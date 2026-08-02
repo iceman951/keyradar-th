@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/nocturne-95162a03-9854-4dfd-88ea-ddfb17d8311d/styles.css">
+<style>:root{--ok:oklch(0.80 0.135 158);--ok-dim:oklch(0.345 0.055 158);--ok-line:oklch(0.46 0.075 158);--ink:#e9e9ed;--mute:color-mix(in srgb,#e9e9ed 55%,transparent);--mute2:color-mix(in srgb,#e9e9ed 38%,transparent);--line:color-mix(in srgb,#e9e9ed 12%,transparent);--line2:color-mix(in srgb,#e9e9ed 7%,transparent)}body{margin:0;font-family:"Inter","Anuphan","Noto Sans Thai",system-ui,sans-serif;background:#161826;color:var(--ink)}a{color:#9184d9}input[type=range]{accent-color:#9184d9;width:100%}</style>
+</helmet>
+<div style="{{ box }}">
+<sc-if value="{{ showHead }}">
+<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding-bottom:12px;border-bottom:1px solid var(--line2)">
+<span style="display:inline-flex;align-items:center;gap:7px;font-size:13.5px;font-weight:600">
+<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M7 12h10M10 18h4"></path></svg>ตัวกรอง</span>
+<button onClick="{{ onReset }}" style="border:0;background:transparent;color:var(--color-accent);font-size:11.5px;cursor:pointer;padding:2px">ล้างทั้งหมด</button>
+</div>
+</sc-if>
+
+<div style="display:flex;flex-direction:column;gap:9px">
+<div style="display:flex;align-items:baseline;justify-content:space-between;gap:8px">
+<span style="font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--mute2)">ช่วงราคา</span>
+<span style="font-size:12.5px;font-weight:600">{{ priceLabel }}</span>
+</div>
+<input type="range" min="99" max="2400" step="50" value="{{ maxPrice }}" onInput="{{ onPriceIn }}" aria-label="ราคาสูงสุด"></input>
+<div style="display:flex;justify-content:space-between;font-size:10.5px;color:var(--mute2)"><span>฿99</span><span>฿2,400+</span></div>
+</div>
+
+<div style="display:flex;flex-direction:column;gap:9px">
+<div style="display:flex;align-items:baseline;justify-content:space-between;gap:8px">
+<span style="font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--mute2)">ส่วนลดขั้นต่ำ</span>
+<span style="font-size:12.5px;font-weight:600">{{ discLabel }}</span>
+</div>
+<input type="range" min="0" max="80" step="5" value="{{ minDisc }}" onInput="{{ onDiscIn }}" aria-label="ส่วนลดขั้นต่ำ"></input>
+</div>
+
+<sc-for list="{{ groups }}" as="grp" hint-placeholder-count="3">
+<div style="display:flex;flex-direction:column;gap:8px;padding-top:12px;border-top:1px solid var(--line2)">
+<span style="font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--mute2)">{{ grp.head }}</span>
+<sc-for list="{{ grp.items }}" as="it" hint-placeholder-count="3">
+<label style="{{ it.style }}">
+<input type="checkbox" checked="{{ it.on }}" onChange="{{ it.toggle }}" style="accent-color:#9184d9;width:15px;height:15px;flex:none;margin-top:2px"></input>
+<span style="display:flex;flex-direction:column;gap:2px;min-width:0">
+<span style="font-size:13px">{{ it.label }}</span>
+<sc-if value="{{ it.hint }}"><span style="font-size:11px;color:var(--mute2);line-height:1.5">{{ it.hint }}</span></sc-if>
+</span>
+<sc-if value="{{ it.dot }}"><span style="{{ it.dot }}"></span></sc-if>
+</label>
+</sc-for>
+</div>
+</sc-for>
+
+<div style="display:flex;flex-direction:column;gap:8px;padding-top:12px;border-top:1px solid var(--line2)">
+<span style="font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--mute2)">Edition</span>
+<div style="display:flex;gap:6px;flex-wrap:wrap">
+<sc-for list="{{ editions }}" as="e" hint-placeholder-count="5">
+<span style="{{ e.style }}">{{ e.label }}</span>
+</sc-for>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:280,&quot;height&quot;:560},&quot;f&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;any&quot;},&quot;onToggle&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(k:string)=&gt;void&quot;},&quot;onPrice&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(v:number)=&gt;void&quot;},&quot;onDisc&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(v:number)=&gt;void&quot;},&quot;onReset&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;()=&gt;void&quot;},&quot;active&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:0,&quot;tsType&quot;:&quot;number&quot;},&quot;bare&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const p = this.props, f = p.f || {}, bare = !!p.bare;
+    const T = k => () => p.onToggle && p.onToggle(k);
+    const row = on => ({ display: 'flex', alignItems: 'flex-start', gap: 9, padding: bare ? '9px 8px' : '4px 6px', margin: bare ? 0 : '0 -6px', borderRadius: 9, cursor: 'pointer', userSelect: 'none', background: on ? 'color-mix(in srgb,#9184d9 9%,transparent)' : 'transparent' });
+    const item = (k, label, hint) => ({ key: k, label, hint, on: !!f[k], toggle: T(k), style: row(!!f[k]) });
+    return {
+      showHead: !bare,
+      box: { display: 'flex', flexDirection: 'column', gap: 16, padding: bare ? 0 : 14, border: bare ? 'none' : '1px solid var(--line)', borderRadius: 14, background: bare ? 'transparent' : 'color-mix(in srgb,#e9e9ed 2.5%,transparent)' },
+      priceLabel: 'ไม่เกิน ฿' + Number(f.maxPrice || 2400).toLocaleString('th-TH'),
+      discLabel: (f.minDisc || 0) > 0 ? 'ตั้งแต่ ' + f.minDisc + '%' : 'ทั้งหมด',
+      maxPrice: f.maxPrice || 2400, minDisc: f.minDisc || 0,
+      onPriceIn: e => p.onPrice && p.onPrice(e.target.value),
+      onDiscIn: e => p.onDisc && p.onDisc(e.target.value),
+      onReset: p.onReset || (e => { if (e) e.preventDefault(); }),
+      groups: [
+        { head: 'การเปิดใช้งาน', items: [item('thOnly', 'ใช้งานได้ในประเทศไทย', 'แสดงเฉพาะข้อเสนอที่ยืนยันภูมิภาคแล้ว'), item('steamOnly', 'เปิดใช้งานผ่าน Steam', 'ไม่รวมคีย์ Epic / Ubisoft / EA App')] },
+        { head: 'ประเภทร้านค้า', items: [item('officialOnly', 'เฉพาะร้านค้าอย่างเป็นทางการ', 'ตัวแทนจำหน่ายที่ได้รับอนุญาตเท่านั้น'), item('noMarket', 'ไม่รวม Marketplace', 'ตัดผู้ขายรายย่อยที่มีค่าธรรมเนียมเพิ่ม')] },
+        { head: 'สถานะข้อเสนอ', items: [item('inStock', 'มีสินค้าพร้อมส่ง'), item('histLow', 'ราคาต่ำสุดเป็นประวัติการณ์'), item('noFee', 'ไม่มีค่าธรรมเนียมเพิ่มเติม')] }
+      ],
+      editions: ['Standard', 'Deluxe', 'Complete', 'DLC', 'Bundle'].map((l, i) => ({ label: l, style: { padding: '4px 10px', borderRadius: 999, border: '1px solid ' + (i === 0 ? 'var(--color-accent)' : 'var(--line)'), background: i === 0 ? 'color-mix(in srgb,#9184d9 12%,transparent)' : 'transparent', color: i === 0 ? 'var(--color-accent-200)' : 'var(--mute)', fontSize: 11.5, cursor: 'pointer' } }))
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/nocturne-95162a03-9854-4dfd-88ea-ddfb17d8311d/styles.css">
+<style>:root{--ok:oklch(0.80 0.135 158);--ok-dim:oklch(0.345 0.055 158);--ok-line:oklch(0.46 0.075 158);--ink:#e9e9ed;--mute:color-mix(in srgb,#e9e9ed 55%,transparent);--mute2:color-mix(in srgb,#e9e9ed 38%,transparent);--line:color-mix(in srgb,#e9e9ed 12%,transparent);--line2:color-mix(in srgb,#e9e9ed 7%,transparent)}body{margin:0;font-family:"Inter","Anuphan","Noto Sans Thai",system-ui,sans-serif;background:#161826;color:var(--ink)}</style>
+</helmet>
+<div style="{{ box }}">
+<div style="display:flex;align-items:stretch">
+<div style="{{ gutter }}">
+<sc-for list="{{ grid }}" as="g" hint-placeholder-count="5">
+<span style="{{ g.labelStyle }}">{{ g.label }}</span>
+</sc-for>
+</div>
+<div style="{{ plot }}" onMouseMove="{{ onMove }}" onMouseLeave="{{ onLeave }}" onTouchMove="{{ onMove }}" onTouchEnd="{{ onLeave }}">
+<svg viewBox="0 0 100 100" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%;overflow:visible" aria-hidden="true">
+<defs>
+<linearGradient id="krArea" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0%" stop-color="#9184d9" stop-opacity="0.34"></stop>
+<stop offset="100%" stop-color="#9184d9" stop-opacity="0"></stop>
+</linearGradient>
+</defs>
+<sc-for list="{{ grid }}" as="g" hint-placeholder-count="5">
+<line x1="0" y1="{{ g.pct }}" x2="100" y2="{{ g.pct }}" stroke="rgba(233,233,237,0.07)" stroke-width="1" vector-effect="non-scaling-stroke"></line>
+</sc-for>
+<path d="{{ c.area }}" fill="url(#krArea)"></path>
+<line x1="0" y1="{{ c.steamPct }}" x2="100" y2="{{ c.steamPct }}" stroke="#75798c" stroke-width="1.2" stroke-dasharray="5 5" vector-effect="non-scaling-stroke"></line>
+<path d="{{ c.path }}" fill="none" stroke="#9184d9" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"></path>
+<sc-if value="{{ hasHover }}">
+<line x1="{{ hoverX }}" y1="0" x2="{{ hoverX }}" y2="100" stroke="rgba(233,233,237,0.28)" stroke-width="1" vector-effect="non-scaling-stroke"></line>
+</sc-if>
+</svg>
+<span style="{{ steamTag }}">Steam {{ c.steamLabel }}</span>
+<span style="{{ lowDot }}"></span>
+<span style="{{ lowTag }}">ต่ำสุด {{ lowLabel }}</span>
+<span style="{{ curDot }}"></span>
+<sc-if value="{{ hasHover }}">
+<span style="{{ hoverDot }}"></span>
+<div style="{{ tip }}">
+<span style="font-size:10.5px;color:var(--mute2)">{{ hoverDate }}</span>
+<span style="font-size:17px;font-weight:700;letter-spacing:-0.02em;color:var(--color-accent-200)">{{ hoverPrice }}</span>
+<span style="font-size:10.5px;color:var(--ok)">{{ hoverDiff }}</span>
+</div>
+</sc-if>
+</div>
+</div>
+<div style="{{ xrow }}">
+<sc-for list="{{ ticks }}" as="t" hint-placeholder-count="5">
+<span style="font-size:10.5px;color:var(--mute2);white-space:nowrap">{{ t.label }}</span>
+</sc-for>
+</div>
+<div style="{{ legend }}">
+<span style="display:inline-flex;align-items:center;gap:7px;font-size:11.5px;color:var(--mute)"><span style="width:16px;height:2px;border-radius:2px;background:#9184d9"></span>ราคาสุทธิต่ำสุดที่ใช้งานในไทยได้</span>
+<span style="display:inline-flex;align-items:center;gap:7px;font-size:11.5px;color:var(--mute)"><span style="width:16px;height:0;border-top:2px dashed #75798c"></span>ราคาบน Steam</span>
+<span style="display:inline-flex;align-items:center;gap:7px;font-size:11.5px;color:var(--mute)"><span style="width:9px;height:9px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 3px var(--ok-dim)"></span>ต่ำสุดในช่วงที่เลือก</span>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:760,&quot;height&quot;:320},&quot;c&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;any&quot;},&quot;onHover&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(i:number|null)=&gt;void&quot;},&quot;hover&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;number|null&quot;}}">
+class Component extends DCLogic {
+  move = e => {
+    const c = this.props.c; if (!c) return;
+    const el = e.currentTarget; if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const cx = e.touches && e.touches[0] ? e.touches[0].clientX : e.clientX;
+    const f = Math.max(0, Math.min(1, (cx - rect.left) / rect.width));
+    const i = Math.round(f * (c.n - 1));
+    if (this.props.onHover) this.props.onHover(i);
+  };
+  leave = () => { if (this.props.onHover) this.props.onHover(null); };
+
+  renderVals() {
+    const c = this.props.c || { grid: [], ticks: [], n: 2 };
+    const m = !!c.mobile;
+    const h = m ? 176 : 216;
+    const hv = c.hover;
+    const dot = (x, y, color, size) => ({ position: 'absolute', left: x + '%', top: y + '%', width: size, height: size, marginLeft: -size / 2, marginTop: -size / 2, borderRadius: '50%', background: color, boxShadow: '0 0 0 3px ' + (color === 'var(--ok)' ? 'var(--ok-dim)' : 'color-mix(in srgb,#9184d9 26%,transparent)'), pointerEvents: 'none' });
+    const flip = hv && hv.x > 62;
+    return {
+      c, grid: (c.grid || []).map(g => ({ pct: g.pct, label: g.label, labelStyle: { position: 'absolute', right: 0, top: g.pct + '%', transform: 'translateY(-50%)', fontSize: 10.5, color: 'var(--mute2)', whiteSpace: 'nowrap' } })),
+      ticks: c.ticks || [],
+      box: { padding: m ? '14px 12px 12px' : '18px 16px 14px', border: '1px solid var(--line)', borderRadius: 15, background: 'linear-gradient(170deg,rgba(233,233,237,.035),rgba(233,233,237,.008))' },
+      gutter: { position: 'relative', width: m ? 46 : 56, flex: 'none', height: h },
+      plot: { position: 'relative', flex: 1, height: h, marginLeft: 8, cursor: 'crosshair', touchAction: 'pan-y' },
+      xrow: { display: 'flex', justifyContent: 'space-between', gap: 6, paddingLeft: (m ? 54 : 64), marginTop: 8 },
+      legend: { display: 'flex', gap: 16, flexWrap: 'wrap', marginTop: 12, paddingTop: 11, borderTop: '1px solid var(--line2)' },
+      steamTag: { position: 'absolute', right: 0, top: (c.steamPct || 0) + '%', transform: 'translateY(-50%)', padding: '1px 7px', borderRadius: 6, background: '#2b2e3f', border: '1px solid #3a3d52', fontSize: 9.5, fontWeight: 600, color: '#cfd3e5', whiteSpace: 'nowrap', pointerEvents: 'none' },
+      lowDot: dot(c.low ? c.low.x : 0, c.low ? c.low.y : 0, 'var(--ok)', 9),
+      lowLabel: c.low ? c.low.label : '',
+      lowTag: { position: 'absolute', left: (c.low ? c.low.x : 0) + '%', top: (c.low ? c.low.y : 0) + '%', transform: 'translate(-50%,-190%)', padding: '2px 7px', borderRadius: 6, background: 'var(--ok-dim)', border: '1px solid var(--ok-line)', color: 'var(--ok)', fontSize: 9.5, fontWeight: 700, whiteSpace: 'nowrap', pointerEvents: 'none' },
+      curDot: dot(100, c.cur ? c.cur.y : 0, '#9184d9', 10),
+      hasHover: !!hv, hoverX: hv ? hv.x : 0,
+      hoverDot: hv ? dot(hv.x, hv.y, '#b5abfc', 11) : {},
+      hoverDate: hv ? hv.date : '', hoverPrice: hv ? hv.price : '', hoverDiff: hv ? hv.diff : '',
+      tip: hv ? { position: 'absolute', left: hv.x + '%', top: 0, transform: 'translate(' + (flip ? '-104%' : '4%') + ', 0)', display: 'flex', flexDirection: 'column', gap: 1, padding: '7px 11px', borderRadius: 10, background: 'rgba(20,22,34,.96)', border: '1px solid #3a3d52', boxShadow: '0 12px 30px rgba(0,0,0,.5)', pointerEvents: 'none', whiteSpace: 'nowrap', zIndex: 3 } : {},
+      onMove: this.move, onLeave: this.leave
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,1300 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/nocturne-95162a03-9854-4dfd-88ea-ddfb17d8311d/styles.css">
+<script src="_ds/nocturne-95162a03-9854-4dfd-88ea-ddfb17d8311d/_ds_bundle.js"></script>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Anuphan:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  color-scheme: dark;
+  --ok: oklch(0.80 0.135 158);
+  --ok-dim: oklch(0.345 0.055 158);
+  --ok-line: oklch(0.46 0.075 158);
+  --warn: oklch(0.845 0.135 82);
+  --warn-dim: oklch(0.345 0.055 74);
+  --warn-line: oklch(0.46 0.075 74);
+  --bad: oklch(0.72 0.155 24);
+  --bad-dim: oklch(0.335 0.070 24);
+  --bad-line: oklch(0.45 0.095 24);
+  --ink: #e9e9ed;
+  --mute: color-mix(in srgb, #e9e9ed 55%, transparent);
+  --mute2: color-mix(in srgb, #e9e9ed 38%, transparent);
+  --line: color-mix(in srgb, #e9e9ed 12%, transparent);
+  --line2: color-mix(in srgb, #e9e9ed 7%, transparent);
+  --sunk: #12141f;
+  --raise: #1d2030;
+}
+html,body{margin:0;padding:0}
+body{background:var(--color-bg);color:var(--ink);font-family:"Inter","Anuphan","Noto Sans Thai",system-ui,sans-serif;font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4,h5,h6{font-family:"Inter","Anuphan","Noto Sans Thai",system-ui,sans-serif;font-weight:600;letter-spacing:-0.02em;line-height:1.16;margin:0}
+a{color:var(--color-accent);text-decoration:none;text-underline-offset:3px}
+a:hover{color:var(--color-accent-400);text-decoration:underline}
+button{font-family:inherit}
+:focus-visible{outline:2px solid var(--color-accent);outline-offset:2px}
+::selection{background:color-mix(in srgb, #9184d9 32%, transparent)}
+input::placeholder{color:color-mix(in srgb,#e9e9ed 34%,transparent)}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:#31344a;border-radius:8px;border:3px solid #161826}
+::-webkit-scrollbar-thumb:hover{background:#454a66}
+@keyframes krShimmer{0%{background-position:-360px 0}100%{background-position:360px 0}}
+@keyframes krRise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes krSheet{from{transform:translateY(100%)}to{transform:none}}
+@keyframes krFade{from{opacity:0}to{opacity:1}}
+@keyframes krSpin{to{transform:rotate(360deg)}}
+@keyframes krSweep{to{transform:rotate(360deg)}}
+@keyframes krPulse{0%,100%{opacity:.35}50%{opacity:.9}}
+</style>
+</helmet>
+
+<div style="min-height:100vh;background:var(--color-bg)">
+<div style="{{ pageWrap }}">
+<div style="{{ shell }}">
+
+<sc-if value="{{ wide }}" hint-placeholder-val="{{ true }}">
+<header style="position:sticky;top:0;z-index:40;background:color-mix(in srgb,#161826 86%,transparent);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--line)">
+<div style="{{ pad }}">
+<div style="display:flex;align-items:center;gap:26px;height:62px">
+<a href="#" onClick="{{ goHome }}" style="display:flex;align-items:center;gap:9px;color:var(--ink);text-decoration:none;flex:none">
+<span style="position:relative;width:26px;height:26px;display:grid;place-items:center">
+<svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+<circle cx="13" cy="13" r="11.2" stroke="#3a3d55" stroke-width="1.2"></circle>
+<circle cx="13" cy="13" r="6.6" stroke="#3a3d55" stroke-width="1.2"></circle>
+<path d="M13 13 L13 1.8 A11.2 11.2 0 0 1 22.9 8.1 Z" fill="#9184d9" opacity="0.28"></path>
+<path d="M13 13 L22.9 8.1" stroke="#9184d9" stroke-width="1.4" stroke-linecap="round"></path>
+<circle cx="18.4" cy="16.9" r="2" fill="#9184d9"></circle>
+</svg>
+</span>
+<span style="display:flex;flex-direction:column;line-height:1">
+<span style="font-size:15.5px;font-weight:700;letter-spacing:0.07em">KEYRADAR</span>
+<span style="font-size:8.5px;letter-spacing:0.24em;color:var(--color-accent);font-weight:600;margin-top:2px">TH</span>
+</span>
+</a>
+<nav style="display:flex;align-items:center;gap:2px;flex:none">
+<sc-for list="{{ nav }}" as="n" hint-placeholder-count="5">
+<a href="#" onClick="{{ n.go }}" style="{{ n.style }}">{{ n.label }}</a>
+</sc-for>
+</nav>
+<div style="flex:1;max-width:420px;margin-left:auto;position:relative">
+<div style="{{ navSearchBox }}">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--mute2);flex:none"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.6-3.6" stroke-linecap="round"></path></svg>
+<input value="{{ query }}" onInput="{{ onType }}" onFocus="{{ onFocus }}" onBlur="{{ onBlur }}" onKeyDown="{{ onKey }}" placeholder="ค้นหาเกม…" style="flex:1;background:transparent;border:0;outline:none;color:var(--ink);font-size:13.5px;min-width:0"></input>
+<sc-if value="{{ query }}">
+<button onClick="{{ clearQuery }}" aria-label="ล้าง" style="border:0;background:transparent;color:var(--mute2);cursor:pointer;padding:2px;display:grid;place-items:center">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+</button>
+</sc-if>
+</div>
+<sc-if value="{{ acOpen }}">
+<div style="position:absolute;top:calc(100% + 8px);left:0;right:0;background:var(--raise);border:1px solid var(--line);border-radius:12px;box-shadow:0 18px 44px rgba(0,0,0,.6);overflow:hidden;z-index:60;animation:krRise .14s ease-out">
+<dc-import name="KeyRadar Autocomplete" rows="{{ acRows }}" loading="{{ acLoading }}" empty="{{ acEmpty }}" q="{{ query }}" hint-size="100%,240px"></dc-import>
+</div>
+</sc-if>
+</div>
+</div>
+</div>
+</header>
+</sc-if>
+
+<sc-if value="{{ mobile }}">
+<header style="position:sticky;top:0;z-index:40;background:color-mix(in srgb,#161826 92%,transparent);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--line)">
+<div style="display:flex;align-items:center;gap:10px;padding:10px 14px">
+<a href="#" onClick="{{ goHome }}" style="display:flex;align-items:center;gap:7px;color:var(--ink);text-decoration:none;margin-right:auto">
+<svg width="22" height="22" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+<circle cx="13" cy="13" r="11.2" stroke="#3a3d55" stroke-width="1.3"></circle>
+<path d="M13 13 L13 1.8 A11.2 11.2 0 0 1 22.9 8.1 Z" fill="#9184d9" opacity="0.28"></path>
+<path d="M13 13 L22.9 8.1" stroke="#9184d9" stroke-width="1.5" stroke-linecap="round"></path>
+<circle cx="18.4" cy="16.9" r="2.1" fill="#9184d9"></circle>
+</svg>
+<span style="font-size:14px;font-weight:700;letter-spacing:0.07em">KEYRADAR<span style="color:var(--color-accent);font-size:9px;letter-spacing:0.2em;margin-left:4px">TH</span></span>
+</a>
+<button onClick="{{ toggleNav }}" aria-label="เมนู" style="width:38px;height:38px;display:grid;place-items:center;border:1px solid var(--line);background:transparent;border-radius:10px;color:var(--ink);cursor:pointer">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>
+</button>
+</div>
+<sc-if value="{{ mShowSearch }}">
+<div style="padding:0 14px 11px;position:relative">
+<div style="{{ navSearchBox }}">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--mute2);flex:none"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.6-3.6" stroke-linecap="round"></path></svg>
+<input value="{{ query }}" onInput="{{ onType }}" onFocus="{{ onFocus }}" onBlur="{{ onBlur }}" onKeyDown="{{ onKey }}" placeholder="ค้นหาเกม…" style="flex:1;background:transparent;border:0;outline:none;color:var(--ink);font-size:15px;min-width:0"></input>
+</div>
+<sc-if value="{{ acOpen }}">
+<div style="position:absolute;top:calc(100% + 6px);left:14px;right:14px;background:var(--raise);border:1px solid var(--line);border-radius:12px;box-shadow:0 18px 44px rgba(0,0,0,.6);overflow:hidden;z-index:60;animation:krRise .14s ease-out">
+<dc-import name="KeyRadar Autocomplete" rows="{{ acRows }}" loading="{{ acLoading }}" empty="{{ acEmpty }}" q="{{ query }}" hint-size="100%,220px"></dc-import>
+</div>
+</sc-if>
+</div>
+</sc-if>
+<sc-if value="{{ navOpen }}">
+<div style="border-top:1px solid var(--line);padding:6px 8px 10px;animation:krRise .16s ease-out">
+<sc-for list="{{ nav }}" as="n" hint-placeholder-count="5">
+<a href="#" onClick="{{ n.go }}" style="{{ n.mStyle }}">{{ n.label }}</a>
+</sc-for>
+</div>
+</sc-if>
+</header>
+</sc-if>
+
+<sc-if value="{{ r.home }}" hint-placeholder-val="{{ true }}">
+<main data-screen-label="หน้าแรก">
+<section style="position:relative;overflow:hidden">
+<div style="position:absolute;inset:0;background:radial-gradient(120% 78% at 18% -18%, rgba(145,132,217,.20), transparent 62%), radial-gradient(80% 60% at 92% 8%, rgba(90,180,150,.10), transparent 60%);pointer-events:none"></div>
+<div style="position:absolute;top:-140px;right:-90px;width:460px;height:460px;opacity:.16;pointer-events:none">
+<svg viewBox="0 0 200 200" fill="none" style="width:100%;height:100%">
+<circle cx="100" cy="100" r="94" stroke="#9184d9" stroke-width="0.5"></circle>
+<circle cx="100" cy="100" r="68" stroke="#9184d9" stroke-width="0.5"></circle>
+<circle cx="100" cy="100" r="42" stroke="#9184d9" stroke-width="0.5"></circle>
+<circle cx="100" cy="100" r="16" stroke="#9184d9" stroke-width="0.5"></circle>
+<path d="M6 100h188M100 6v188" stroke="#9184d9" stroke-width="0.4"></path>
+<g style="transform-origin:100px 100px;animation:krSweep 7s linear infinite">
+<path d="M100 100 L100 6 A94 94 0 0 1 166.5 33.5 Z" fill="url(#krg)"></path>
+</g>
+<defs><linearGradient id="krg" x1="100" y1="100" x2="160" y2="40"><stop stop-color="#9184d9" stop-opacity="0.55"></stop><stop offset="1" stop-color="#9184d9" stop-opacity="0"></stop></linearGradient></defs>
+</svg>
+</div>
+<div style="{{ pad }}">
+<div style="{{ heroInner }}">
+<div style="display:inline-flex;align-items:center;gap:8px;padding:5px 12px 5px 6px;border:1px solid var(--line);border-radius:999px;background:color-mix(in srgb,#e9e9ed 4%,transparent);font-size:11.5px;color:var(--mute)">
+<span style="display:inline-flex;align-items:center;gap:5px;padding:2px 8px;border-radius:999px;background:var(--ok-dim);color:var(--ok);font-weight:600;font-size:10.5px">
+<span style="width:5px;height:5px;border-radius:50%;background:var(--ok);animation:krPulse 2.2s ease-in-out infinite"></span>LIVE</span>
+<span>ตรวจสอบราคาจาก 10 ร้านค้า · อัปเดตทุก 15 นาที</span>
+</div>
+<h1 style="{{ h1 }}"><span style="display:block">ค้นหาราคาเกม Steam</span><span style="display:block"><span style="color:var(--color-accent-300)">ที่ถูกที่สุด</span> สำหรับคนไทย</span></h1>
+<p style="{{ heroSub }}">เราเทียบ<strong style="font-weight:600;color:var(--ink)">ราคาสุทธิหลังรวมค่าธรรมเนียม</strong> ไม่ใช่แค่ราคาที่โฆษณา และระบุชัดเจนว่าคีย์แต่ละใบเปิดใช้งานในประเทศไทยได้หรือไม่ — ตรวจสอบก่อนจ่ายเงินทุกครั้ง</p>
+
+<div style="{{ heroSearchWrap }}">
+<div style="{{ heroSearchBox }}">
+<svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--color-accent);flex:none"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.6-3.6" stroke-linecap="round"></path></svg>
+<input value="{{ query }}" onInput="{{ onType }}" onFocus="{{ onFocus }}" onBlur="{{ onBlur }}" onKeyDown="{{ onKey }}" placeholder="ค้นหาเกม เช่น Valheim, Elden Ring, Palworld" aria-label="ค้นหาเกม" style="{{ heroInput }}"></input>
+<button onClick="{{ submitSearch }}" style="{{ heroBtn }}">ค้นหาเกม</button>
+</div>
+<sc-if value="{{ acOpen }}">
+<div style="position:absolute;top:calc(100% + 10px);left:0;right:0;background:var(--raise);border:1px solid var(--line);border-radius:14px;box-shadow:0 22px 56px rgba(0,0,0,.62);overflow:hidden;z-index:60;animation:krRise .15s ease-out">
+<dc-import name="KeyRadar Autocomplete" rows="{{ acRows }}" loading="{{ acLoading }}" empty="{{ acEmpty }}" q="{{ query }}" hint-size="100%,280px"></dc-import>
+</div>
+</sc-if>
+</div>
+
+<div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-top:18px">
+<span style="font-size:11.5px;color:var(--mute2);margin-right:2px">ยอดค้นหา</span>
+<sc-for list="{{ popular }}" as="p" hint-placeholder-count="6">
+<button onClick="{{ p.go }}" style="{{ p.style }}">{{ p.title }}</button>
+</sc-for>
+</div>
+
+<div style="display:flex;gap:22px;flex-wrap:wrap;margin-top:26px;font-size:12px;color:var(--mute)">
+<span style="display:inline-flex;align-items:center;gap:7px"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--ok)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"></path></svg>ไม่มีค่าธรรมเนียมเพิ่มเติมจากเรา</span>
+<span style="display:inline-flex;align-items:center;gap:7px"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--ok)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"></path></svg>ไม่ต้องสมัครสมาชิก</span>
+<span style="display:inline-flex;align-items:center;gap:7px"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--ok)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"></path></svg>แสดงราคาสุทธิโดยประมาณเสมอ</span>
+</div>
+</div>
+</div>
+</section>
+
+<section style="{{ pad }}">
+<div style="{{ sectionHead }}">
+<div>
+<h2 style="{{ h2 }}">เกมลดราคาน่าสนใจ</h2>
+<p style="margin:5px 0 0;font-size:13px;color:var(--mute)">คัดเฉพาะดีลที่มีอย่างน้อยหนึ่งข้อเสนอที่ยืนยันว่าเปิดใช้งานในไทยได้</p>
+</div>
+<a href="#" onClick="{{ goDeals }}" class="btn btn-secondary" style="flex:none">ดูทั้งหมด</a>
+</div>
+<div style="{{ cardGrid }}">
+<sc-for list="{{ trending }}" as="g" hint-placeholder-count="8">
+<dc-import name="KeyRadar Game Card" g="{{ g }}" compact="{{ mobile }}" hint-size="100%,290px"></dc-import>
+</sc-for>
+</div>
+</section>
+
+<section id="how" style="{{ pad }}">
+<div style="{{ howWrap }}">
+<div style="max-width:420px">
+<h2 style="{{ h2 }}">วิธีใช้งาน</h2>
+<p style="margin:10px 0 0;font-size:13.5px;color:var(--mute);line-height:1.7">KeyRadar TH ไม่ได้ขายเกมเอง เรารวบรวมราคาจากร้านค้าปลายทางแล้วคำนวณราคาสุทธิโดยประมาณให้คุณเปรียบเทียบได้ในที่เดียว</p>
+</div>
+<div style="{{ howGrid }}">
+<sc-for list="{{ steps }}" as="s" hint-placeholder-count="3">
+<div style="position:relative;padding:18px 18px 20px;border:1px solid var(--line);border-radius:14px;background:linear-gradient(165deg,rgba(233,233,237,.045),rgba(233,233,237,.012))">
+<div style="display:flex;align-items:center;gap:11px;margin-bottom:11px">
+<span style="width:34px;height:34px;flex:none;display:grid;place-items:center;border-radius:10px;background:var(--color-accent-900);color:var(--color-accent-300);border:1px solid color-mix(in srgb,#9184d9 32%,transparent)">{{ s.icon }}</span>
+<span style="font-size:10.5px;letter-spacing:0.14em;color:var(--mute2);font-weight:600">ขั้นตอนที่ {{ s.n }}</span>
+</div>
+<h3 style="font-size:15.5px;font-weight:600;margin:0 0 6px">{{ s.title }}</h3>
+<p style="margin:0;font-size:12.5px;color:var(--mute);line-height:1.65">{{ s.body }}</p>
+</div>
+</sc-for>
+</div>
+</div>
+</section>
+
+<section style="{{ pad }}">
+<div style="{{ sectionHead }}">
+<div>
+<h2 style="{{ h2 }}">ร้านค้าที่รองรับ</h2>
+<p style="margin:5px 0 0;font-size:13px;color:var(--mute)">เราแยกประเภทร้านค้าอย่างชัดเจน — ร้านค้าที่ได้รับอนุญาตอย่างเป็นทางการไม่เหมือนกับ Marketplace ที่มีผู้ขายรายย่อย</p>
+</div>
+<a href="#" onClick="{{ goStores }}" class="btn btn-secondary" style="flex:none">รายละเอียดร้านค้า</a>
+</div>
+<div style="{{ storeGrid }}">
+<sc-for list="{{ storeChips }}" as="s" hint-placeholder-count="10">
+<button onClick="{{ s.go }}" style="display:flex;align-items:center;gap:11px;padding:12px;border:1px solid var(--line);border-radius:12px;background:color-mix(in srgb,#e9e9ed 2.5%,transparent);cursor:pointer;text-align:left;color:var(--ink)" style-hover="border-color:color-mix(in srgb,#9184d9 45%,transparent);background:color-mix(in srgb,#9184d9 8%,transparent)">
+<span style="{{ s.logo }}">{{ s.letters }}</span>
+<span style="display:flex;flex-direction:column;gap:3px;min-width:0">
+<span style="font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ s.name }}</span>
+<span style="{{ s.typeStyle }}">{{ s.typeLabel }}</span>
+</span>
+</button>
+</sc-for>
+</div>
+</section>
+</main>
+</sc-if>
+
+<sc-if value="{{ r.results }}">
+<main data-screen-label="ผลการค้นหา" style="{{ pad }}">
+<div style="display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:4px">
+<h1 style="{{ h2 }}">{{ resultsHeading }}</h1>
+<span style="font-size:13px;color:var(--mute)">{{ resultsCount }}</span>
+</div>
+<p style="margin:0 0 20px;font-size:12.5px;color:var(--mute2)">ราคาที่แสดงคือราคาสุทธิโดยประมาณต่ำสุดที่ยืนยันว่าเปิดใช้งานในไทยได้ · อัปเดตล่าสุด {{ updatedAt }}</p>
+
+<div style="{{ resultsLayout }}">
+<sc-if value="{{ wide }}">
+<aside style="width:246px;flex:none;position:sticky;top:82px;align-self:flex-start">
+<dc-import name="KeyRadar Filters" f="{{ filters }}" on-toggle="{{ toggleFilter }}" on-price="{{ setMaxPrice }}" on-disc="{{ setMinDisc }}" on-reset="{{ resetFilters }}" active="{{ activeFilterCount }}" hint-size="246px,520px"></dc-import>
+</aside>
+</sc-if>
+
+<div style="flex:1;min-width:0">
+<div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap">
+<sc-if value="{{ mobile }}">
+<button onClick="{{ openFilterSheet }}" style="{{ mControlBtn }}">
+<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M7 12h10M10 18h4"></path></svg>ตัวกรอง<sc-if value="{{ hasFilters }}"><span style="min-width:17px;height:17px;padding:0 4px;display:grid;place-items:center;border-radius:99px;background:var(--color-accent);color:#161826;font-size:10px;font-weight:700">{{ activeFilterCount }}</span></sc-if>
+</button>
+<button onClick="{{ openSortSheet }}" style="{{ mControlBtn }}">
+<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4v16m0 0l-3-3m3 3l3-3M17 20V4m0 0l-3 3m3-3l3 3"></path></svg>{{ sortLabel }}
+</button>
+</sc-if>
+<sc-if value="{{ wide }}">
+<span style="font-size:12px;color:var(--mute2);margin-right:auto">{{ shownCount }}</span>
+<label style="display:inline-flex;align-items:center;gap:8px;font-size:12.5px;color:var(--mute)">เรียงตาม
+<select value="{{ sort }}" onChange="{{ onSort }}" class="input" style="width:auto;min-height:34px;font-size:13px;padding-right:26px">
+<option value="final">ราคาต่ำสุด</option>
+<option value="discount">ส่วนลดมากที่สุด</option>
+<option value="popular">ความนิยม</option>
+<option value="release">วันวางจำหน่าย</option>
+<option value="updated">อัปเดตล่าสุด</option>
+</select>
+</label>
+</sc-if>
+</div>
+
+<sc-if value="{{ hasFilters }}">
+<div style="display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px">
+<sc-for list="{{ filterPills }}" as="p" hint-placeholder-count="2">
+<button onClick="{{ p.clear }}" style="display:inline-flex;align-items:center;gap:6px;padding:4px 9px;border-radius:999px;border:1px solid color-mix(in srgb,#9184d9 40%,transparent);background:color-mix(in srgb,#9184d9 12%,transparent);color:var(--color-accent-300);font-size:11.5px;cursor:pointer">{{ p.label }}<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+</sc-for>
+<button onClick="{{ resetFilters }}" style="padding:4px 9px;border-radius:999px;border:1px solid transparent;background:transparent;color:var(--mute);font-size:11.5px;cursor:pointer;text-decoration:underline;text-underline-offset:3px">ล้างทั้งหมด</button>
+</div>
+</sc-if>
+
+<sc-if value="{{ st.loading }}">
+<div style="display:flex;flex-direction:column;gap:10px">
+<sc-for list="{{ skeletons }}" as="s" hint-placeholder-count="4">
+<div style="{{ s.style }}"></div>
+</sc-for>
+</div>
+</sc-if>
+
+<sc-if value="{{ st.empty }}">
+<dc-import name="KeyRadar Empty" kind="no-results" q="{{ query }}" on-action="{{ goHome }}" hint-size="100%,300px"></dc-import>
+</sc-if>
+
+<sc-if value="{{ st.normal }}">
+<div style="display:flex;flex-direction:column;gap:10px">
+<sc-for list="{{ results }}" as="g" hint-placeholder-count="5">
+<dc-import name="KeyRadar Result Row" g="{{ g }}" mobile="{{ mobile }}" hint-size="100%,150px"></dc-import>
+</sc-for>
+</div>
+</sc-if>
+</div>
+</div>
+</main>
+</sc-if>
+
+<sc-if value="{{ r.game }}">
+<main data-screen-label="เปรียบเทียบราคา">
+<div style="{{ pad }}">
+<nav style="display:flex;align-items:center;gap:7px;font-size:12px;color:var(--mute2);margin-bottom:16px;flex-wrap:wrap">
+<a href="#" onClick="{{ goHome }}" style="color:var(--mute)">หน้าแรก</a><span>/</span>
+<a href="#" onClick="{{ goPopular }}" style="color:var(--mute)">เกมยอดนิยม</a><span>/</span>
+<span style="color:var(--ink)">{{ game.title }}</span>
+</nav>
+
+<div style="{{ gameHeader }}">
+<div style="{{ coverBig }}">
+<span style="{{ coverBigText }}">{{ game.title }}</span>
+<span style="position:absolute;left:14px;bottom:12px;display:inline-flex;align-items:center;gap:6px;padding:4px 9px;border-radius:8px;background:rgba(9,11,18,.72);backdrop-filter:blur(6px);font-size:10.5px;font-weight:600;letter-spacing:.05em;color:#cfd3e5">
+<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 00-9.94 9.02l5.3 2.19a2.83 2.83 0 011.6-.49h.14l2.36-3.42v-.05a3.78 3.78 0 113.78 3.78h-.09l-3.37 2.4v.12a2.84 2.84 0 01-5.63.5l-3.79-1.57A10 10 0 1012 2zm-3.3 15.17l-1.21-.5a2.13 2.13 0 001.1 1.04 2.15 2.15 0 002.8-1.16 2.13 2.13 0 00-1.17-2.79 2.13 2.13 0 00-1.5-.02l1.25.52a1.57 1.57 0 11-1.21 2.9zm10.34-6.05a2.52 2.52 0 10-5.04 0 2.52 2.52 0 005.04 0zm-4.41 0a1.9 1.9 0 111.9 1.89 1.9 1.9 0 01-1.9-1.89z"></path></svg>STEAM</span>
+</div>
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:14px">
+<div>
+<div style="display:flex;gap:7px;flex-wrap:wrap;margin-bottom:9px">
+<span style="{{ badges.platform }}"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" style="flex:none"><path d="M12 2a10 10 0 00-9.94 9.02l5.3 2.19a2.83 2.83 0 011.6-.49h.14l2.36-3.42v-.05a3.78 3.78 0 113.78 3.78h-.09l-3.37 2.4v.12a2.84 2.84 0 01-5.63.5l-3.79-1.57A10 10 0 1012 2z"></path></svg>Steam</span>
+<sc-for list="{{ game.genreTags }}" as="t" hint-placeholder-count="3">
+<span style="{{ t.style }}">{{ t.label }}</span>
+</sc-for>
+</div>
+<h1 style="{{ h1game }}">{{ game.title }}</h1>
+<div style="{{ metaGrid }}">
+<sc-for list="{{ game.meta }}" as="m" hint-placeholder-count="4">
+<div style="display:flex;flex-direction:column;gap:2px">
+<span style="font-size:10.5px;letter-spacing:.09em;color:var(--mute2);text-transform:uppercase">{{ m.k }}</span>
+<span style="font-size:13px;color:var(--ink)">{{ m.v }}</span>
+</div>
+</sc-for>
+</div>
+</div>
+<div style="{{ reviewRow }}">
+<div style="display:flex;align-items:center;gap:9px">
+<span style="{{ game.reviewPill }}">{{ game.review.pct }}%</span>
+<div style="display:flex;flex-direction:column;line-height:1.3">
+<span style="font-size:12.5px;font-weight:600">{{ game.review.label }}</span>
+<span style="font-size:11px;color:var(--mute2)">รีวิว Steam {{ game.review.countText }} รายการ</span>
+</div>
+</div>
+<div style="{{ thStatusBig }}">
+<span style="{{ thIconWrap }}">{{ thIcon }}</span>
+<div style="display:flex;flex-direction:column;line-height:1.35;min-width:0">
+<span style="font-size:13px;font-weight:600">{{ thStatusTitle }}</span>
+<span style="font-size:11.5px;opacity:.8">{{ thStatusSub }}</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div style="{{ editionBar }}">
+<span style="font-size:11px;letter-spacing:.09em;color:var(--mute2);text-transform:uppercase;flex:none">เวอร์ชัน</span>
+<div style="display:flex;gap:6px;overflow-x:auto;padding-bottom:2px">
+<sc-for list="{{ editions }}" as="e" hint-placeholder-count="3">
+<button onClick="{{ e.go }}" style="{{ e.style }}">{{ e.name }}<span style="{{ e.priceStyle }}">{{ e.from }}</span></button>
+</sc-for>
+</div>
+</div>
+
+<sc-if value="{{ st.noprice }}">
+<dc-import name="KeyRadar Empty" kind="no-price" q="{{ game.title }}" on-action="{{ refreshPrices }}" hint-size="100%,260px"></dc-import>
+</sc-if>
+
+<sc-if value="{{ st.nothai }}">
+<dc-import name="KeyRadar Empty" kind="no-th" q="{{ game.title }}" on-action="{{ showAllOffers }}" hint-size="100%,280px"></dc-import>
+</sc-if>
+
+<sc-if value="{{ showPrices }}">
+<div style="{{ summaryWrap }}">
+<div style="{{ summaryCard }}">
+<div style="position:absolute;inset:0;background:radial-gradient(70% 130% at 6% 0%, color-mix(in srgb,var(--ok) 13%, transparent), transparent 68%);pointer-events:none"></div>
+<div style="position:relative;display:flex;flex-direction:column;gap:14px">
+<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+<span style="display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:7px;background:var(--ok-dim);color:var(--ok);font-size:11px;font-weight:700;letter-spacing:.03em">
+<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"></path></svg>ถูกที่สุดที่ใช้งานในไทยได้</span>
+<sc-if value="{{ best.isHistLow }}"><span style="{{ badges.histLow }}">ต่ำสุดเป็นประวัติการณ์</span></sc-if>
+</div>
+<div style="{{ summaryTop }}">
+<div style="display:flex;flex-direction:column;gap:6px;min-width:0">
+<div style="display:flex;align-items:center;gap:11px">
+<span style="{{ best.logo }}">{{ best.letters }}</span>
+<div style="display:flex;flex-direction:column;line-height:1.3;min-width:0">
+<span style="font-size:15px;font-weight:600">{{ best.store }}</span>
+<span style="{{ best.typeStyle }}">{{ best.typeLabel }}</span>
+</div>
+</div>
+<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:4px">
+<span style="{{ best.regionStyle }}">{{ best.regionLabel }}</span>
+<span style="{{ best.thStyle }}">{{ best.thLabel }}</span>
+<span style="{{ badges.drm }}">{{ best.drm }}</span>
+<span style="{{ badges.neutral }}">{{ best.edition }}</span>
+</div>
+</div>
+<div style="{{ summaryPriceCol }}">
+<span style="font-size:10.5px;letter-spacing:.09em;color:var(--mute2);text-transform:uppercase">ราคาสุทธิโดยประมาณ</span>
+<div style="display:flex;align-items:baseline;gap:10px;flex-wrap:wrap">
+<span style="{{ bigPrice }}">{{ best.finalText }}</span>
+<span style="display:inline-flex;flex-direction:column;line-height:1.25">
+<s style="font-size:13px;color:var(--mute2)">{{ best.steamText }}</s>
+<span style="font-size:11.5px;color:var(--ok);font-weight:600">ประหยัด {{ best.saveText }}</span>
+</span>
+</div>
+<sc-if value="{{ best.hasFees }}">
+<span style="font-size:11.5px;color:var(--mute)">ราคาโฆษณา <s>{{ best.advText }}</s> + ค่าธรรมเนียม {{ best.feeText }}</span>
+</sc-if>
+<sc-if value="{{ best.noFees }}">
+<span style="font-size:11.5px;color:var(--mute)">ไม่มีค่าธรรมเนียมเพิ่มเติมที่ทราบ</span>
+</sc-if>
+</div>
+</div>
+<div style="{{ summaryFoot }}">
+<span style="display:inline-flex;align-items:center;gap:6px;font-size:11.5px;color:var(--mute2)">
+<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>อัปเดตล่าสุด {{ best.updated }} · {{ updatedAt }}</span>
+<button onClick="{{ best.buy }}" style="{{ ctaBtn }}">ไปยังร้านค้า {{ best.store }}
+<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 01-1 1H5a1 1 0 01-1-1V7a1 1 0 011-1h5"></path></svg></button>
+</div>
+</div>
+</div>
+
+<div style="{{ steamRefCard }}">
+<span style="font-size:10.5px;letter-spacing:.09em;color:var(--mute2);text-transform:uppercase">ราคาบน Steam</span>
+<span style="font-size:23px;font-weight:600;letter-spacing:-0.02em">{{ game.steamText }}</span>
+<span style="font-size:11.5px;color:var(--mute);line-height:1.55">ซื้อโดยตรงจากร้านค้า Steam ประเทศไทย — เปิดใช้งานได้แน่นอน ไม่มีค่าธรรมเนียมแฝง แต่ไม่ใช่ราคาที่ถูกที่สุด</span>
+<div style="height:1px;background:var(--line2);margin:2px 0"></div>
+<div style="display:flex;justify-content:space-between;font-size:12px"><span style="color:var(--mute)">ส่วนต่างจากราคาต่ำสุด</span><span style="color:var(--ok);font-weight:600">−{{ best.saveText }}</span></div>
+<div style="display:flex;justify-content:space-between;font-size:12px"><span style="color:var(--mute)">จำนวนร้านที่เทียบ</span><span>{{ offerCountText }}</span></div>
+<div style="display:flex;justify-content:space-between;font-size:12px"><span style="color:var(--mute)">ใช้งานในไทยได้</span><span style="color:var(--ok);font-weight:600">{{ thOkCountText }}</span></div>
+</div>
+</div>
+
+<div style="{{ tableHead }}">
+<div>
+<h2 style="{{ h3 }}">เปรียบเทียบราคา {{ offerCountText }}</h2>
+<p style="margin:4px 0 0;font-size:12px;color:var(--mute2)">เรียงตามราคาสุทธิโดยประมาณหลังรวมค่าธรรมเนียมที่ทราบ · กดแถวเพื่อดูรายละเอียด</p>
+</div>
+<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+<label style="display:inline-flex;align-items:center;gap:7px;font-size:12.5px;color:var(--mute);cursor:pointer;user-select:none">
+<input type="checkbox" checked="{{ filters.thOnly }}" onChange="{{ toggleThOnly }}" style="accent-color:#9184d9;width:15px;height:15px"></input>เฉพาะที่ใช้งานในไทยได้
+</label>
+<sc-if value="{{ wide }}">
+<button onClick="{{ refreshPrices }}" class="btn btn-secondary" style="height:34px">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="{{ refreshSpin }}"><path d="M21 12a9 9 0 11-2.64-6.36M21 4v5h-5"></path></svg>รีเฟรช
+</button>
+</sc-if>
+</div>
+</div>
+
+<sc-if value="{{ st.refreshing }}">
+<div style="display:flex;align-items:center;gap:10px;padding:11px 14px;border:1px solid color-mix(in srgb,#9184d9 34%,transparent);background:color-mix(in srgb,#9184d9 9%,transparent);border-radius:11px;margin-bottom:12px;font-size:12.5px;color:var(--color-accent-300)">
+<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="animation:krSpin 1s linear infinite"><path d="M21 12a9 9 0 11-2.64-6.36"></path></svg>
+กำลังดึงราคาล่าสุดจากร้านค้า… ข้อมูลที่แสดงอาจยังไม่ใช่ราคาปัจจุบัน
+</div>
+</sc-if>
+
+<sc-if value="{{ wide }}">
+<div style="border:1px solid var(--line);border-radius:14px;overflow-x:auto;overflow-y:hidden;background:color-mix(in srgb,#e9e9ed 2%,transparent)">
+<div style="min-width:1084px">
+<div style="{{ thRow }}">
+<span>ร้านค้า</span><span>Edition</span><span>ภูมิภาค / การเปิดใช้งาน</span><span style="text-align:right">ราคาโฆษณา</span><span style="text-align:right">ค่าธรรมเนียม</span><span style="text-align:right">ราคาสุทธิโดยประมาณ</span><span style="text-align:right">อัปเดต</span><span></span>
+</div>
+<sc-for list="{{ offers }}" as="o" hint-placeholder-count="8">
+<div style="{{ o.rowWrap }}">
+<div onClick="{{ o.toggle }}" style="{{ o.row }}">
+<div style="display:flex;align-items:center;gap:10px;min-width:0">
+<span style="{{ o.logo }}">{{ o.letters }}</span>
+<span style="display:flex;flex-direction:column;gap:3px;min-width:0">
+<span style="display:flex;align-items:center;gap:6px"><span style="font-size:13.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ o.store }}</span><sc-if value="{{ o.isBest }}"><span style="{{ badges.best }}">ถูกที่สุด</span></sc-if></span>
+<span style="{{ o.typeStyle }}">{{ o.typeLabel }}</span>
+</span>
+</div>
+<div style="display:flex;flex-direction:column;gap:4px;min-width:0">
+<span style="font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ o.edition }}</span>
+<span style="font-size:11px;color:var(--mute2)">{{ o.drm }}</span>
+</div>
+<div style="display:flex;flex-direction:column;gap:5px;align-items:flex-start">
+<span style="{{ o.regionStyle }}">{{ o.regionLabel }}</span>
+<span style="{{ o.thStyle }}">{{ o.thLabel }}</span>
+</div>
+<div style="text-align:right;font-size:12.5px;color:var(--mute)"><s style="{{ o.advStrike }}">{{ o.advText }}</s></div>
+<div style="text-align:right;font-size:12.5px">{{ o.feeText }}</div>
+<div style="text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:3px">
+<span style="{{ o.finalStyle }}">{{ o.finalText }}</span>
+<sc-if value="{{ o.hasDisc }}"><span style="{{ o.discStyle }}">{{ o.discText }}</span></sc-if>
+</div>
+<div style="text-align:right;font-size:11.5px;color:var(--mute2);white-space:nowrap">{{ o.updated }}</div>
+<div style="display:flex;align-items:center;justify-content:flex-end;gap:6px">
+<sc-if value="{{ o.inStock }}"><button onClick="{{ o.buy }}" style="{{ o.buyStyle }}">ไปยังร้าน</button></sc-if>
+<sc-if value="{{ o.oos }}"><span style="{{ badges.oos }}">สินค้าหมด</span></sc-if>
+<span style="{{ o.chev }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg></span>
+</div>
+</div>
+<sc-if value="{{ o.open }}">
+<div style="padding:0 16px 16px;animation:krFade .16s ease-out">
+<div style="{{ o.detailGrid }}">
+<div style="display:flex;flex-direction:column;gap:8px">
+<span style="font-size:10.5px;letter-spacing:.09em;color:var(--mute2);text-transform:uppercase">รายละเอียดราคา</span>
+<sc-for list="{{ o.breakdown }}" as="b" hint-placeholder-count="3">
+<div style="{{ b.style }}"><span>{{ b.k }}</span><span>{{ b.v }}</span></div>
+</sc-for>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px">
+<span style="font-size:10.5px;letter-spacing:.09em;color:var(--mute2);text-transform:uppercase">ผู้ขายและความน่าเชื่อถือ</span>
+<sc-for list="{{ o.trust }}" as="b" hint-placeholder-count="3">
+<div style="{{ b.style }}"><span>{{ b.k }}</span><span>{{ b.v }}</span></div>
+</sc-for>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px">
+<span style="font-size:10.5px;letter-spacing:.09em;color:var(--mute2);text-transform:uppercase">ข้อควรทราบ</span>
+<p style="{{ o.noteStyle }}">{{ o.note }}</p>
+</div>
+</div>
+</div>
+</sc-if>
+</div>
+</sc-for>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ mobile }}">
+<div style="display:flex;flex-direction:column;gap:10px">
+<sc-for list="{{ offers }}" as="o" hint-placeholder-count="6">
+<dc-import name="KeyRadar Offer Card" o="{{ o }}" hint-size="100%,230px"></dc-import>
+</sc-for>
+</div>
+</sc-if>
+
+<div style="{{ noticeBox }}">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--warn)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:1px"><path d="M12 9v4M12 17h.01"></path><path d="M10.3 3.9L1.8 18a2 2 0 001.7 3h17a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"></path></svg>
+<span>ราคาและเงื่อนไขภูมิภาคอาจเปลี่ยนแปลงได้ กรุณาตรวจสอบรายละเอียดบนหน้าร้านค้าก่อนชำระเงิน</span>
+</div>
+
+<section style="margin-top:34px">
+<div style="{{ chartHead }}">
+<div>
+<h2 style="{{ h3 }}">ประวัติราคา</h2>
+<p style="margin:4px 0 0;font-size:12px;color:var(--mute2)">ราคาสุทธิต่ำสุดที่ใช้งานในไทยได้ เทียบกับราคาบน Steam</p>
+</div>
+<div style="display:flex;gap:4px;padding:3px;border:1px solid var(--line);border-radius:10px;background:color-mix(in srgb,#e9e9ed 3%,transparent);flex:none;overflow-x:auto">
+<sc-for list="{{ ranges }}" as="rg" hint-placeholder-count="5">
+<button onClick="{{ rg.go }}" style="{{ rg.style }}">{{ rg.label }}</button>
+</sc-for>
+</div>
+</div>
+<dc-import name="KeyRadar Chart" c="{{ chart }}" on-hover="{{ setHover }}" hover="{{ hover }}" hint-size="100%,300px"></dc-import>
+<div style="{{ chartStats }}">
+<sc-for list="{{ chartStats2 }}" as="s" hint-placeholder-count="4">
+<div style="display:flex;flex-direction:column;gap:4px;padding:11px 13px;border:1px solid var(--line);border-radius:11px;background:color-mix(in srgb,#e9e9ed 2.5%,transparent)">
+<span style="font-size:10.5px;letter-spacing:.08em;color:var(--mute2);text-transform:uppercase">{{ s.k }}</span>
+<span style="{{ s.style }}">{{ s.v }}</span>
+<span style="font-size:11px;color:var(--mute2)">{{ s.sub }}</span>
+</div>
+</sc-for>
+</div>
+</section>
+</sc-if>
+</div>
+</main>
+</sc-if>
+
+<sc-if value="{{ r.deals }}">
+<main data-screen-label="เกมลดราคา" style="{{ pad }}">
+<h1 style="{{ h2 }}">เกมลดราคา</h1>
+<p style="margin:6px 0 20px;font-size:13px;color:var(--mute)">ดีล Steam ที่กำลังลดราคา พร้อมราคาสุทธิโดยประมาณและสถานะการเปิดใช้งานในไทย · อัปเดตล่าสุด {{ updatedAt }}</p>
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px">
+<sc-for list="{{ dealTabs }}" as="t" hint-placeholder-count="6">
+<button onClick="{{ t.go }}" style="{{ t.style }}">{{ t.label }}<sc-if value="{{ t.count }}"><span style="{{ t.countStyle }}">{{ t.count }}</span></sc-if></button>
+</sc-for>
+</div>
+<sc-if value="{{ dealsEmpty }}">
+<dc-import name="KeyRadar Empty" kind="no-deals" q="" on-action="{{ resetDealTab }}" hint-size="100%,280px"></dc-import>
+</sc-if>
+<div style="{{ cardGrid }}">
+<sc-for list="{{ deals }}" as="g" hint-placeholder-count="8">
+<dc-import name="KeyRadar Game Card" g="{{ g }}" compact="{{ mobile }}" hint-size="100%,290px"></dc-import>
+</sc-for>
+</div>
+</main>
+</sc-if>
+
+<sc-if value="{{ r.stores }}">
+<main data-screen-label="ร้านค้า" style="{{ pad }}">
+<h1 style="{{ h2 }}">ร้านค้าที่รองรับ</h1>
+<p style="margin:6px 0 8px;font-size:13px;color:var(--mute);max-width:660px">เราแยกร้านค้าออกเป็นสามประเภทและไม่ได้ถือว่าทุกร้านน่าเชื่อถือเท่ากัน โปรดอ่านเงื่อนไขภูมิภาคและค่าธรรมเนียมของแต่ละร้านก่อนซื้อ</p>
+<div style="display:flex;gap:14px;flex-wrap:wrap;margin:16px 0 24px">
+<sc-for list="{{ storeLegend }}" as="l" hint-placeholder-count="3">
+<div style="display:flex;align-items:flex-start;gap:9px;padding:11px 13px;border:1px solid var(--line);border-radius:11px;flex:1;min-width:220px">
+<span style="{{ l.dot }}"></span>
+<span style="display:flex;flex-direction:column;gap:2px"><span style="font-size:12.5px;font-weight:600">{{ l.title }}</span><span style="font-size:11.5px;color:var(--mute);line-height:1.5">{{ l.body }}</span></span>
+</div>
+</sc-for>
+</div>
+<div style="{{ storeCardGrid }}">
+<sc-for list="{{ storeCards }}" as="s" hint-placeholder-count="10">
+<dc-import name="KeyRadar Store Card" s="{{ s }}" hint-size="100%,300px"></dc-import>
+</sc-for>
+</div>
+</main>
+</sc-if>
+
+<footer style="{{ footerWrap }}">
+<div style="{{ padTight }}">
+<div style="{{ footGrid }}">
+<div style="max-width:280px">
+<div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+<svg width="20" height="20" viewBox="0 0 26 26" fill="none" aria-hidden="true"><circle cx="13" cy="13" r="11.2" stroke="#3a3d55" stroke-width="1.3"></circle><path d="M13 13 L22.9 8.1" stroke="#9184d9" stroke-width="1.5" stroke-linecap="round"></path><circle cx="18.4" cy="16.9" r="2.1" fill="#9184d9"></circle></svg>
+<span style="font-size:13.5px;font-weight:700;letter-spacing:.07em">KEYRADAR<span style="color:var(--color-accent);font-size:9px;letter-spacing:.2em;margin-left:4px">TH</span></span>
+</div>
+<p style="margin:0;font-size:12px;color:var(--mute);line-height:1.65">เช็กราคาเกม เล่นได้ในไทย — เครื่องมือเปรียบเทียบราคาคีย์เกม Steam ที่เน้นความโปร่งใสเรื่องราคาสุทธิและภูมิภาคการเปิดใช้งาน</p>
+</div>
+<sc-for list="{{ footCols }}" as="c" hint-placeholder-count="3">
+<div style="display:flex;flex-direction:column;gap:9px">
+<span style="font-size:10.5px;letter-spacing:.1em;color:var(--mute2);text-transform:uppercase">{{ c.head }}</span>
+<sc-for list="{{ c.links }}" as="l" hint-placeholder-count="4">
+<a href="#" onClick="{{ l.go }}" style="font-size:12.5px;color:var(--mute)" style-hover="color:var(--color-accent-300)">{{ l.label }}</a>
+</sc-for>
+</div>
+</sc-for>
+</div>
+<div style="height:1px;background:linear-gradient(to right,transparent,var(--line2) 48px,var(--line2) calc(100% - 48px),transparent);margin:22px 0 16px"></div>
+<div style="display:flex;flex-direction:column;gap:8px;font-size:11.5px;color:var(--mute2);line-height:1.7">
+<p style="margin:0">ราคาที่แสดงรวบรวมโดยอัตโนมัติและอาจเปลี่ยนแปลงได้ตลอดเวลา KeyRadar TH อาจได้รับค่าคอมมิชชันจากร้านค้าพันธมิตรเมื่อคุณซื้อผ่านลิงก์ของเรา โดยคุณไม่ต้องจ่ายเพิ่ม</p>
+<p style="margin:0">KeyRadar TH ไม่ใช่ผู้จำหน่ายเกม ไม่ได้เป็นตัวแทนของ Valve Corporation และไม่รับประกันผลการเปิดใช้งานคีย์จากร้านค้าภายนอก · © 2569 KeyRadar TH</p>
+</div>
+</div>
+</footer>
+
+<sc-if value="{{ showStickyBar }}">
+<div style="position:sticky;bottom:0;z-index:35;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:color-mix(in srgb,#161826 94%,transparent);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-top:1px solid var(--line);display:flex;align-items:center;gap:12px">
+<div style="display:flex;flex-direction:column;line-height:1.25;min-width:0;flex:1">
+<span style="font-size:10.5px;color:var(--mute2);letter-spacing:.04em">ถูกที่สุดที่ใช้งานในไทยได้ · {{ best.store }}</span>
+<span style="display:flex;align-items:baseline;gap:7px"><span style="font-size:21px;font-weight:700;color:var(--ok);letter-spacing:-0.02em">{{ best.finalText }}</span><s style="font-size:11.5px;color:var(--mute2)">{{ best.steamText }}</s></span>
+</div>
+<button onClick="{{ best.buy }}" style="flex:none;height:46px;padding:0 18px;border-radius:12px;border:1px solid var(--ok-line);background:var(--ok-dim);color:var(--ok);font-size:14px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:7px" style-hover="background:oklch(0.40 0.065 158)">ไปยังร้านค้า
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M20 4l-9 9"></path></svg></button>
+</div>
+</sc-if>
+
+<sc-if value="{{ sheetFilter }}">
+<div onClick="{{ closeSheet }}" style="position:absolute;inset:0;z-index:70;background:rgba(9,11,18,.66);backdrop-filter:blur(3px);display:flex;align-items:flex-end;animation:krFade .16s ease-out">
+<div onClick="{{ stop }}" style="width:100%;max-height:86%;overflow-y:auto;background:var(--raise);border-radius:20px 20px 0 0;border-top:1px solid var(--line);animation:krSheet .24s cubic-bezier(.22,.9,.3,1)">
+<div style="position:sticky;top:0;background:var(--raise);padding:10px 16px 12px;border-bottom:1px solid var(--line2);z-index:2">
+<div style="width:38px;height:4px;border-radius:99px;background:#3d4054;margin:0 auto 12px"></div>
+<div style="display:flex;align-items:center;justify-content:space-between"><h3 style="font-size:16px;font-weight:600">ตัวกรอง</h3><button onClick="{{ resetFilters }}" style="border:0;background:transparent;color:var(--color-accent);font-size:12.5px;cursor:pointer">ล้างทั้งหมด</button></div>
+</div>
+<div style="padding:4px 16px 16px">
+<dc-import name="KeyRadar Filters" f="{{ filters }}" on-toggle="{{ toggleFilter }}" on-price="{{ setMaxPrice }}" on-disc="{{ setMinDisc }}" on-reset="{{ resetFilters }}" active="{{ activeFilterCount }}" bare="{{ true }}" hint-size="100%,460px"></dc-import>
+</div>
+<div style="position:sticky;bottom:0;padding:12px 16px calc(14px + env(safe-area-inset-bottom));background:var(--raise);border-top:1px solid var(--line2)">
+<button onClick="{{ closeSheet }}" style="width:100%;height:48px;border-radius:12px;border:1px solid var(--color-accent);background:color-mix(in srgb,#9184d9 14%,transparent);color:var(--color-accent-200);font-size:15px;font-weight:600;cursor:pointer">ดูผลลัพธ์ {{ shownCount }}</button>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ sheetSort }}">
+<div onClick="{{ closeSheet }}" style="position:absolute;inset:0;z-index:70;background:rgba(9,11,18,.66);backdrop-filter:blur(3px);display:flex;align-items:flex-end;animation:krFade .16s ease-out">
+<div onClick="{{ stop }}" style="width:100%;background:var(--raise);border-radius:20px 20px 0 0;border-top:1px solid var(--line);animation:krSheet .24s cubic-bezier(.22,.9,.3,1);padding-bottom:calc(10px + env(safe-area-inset-bottom))">
+<div style="padding:10px 16px 6px"><div style="width:38px;height:4px;border-radius:99px;background:#3d4054;margin:0 auto 12px"></div><h3 style="font-size:16px;font-weight:600;margin-bottom:6px">เรียงตาม</h3></div>
+<sc-for list="{{ sortOptions }}" as="s" hint-placeholder-count="5">
+<button onClick="{{ s.go }}" style="{{ s.style }}">{{ s.label }}<sc-if value="{{ s.active }}"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"></path></svg></sc-if></button>
+</sc-for>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ exitOffer }}">
+<div onClick="{{ closeDialog }}" style="position:absolute;inset:0;z-index:80;background:rgba(9,11,18,.72);backdrop-filter:blur(4px);display:grid;place-items:center;padding:18px;animation:krFade .16s ease-out">
+<div onClick="{{ stop }}" style="{{ dialogBox }}">
+<div style="display:flex;align-items:flex-start;gap:12px">
+<span style="width:38px;height:38px;flex:none;display:grid;place-items:center;border-radius:11px;background:var(--color-accent-900);color:var(--color-accent-300);border:1px solid color-mix(in srgb,#9184d9 30%,transparent)">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 01-1 1H5a1 1 0 01-1-1V7a1 1 0 011-1h5"></path></svg>
+</span>
+<div style="min-width:0">
+<h3 style="font-size:17px;font-weight:600;margin-bottom:5px">คุณกำลังออกจาก KeyRadar TH</h3>
+<p style="margin:0;font-size:12.5px;color:var(--mute);line-height:1.6">เรากำลังพาคุณไปที่ <strong style="color:var(--ink);font-weight:600">{{ exitOffer.store }}</strong> เพื่อทำรายการซื้อ การชำระเงินและการรับคีย์ทั้งหมดเกิดขึ้นบนเว็บไซต์ของร้านค้า</p>
+</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:1px;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--sunk)">
+<sc-for list="{{ exitOffer.rows }}" as="r2" hint-placeholder-count="4">
+<div style="{{ r2.style }}"><span style="color:var(--mute)">{{ r2.k }}</span><span style="{{ r2.vStyle }}">{{ r2.v }}</span></div>
+</sc-for>
+</div>
+<div style="{{ exitOffer.warnStyle }}">
+<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:1px"><path d="M12 9v4M12 17h.01"></path><path d="M10.3 3.9L1.8 18a2 2 0 001.7 3h17a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"></path></svg>
+<span>{{ exitOffer.warn }}</span>
+</div>
+<div style="display:flex;gap:9px;margin-top:2px">
+<button onClick="{{ closeDialog }}" class="btn btn-secondary" style="flex:1;height:44px">ยกเลิก</button>
+<button onClick="{{ closeDialog }}" style="flex:1.4;height:44px;border-radius:10px;border:1px solid var(--ok-line);background:var(--ok-dim);color:var(--ok);font-size:14px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:7px">ไปยัง {{ exitOffer.store }}
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M20 4l-9 9"></path></svg></button>
+</div>
+</div>
+</div>
+</sc-if>
+
+</div>
+</div>
+
+<sc-if value="{{ showDemoBar }}">
+<div style="{{ demoBar }}">
+<button onClick="{{ toggleDemo }}" style="display:flex;align-items:center;gap:8px;width:100%;padding:9px 11px;border:0;background:transparent;color:var(--ink);cursor:pointer;font-size:11.5px;letter-spacing:.05em">
+<span style="width:6px;height:6px;border-radius:50%;background:var(--color-accent)"></span>
+<span style="font-weight:600">PROTOTYPE</span>
+<span style="color:var(--mute2);font-size:10.5px">{{ demoSummary }}</span>
+<span style="margin-left:auto;color:var(--mute2)">{{ demoChevron }}</span>
+</button>
+<sc-if value="{{ demoOpen }}">
+<div style="padding:0 11px 11px;display:flex;flex-direction:column;gap:11px;border-top:1px solid var(--line2)">
+<div style="display:flex;flex-direction:column;gap:6px;margin-top:10px">
+<span style="font-size:9.5px;letter-spacing:.12em;color:var(--mute2);text-transform:uppercase">ขนาดหน้าจอ</span>
+<div style="display:flex;gap:4px;flex-wrap:wrap">
+<sc-for list="{{ vwOptions }}" as="v" hint-placeholder-count="4">
+<button onClick="{{ v.go }}" style="{{ v.style }}">{{ v.label }}</button>
+</sc-for>
+</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:6px">
+<span style="font-size:9.5px;letter-spacing:.12em;color:var(--mute2);text-transform:uppercase">สถานะ</span>
+<div style="display:flex;flex-direction:column;gap:3px">
+<sc-for list="{{ demoStates }}" as="d" hint-placeholder-count="6">
+<button onClick="{{ d.go }}" style="{{ d.style }}">{{ d.label }}</button>
+</sc-for>
+</div>
+</div>
+<a href="KeyRadar States.dc.html" style="font-size:11px;color:var(--color-accent);padding-top:2px">ดูแกลเลอรีสถานะทั้งหมด →</a>
+</div>
+</sc-if>
+</div>
+</sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;trustLevel&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;essential&quot;,&quot;full&quot;],&quot;default&quot;:&quot;full&quot;,&quot;tsType&quot;:&quot;'essential' | 'full'&quot;,&quot;section&quot;:&quot;เนื้อหา&quot;},&quot;showDemoBar&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;ต้นแบบ&quot;}}">
+const B = n => '฿' + Math.round(n).toLocaleString('th-TH');
+const hash = s => { let h = 2166136261; for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; };
+const rng = seed => { let a = seed >>> 0; return () => { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; };
+
+const STORES = {
+  eneba:       { name: 'Eneba',            letters: 'EN', type: 'market',   pay: ['บัตรเครดิต/เดบิต', 'PayPal', 'Skrill', 'Google Pay'], fee: 0.052, feeLabel: 'ค่าบริการแพลตฟอร์ม', note: 'Marketplace ที่มีผู้ขายรายย่อยจำนวนมาก ภูมิภาคของคีย์ขึ้นกับผู้ขายแต่ละราย' },
+  kinguin:     { name: 'Kinguin',          letters: 'KG', type: 'market',   pay: ['บัตรเครดิต/เดบิต', 'PayPal', 'Alipay'], fee: 0.049, feeLabel: 'Buyer Protection', note: 'ค่า Buyer Protection เป็นตัวเลือกเสริมแต่ถูกติ๊กไว้ล่วงหน้าที่หน้าชำระเงิน' },
+  cdkeys:      { name: 'CDKeys',           letters: 'CD', type: 'reseller', pay: ['บัตรเครดิต/เดบิต', 'PayPal'], fee: 0, feeLabel: '', note: 'ผู้จำหน่ายคีย์รายใหญ่ ไม่ใช่ตัวแทนจำหน่ายอย่างเป็นทางการของผู้พัฒนาทุกราย' },
+  instant:     { name: 'Instant Gaming',   letters: 'IG', type: 'reseller', pay: ['บัตรเครดิต/เดบิต', 'PayPal', 'Crypto'], fee: 0, feeLabel: '', note: 'จัดส่งคีย์อัตโนมัติ ตรวจสอบภูมิภาคที่ระบุบนหน้าสินค้าก่อนชำระเงิน' },
+  fanatical:   { name: 'Fanatical',        letters: 'FA', type: 'official', pay: ['บัตรเครดิต/เดบิต', 'PayPal'], fee: 0, feeLabel: '', note: 'ตัวแทนจำหน่ายที่ได้รับอนุญาต คีย์มาจากผู้จัดจำหน่ายโดยตรง' },
+  gmg:         { name: 'Green Man Gaming', letters: 'GM', type: 'official', pay: ['บัตรเครดิต/เดบิต', 'PayPal'], fee: 0, feeLabel: '', note: 'ตัวแทนจำหน่ายที่ได้รับอนุญาต มีระบบคืนเงินตามเงื่อนไขของร้าน' },
+  humble:      { name: 'Humble Store',     letters: 'HB', type: 'official', pay: ['บัตรเครดิต/เดบิต', 'PayPal', 'Amazon Pay'], fee: 0, feeLabel: '', note: 'ตัวแทนจำหน่ายที่ได้รับอนุญาต ราคาแสดงเป็น USD และจะถูกแปลงโดยผู้ออกบัตร' },
+  gamesplanet: { name: 'Gamesplanet',      letters: 'GP', type: 'official', pay: ['บัตรเครดิต/เดบิต', 'PayPal'], fee: 0, feeLabel: '', note: 'ตัวแทนจำหน่ายในยุโรป คีย์บางรายการจำกัดเฉพาะภูมิภาค EU' },
+  gamersgate:  { name: 'GamersGate',       letters: 'GG', type: 'official', pay: ['บัตรเครดิต/เดบิต', 'PayPal'], fee: 0, feeLabel: '', note: 'ตัวแทนจำหน่ายที่ได้รับอนุญาต สต็อกคีย์บางรายการมีจำกัด' },
+  steam:       { name: 'Steam',            letters: 'ST', type: 'steam',    pay: ['บัตรเครดิต/เดบิต', 'TrueMoney Wallet', 'พร้อมเพย์', 'Steam Wallet'], fee: 0, feeLabel: '', note: 'ซื้อโดยตรงจากร้านค้า Steam ประเทศไทย เปิดใช้งานได้แน่นอนและไม่มีค่าธรรมเนียมแฝง' }
+};
+const ORDER = ['eneba', 'kinguin', 'cdkeys', 'instant', 'fanatical', 'gmg', 'humble', 'gamesplanet', 'gamersgate', 'steam'];
+const TYPE = {
+  steam:    { label: 'Steam โดยตรง',           color: 'var(--color-accent-300)', bg: 'var(--color-accent-900)', bd: 'color-mix(in srgb,#9184d9 30%,transparent)' },
+  official: { label: 'ร้านค้าอย่างเป็นทางการ', color: 'var(--ok)',               bg: 'var(--ok-dim)',           bd: 'var(--ok-line)' },
+  reseller: { label: 'ตัวแทนจำหน่ายคีย์',       color: 'var(--warn)',             bg: 'var(--warn-dim)',         bd: 'var(--warn-line)' },
+  market:   { label: 'Marketplace',             color: '#cfd3e5',                 bg: '#31344a',                 bd: '#454a66' }
+};
+
+const GAMES = [
+  { id: 'elden-ring', title: 'ELDEN RING', year: 2022, dev: 'FromSoftware', pub: 'BANDAI NAMCO Entertainment', released: '25 ก.พ. 2565', genres: ['แอ็กชัน', 'สวมบทบาท', 'โลกเปิด'], review: { pct: 94, label: 'แง่บวกอย่างมาก', count: 782940 }, hue: 36, steam: 1590, pop: 99, eds: [['standard', 'Standard Edition', 1590], ['deluxe', 'Deluxe Edition', 1990], ['dlc', 'Shadow of the Erdtree (DLC)', 1290]] },
+  { id: 'baldurs-gate-3', title: "Baldur's Gate 3", year: 2023, dev: 'Larian Studios', pub: 'Larian Studios', released: '3 ส.ค. 2566', genres: ['สวมบทบาท', 'ผจญภัย', 'วางแผน'], review: { pct: 96, label: 'แง่บวกอย่างมาก', count: 692340 }, hue: 18, steam: 1990, pop: 96, eds: [['standard', 'Standard Edition', 1990], ['deluxe', 'Digital Deluxe Edition', 2290]] },
+  { id: 'palworld', title: 'Palworld', year: 2024, dev: 'Pocketpair', pub: 'Pocketpair', released: '19 ม.ค. 2567', genres: ['เอาชีวิตรอด', 'ผจญภัย', 'โลกเปิด'], review: { pct: 93, label: 'แง่บวกอย่างมาก', count: 512880 }, hue: 202, steam: 899, pop: 95, eds: [['standard', 'Standard Edition', 899]] },
+  { id: 'cyberpunk-2077', title: 'Cyberpunk 2077', year: 2020, dev: 'CD PROJEKT RED', pub: 'CD PROJEKT RED', released: '10 ธ.ค. 2563', genres: ['สวมบทบาท', 'โลกเปิด', 'แอ็กชัน'], review: { pct: 82, label: 'แง่บวกเป็นส่วนใหญ่', count: 748110 }, hue: 54, steam: 1799, pop: 94, eds: [['standard', 'Standard Edition', 1799], ['complete', 'Ultimate Edition', 2290], ['dlc', 'Phantom Liberty (DLC)', 990]] },
+  { id: 'valheim', title: 'Valheim', year: 2021, dev: 'Iron Gate AB', pub: 'Coffee Stain Publishing', released: '2 ก.พ. 2564', genres: ['เอาชีวิตรอด', 'ก่อสร้าง', 'ผจญภัย'], review: { pct: 94, label: 'แง่บวกอย่างมาก', count: 461220 }, hue: 188, steam: 415, pop: 92, eds: [['standard', 'Standard Edition', 415]] },
+  { id: 'helldivers-2', title: 'HELLDIVERS 2', year: 2024, dev: 'Arrowhead Game Studios', pub: 'PlayStation Publishing LLC', released: '8 ก.พ. 2567', genres: ['แอ็กชัน', 'ยิงมุมมองบุคคลที่สาม'], review: { pct: 74, label: 'แง่บวกเป็นส่วนใหญ่', count: 372560 }, hue: 44, steam: 1490, pop: 89, eds: [['standard', 'Standard Edition', 1490], ['bundle', 'Super Citizen Bundle', 1890]] },
+  { id: 'sons-of-the-forest', title: 'Sons Of The Forest', year: 2024, dev: 'Endnight Games Ltd', pub: 'Newnight', released: '22 ก.พ. 2567', genres: ['เอาชีวิตรอด', 'สยองขวัญ'], review: { pct: 88, label: 'แง่บวกอย่างมาก', count: 214300 }, hue: 96, steam: 599, pop: 90, eds: [['standard', 'Standard Edition', 599]] },
+  { id: 'the-forest', title: 'The Forest', year: 2018, dev: 'Endnight Games Ltd', pub: 'Endnight Games Ltd', released: '30 เม.ย. 2561', genres: ['เอาชีวิตรอด', 'สยองขวัญ', 'ผจญภัย'], review: { pct: 92, label: 'แง่บวกอย่างมาก', count: 401760 }, hue: 128, steam: 199, pop: 88, eds: [['standard', 'Standard Edition', 199], ['bundle', 'Forest Collection Bundle', 719]] },
+  { id: 'rdr2', title: 'Red Dead Redemption 2', year: 2019, dev: 'Rockstar Games', pub: 'Rockstar Games', released: '5 ธ.ค. 2562', genres: ['แอ็กชัน', 'ผจญภัย', 'โลกเปิด'], review: { pct: 92, label: 'แง่บวกอย่างมาก', count: 552120 }, hue: 10, steam: 1799, pop: 87, eds: [['standard', 'Standard Edition', 1799], ['complete', 'Ultimate Edition', 2190]] },
+  { id: 'stardew-valley', title: 'Stardew Valley', year: 2016, dev: 'ConcernedApe', pub: 'ConcernedApe', released: '26 ก.พ. 2559', genres: ['อินดี้', 'จำลอง', 'สวมบทบาท'], review: { pct: 98, label: 'แง่บวกอย่างล้นหลาม', count: 812470 }, hue: 150, steam: 275, pop: 85, eds: [['standard', 'Standard Edition', 275]] },
+  { id: 'terraria', title: 'Terraria', year: 2011, dev: 'Re-Logic', pub: 'Re-Logic', released: '16 พ.ค. 2554', genres: ['อินดี้', 'เอาชีวิตรอด', 'ก่อสร้าง'], review: { pct: 97, label: 'แง่บวกอย่างล้นหลาม', count: 1102400 }, hue: 168, steam: 199, pop: 82, eds: [['standard', 'Standard Edition', 199]] },
+  { id: 'it-takes-two', title: 'It Takes Two', year: 2021, dev: 'Hazelight Studios', pub: 'Electronic Arts', released: '26 มี.ค. 2564', genres: ['ผจญภัย', 'เล่นร่วมกัน'], review: { pct: 96, label: 'แง่บวกอย่างมาก', count: 189300 }, hue: 306, steam: 990, pop: 78, eds: [['standard', 'Standard Edition', 990]] }
+];
+const byId = id => GAMES.find(g => g.id === id) || GAMES[0];
+
+const REGIONS = {
+  global: { label: 'Global', th: 'ok', tip: 'คีย์ Global ไม่จำกัดภูมิภาค เปิดใช้งานจากประเทศไทยได้' },
+  sea:    { label: 'SEA',    th: 'ok', tip: 'คีย์สำหรับเอเชียตะวันออกเฉียงใต้ ครอบคลุมประเทศไทย' },
+  th:     { label: 'ไทย',    th: 'ok', tip: 'ราคาและคีย์สำหรับร้านค้าประเทศไทยโดยตรง' },
+  eu:     { label: 'ยุโรป (EU)', th: 'check', tip: 'คีย์ล็อกภูมิภาคยุโรป อาจเปิดใช้งานจากไทยไม่ได้ ควรสอบถามร้านค้าก่อนซื้อ' },
+  row:    { label: 'ROW (ยกเว้นบางประเทศ)', th: 'check', tip: 'ผู้ขายไม่ได้ระบุรายชื่อประเทศที่รองรับอย่างชัดเจน' },
+  na:     { label: 'อเมริกาเหนือ', th: 'no', tip: 'คีย์ล็อกเฉพาะอเมริกาเหนือ ไม่สามารถเปิดใช้งานจากประเทศไทยได้' }
+};
+
+function buildOffers(gameId, edKey) {
+  const g = byId(gameId);
+  const ed = (g.eds.find(e => e[0] === edKey) || g.eds[0]);
+  const base = ed[2];
+  const r = rng(hash(gameId + '|' + ed[0]));
+  const bands = { eneba: [0.44, 0.16], kinguin: [0.47, 0.15], cdkeys: [0.52, 0.14], instant: [0.55, 0.14], fanatical: [0.61, 0.15], gmg: [0.65, 0.15], humble: [0.70, 0.15], gamesplanet: [0.72, 0.15], gamersgate: [0.68, 0.16], steam: [1, 0] };
+  const out = [];
+  ORDER.forEach((k, i) => {
+    const s = STORES[k];
+    const [lo, sp] = bands[k];
+    const adv = k === 'steam' ? base : Math.round(base * (lo + r() * sp) / 5) * 5 - 1;
+    let reg = 'global';
+    if (k === 'steam') reg = 'th';
+    else if (k === 'gamesplanet') reg = 'eu';
+    else if (k === 'eneba') reg = r() < 0.34 ? 'eu' : (r() < 0.4 ? 'sea' : 'global');
+    else if (k === 'kinguin') reg = r() < 0.22 ? 'row' : 'global';
+    else if (k === 'humble' && gameId === 'helldivers-2') reg = 'na';
+    const fee = s.fee ? Math.max(9, Math.round(adv * s.fee)) : 0;
+    const extraFee = k === 'eneba' && r() < 0.4 ? 15 : 0;
+    const fees = [];
+    if (fee) fees.push({ k: s.feeLabel, v: fee });
+    if (extraFee) fees.push({ k: 'ค่าธรรมเนียมการชำระเงิน', v: extraFee });
+    const feeTotal = fees.reduce((a, b) => a + b.v, 0);
+    const stock = !(k === 'gamersgate' && r() < 0.5);
+    const mins = 2 + Math.floor(r() * 220);
+    out.push({
+      id: k, store: s.name, letters: s.letters, type: s.type, edition: ed[1], drm: k === 'steam' ? 'Steam' : 'Steam Key',
+      adv, fees, feeTotal, final: adv + feeTotal, region: reg, th: REGIONS[reg].th, stock, mins,
+      steamBase: g.steam, disc: Math.max(0, Math.round((1 - (adv + feeTotal) / g.steam) * 100)),
+      rating: s.type === 'market' ? (95.5 + r() * 4).toFixed(1) : null,
+      ratingCount: s.type === 'market' ? 1200 + Math.floor(r() * 38000) : null,
+      note: s.note, pay: s.pay
+    });
+  });
+  out.sort((a, b) => a.final - b.final);
+  return out;
+}
+
+const RANGE_DAYS = { '30d': 30, '3m': 92, '6m': 183, '1y': 365, all: 900 };
+function buildHistory(gameId, range) {
+  const g = byId(gameId);
+  const cur = buildOffers(gameId, 'standard').filter(o => o.th === 'ok' && o.stock)[0];
+  const low = cur ? cur.final : Math.round(g.steam * 0.6);
+  const days = RANGE_DAYS[range];
+  const n = range === '30d' ? 30 : range === '3m' ? 46 : range === '6m' ? 61 : range === '1y' ? 73 : 90;
+  const r = rng(hash(gameId + range));
+  const vals = [];
+  while (vals.length < n) {
+    const sale = r() < 0.24;
+    const len = sale ? 2 + Math.floor(r() * 4) : 4 + Math.floor(r() * 8);
+    const v = sale ? Math.round(g.steam * (0.42 + r() * 0.26)) : Math.round(g.steam * (0.80 + r() * 0.19));
+    for (let k = 0; k < len && vals.length < n; k++) vals.push(v);
+  }
+  vals[vals.length - 1] = low;
+  const end = new Date(2026, 7, 2);
+  const pts = vals.map((v, i) => {
+    const d = new Date(end.getTime() - (n - 1 - i) * (days / (n - 1)) * 864e5);
+    return { v, d };
+  });
+  return { pts, steam: g.steam, low: Math.min(...vals), avg: Math.round(vals.reduce((a, b) => a + b, 0) / vals.length), cur: low };
+}
+
+const TH_MON = ['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.', 'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.'];
+const thDate = d => `${d.getDate()} ${TH_MON[d.getMonth()]} ${(d.getFullYear() + 543) % 100}`;
+const ago = m => m < 60 ? `${m} นาทีที่แล้ว` : `${Math.floor(m / 60)} ชม.ที่แล้ว`;
+
+class Component extends DCLogic {
+  state = {
+    route: 'home', gameId: 'elden-ring', query: '', focus: false, ac: 'idle',
+    edition: 'standard', sort: 'final', range: '3m', hover: null, expanded: {},
+    sheet: null, dialog: null, vw: 'auto', winW: 1440, demo: 'normal', demoOpen: false,
+    navOpen: false, dealTab: 'featured', resultsQuery: 'The Forest', thOnlyOverride: null,
+    filters: { thOnly: true, officialOnly: false, noMarket: false, inStock: true, histLow: false, maxPrice: 2400, minDisc: 0 }
+  };
+
+  componentDidMount() {
+    this._r = () => this.setState({ winW: window.innerWidth });
+    window.addEventListener('resize', this._r);
+    this._r();
+  }
+  componentWillUnmount() { window.removeEventListener('resize', this._r); clearTimeout(this._t); }
+
+  mode() {
+    const v = this.state.vw;
+    if (v !== 'auto') return v;
+    const w = this.state.winW;
+    return w < 780 ? 'mobile' : w < 1180 ? 'tablet' : 'desktop';
+  }
+
+  nav(route, extra) { this.setState(Object.assign({ route, navOpen: false, sheet: null, dialog: null, focus: false, hover: null }, extra || {})); window.scrollTo({ top: 0 }); }
+
+  search(q) {
+    this.setState({ ac: 'loading', focus: false });
+    clearTimeout(this._t);
+    this._t = setTimeout(() => this.setState({ ac: 'idle' }), 520);
+    this.nav('results', { resultsQuery: q, query: q, demo: this.state.demo === 'empty' ? 'empty' : 'normal' });
+  }
+
+  renderVals() {
+    const S = this.state, m = this.mode(), mobile = m === 'mobile', wide = !mobile, tablet = m === 'tablet';
+    const P = this.props;
+    const trust = P.trustLevel || 'full';
+    const demo = S.demo;
+    const g = byId(S.gameId);
+    const edKey = (g.eds.find(e => e[0] === S.edition) ? S.edition : g.eds[0][0]);
+    const rawOffers = buildOffers(g.id, edKey);
+    const thOnly = S.filters.thOnly;
+    let offers = rawOffers.filter(o => (!thOnly || o.th === 'ok') && (!S.filters.noMarket || o.type !== 'market'));
+    if (demo === 'nothai') offers = rawOffers.filter(o => o.th !== 'ok');
+    if (demo === 'oos') offers = offers.map((o, i) => i === 0 ? Object.assign({}, o, { stock: false }) : o);
+    const best = offers.filter(o => o.th === 'ok' && o.stock)[0] || offers[0] || rawOffers[0];
+    const hist = buildHistory(g.id, S.range);
+
+    const px = mobile ? 14 : tablet ? 22 : 28;
+    const pad = { maxWidth: 1320, margin: '0 auto', padding: `${mobile ? 26 : 40}px ${px}px` };
+    const padTight = { maxWidth: 1320, margin: '0 auto', padding: `${mobile ? 24 : 34}px ${px}px ${mobile ? 26 : 30}px` };
+
+    const chip = (on, extra) => Object.assign({
+      display: 'inline-flex', alignItems: 'center', gap: 6, padding: mobile ? '8px 13px' : '6px 12px',
+      borderRadius: 999, fontSize: 12.5, cursor: 'pointer', whiteSpace: 'nowrap',
+      border: '1px solid ' + (on ? 'var(--color-accent)' : 'var(--line)'),
+      background: on ? 'color-mix(in srgb,#9184d9 14%,transparent)' : 'color-mix(in srgb,#e9e9ed 3%,transparent)',
+      color: on ? 'var(--color-accent-200)' : 'var(--ink)', fontWeight: on ? 600 : 400
+    }, extra || {});
+
+    const tagBase = { display: 'inline-flex', alignItems: 'center', gap: 5, padding: '2.5px 8px', borderRadius: 7, fontSize: 10.5, fontWeight: 600, letterSpacing: '.02em', lineHeight: 1.5, whiteSpace: 'nowrap' };
+    const tag = (color, bg, bd) => Object.assign({}, tagBase, { color, background: bg, border: '1px solid ' + (bd || 'transparent') });
+    const typeStyle = t => Object.assign({}, tagBase, { fontSize: 10, padding: '1.5px 7px', color: TYPE[t].color, background: TYPE[t].bg, border: '1px solid ' + TYPE[t].bd });
+    const regionStyle = reg => REGIONS[reg].th === 'ok' ? tag('#cfd3e5', '#2b2e3f', '#3d4054') : tag('var(--warn)', 'var(--warn-dim)', 'var(--warn-line)');
+    const thStyle = t => t === 'ok' ? tag('var(--ok)', 'var(--ok-dim)', 'var(--ok-line)') : t === 'check' ? tag('var(--warn)', 'var(--warn-dim)', 'var(--warn-line)') : tag('var(--bad)', 'var(--bad-dim)', 'var(--bad-line)');
+    const thLabel = t => t === 'ok' ? 'ใช้งานในไทยได้' : t === 'check' ? 'ตรวจสอบภูมิภาค' : 'ไม่รองรับไทย';
+    const logo = (t, size) => ({
+      width: size, height: size, flex: 'none', display: 'grid', placeItems: 'center', borderRadius: size > 34 ? 11 : 9,
+      background: `linear-gradient(150deg, ${TYPE[t].bg}, color-mix(in srgb, ${TYPE[t].bg} 40%, #12141f))`,
+      border: '1px solid ' + TYPE[t].bd, color: TYPE[t].color, fontSize: size > 34 ? 13 : 11, fontWeight: 700, letterSpacing: '.03em'
+    });
+    const cover = (hue, h) => ({
+      position: 'relative', width: '100%', height: h, borderRadius: 10, overflow: 'hidden', display: 'grid', placeItems: 'center',
+      background: `linear-gradient(150deg, hsl(${hue} 34% 26%) 0%, hsl(${(hue + 34) % 360} 40% 14%) 52%, hsl(${(hue + 300) % 360} 30% 9%) 100%)`,
+      boxShadow: 'inset 0 0 0 1px rgba(233,233,237,.07), inset 0 -40px 60px rgba(0,0,0,.35)'
+    });
+    const coverText = size => ({ padding: '0 10%', textAlign: 'center', fontSize: size, fontWeight: 700, letterSpacing: '.02em', lineHeight: 1.15, color: 'rgba(255,255,255,.92)', textShadow: '0 2px 18px rgba(0,0,0,.5)', textWrap: 'pretty' });
+
+    const cardOf = gm => {
+      const of2 = buildOffers(gm.id, 'standard');
+      const b = of2.filter(o => o.th === 'ok' && o.stock)[0] || of2[0];
+      const thCount = of2.filter(o => o.th === 'ok' && o.stock).length;
+      return {
+        id: gm.id, title: gm.title, year: gm.year, hue: gm.hue, pop: gm.pop, released: gm.released, genres: gm.genres.join(' · '),
+        cover: cover(gm.hue, mobile ? 118 : 146), coverText: coverText(mobile ? 15 : 17),
+        finalText: B(b.final), steamText: B(gm.steam), disc: b.disc, hasDisc: b.disc > 0,
+        store: b.store, storeType: b.type, storeTypeLabel: TYPE[b.type].label, typeStyle: typeStyle(b.type), logo: logo(b.type, 26), letters: b.letters,
+        thOk: thCount > 0, thStyle: thStyle(thCount > 0 ? 'ok' : 'check'), thLabel: thCount > 0 ? `ใช้งานในไทยได้ · ${thCount} ร้าน` : 'ต้องตรวจสอบภูมิภาค',
+        storesText: `เทียบ ${of2.length} ร้าน`, final: b.final, disc0: b.disc,
+        go: e => { if (e) e.preventDefault(); this.nav('game', { gameId: gm.id, edition: 'standard', expanded: {}, demo: 'normal' }); },
+        discStyle: Object.assign({}, tagBase, { fontSize: 11.5, padding: '3px 8px', background: 'var(--ok-dim)', color: 'var(--ok)', border: '1px solid var(--ok-line)' })
+      };
+    };
+
+    const q = S.query.trim().toLowerCase();
+    const acMatches = q ? GAMES.filter(x => x.title.toLowerCase().includes(q)).slice(0, 6) : GAMES.slice().sort((a, b) => b.pop - a.pop).slice(0, 5);
+    const acRows = acMatches.map(x => {
+      const of2 = buildOffers(x.id, 'standard');
+      const b = of2.filter(o => o.th === 'ok' && o.stock)[0] || of2[0];
+      return { id: x.id, title: x.title, year: x.year, cover: cover(x.hue, 44), price: B(b.final), thOk: of2.some(o => o.th === 'ok'), go: e => { if (e) e.preventDefault(); this.nav('game', { gameId: x.id, edition: 'standard', query: x.title, expanded: {}, demo: 'normal' }); } };
+    });
+
+    let results = GAMES.filter(x => !S.resultsQuery || S.resultsQuery === '*' || x.title.toLowerCase().includes(S.resultsQuery.toLowerCase()));
+    if (S.resultsQuery === '*') results = GAMES.slice();
+    const fl = S.filters;
+    results = results.filter(x => {
+      const c = cardOf(x);
+      if (c.final > fl.maxPrice) return false;
+      if (c.disc0 < fl.minDisc) return false;
+      if (fl.thOnly && !c.thOk) return false;
+      if (fl.officialOnly && !(c.storeType === 'official' || c.storeType === 'steam')) return false;
+      if (fl.noMarket && c.storeType === 'market') return false;
+      return true;
+    });
+    const sortFns = { final: (a, b) => cardOf(a).final - cardOf(b).final, discount: (a, b) => cardOf(b).disc0 - cardOf(a).disc0, popular: (a, b) => b.pop - a.pop, release: (a, b) => b.year - a.year, updated: (a, b) => a.title.localeCompare(b.title) };
+    results = results.slice().sort(sortFns[S.sort] || sortFns.final);
+    const sortLabels = { final: 'ราคาต่ำสุด', discount: 'ส่วนลดมากที่สุด', popular: 'ความนิยม', release: 'วันวางจำหน่าย', updated: 'อัปเดตล่าสุด' };
+
+    const dealPools = {
+      featured: GAMES.filter(x => cardOf(x).disc0 >= 20),
+      histlow: GAMES.filter(x => cardOf(x).disc0 >= 45),
+      ending: GAMES.filter(x => x.pop >= 88),
+      u200: GAMES.filter(x => cardOf(x).final < 200),
+      u500: GAMES.filter(x => cardOf(x).final < 500),
+      d70: GAMES.filter(x => cardOf(x).disc0 >= 70),
+      thonly: GAMES.filter(x => cardOf(x).thOk)
+    };
+    const deals = (dealPools[S.dealTab] || []).map(cardOf);
+
+    const editions = g.eds.map(e => {
+      const of2 = buildOffers(g.id, e[0]);
+      const b = of2.filter(o => o.th === 'ok' && o.stock)[0] || of2[0];
+      const on = e[0] === edKey;
+      return {
+        key: e[0], name: e[1], from: 'จาก ' + B(b.final), go: ev => { if (ev) ev.preventDefault(); this.setState({ edition: e[0], expanded: {} }); },
+        style: { display: 'inline-flex', flexDirection: 'column', alignItems: 'flex-start', gap: 3, padding: '8px 14px', borderRadius: 10, cursor: 'pointer', whiteSpace: 'nowrap', fontSize: 13, fontWeight: on ? 600 : 400, border: '1px solid ' + (on ? 'var(--color-accent)' : 'var(--line)'), background: on ? 'color-mix(in srgb,#9184d9 13%,transparent)' : 'transparent', color: on ? 'var(--color-accent-200)' : 'var(--ink)' },
+        priceStyle: { fontSize: 11, fontWeight: 400, color: on ? 'var(--color-accent-300)' : 'var(--mute2)' }
+      };
+    });
+
+    const mkOffer = (o, i) => {
+      const isBest = best && o.id === best.id && o.th === 'ok' && o.stock;
+      const open = !!S.expanded[o.id];
+      const cols = '186px 128px 132px 88px 92px 116px 78px 118px';
+      const rowBg = isBest ? 'linear-gradient(90deg, color-mix(in srgb,var(--ok) 9%,transparent), transparent 55%)' : open ? 'color-mix(in srgb,#e9e9ed 4%,transparent)' : 'transparent';
+      const breakdown = [{ k: 'ราคาที่โฆษณา', v: B(o.adv) }].concat(o.fees.map(f => ({ k: f.k, v: '+ ' + B(f.v) })), [{ k: 'ราคาสุทธิโดยประมาณ', v: B(o.final), strong: true }, { k: 'ประหยัดจากราคา Steam', v: o.final < o.steamBase ? '−' + B(o.steamBase - o.final) : '—' }]);
+      const trustRows = o.type === 'market'
+        ? [{ k: 'คะแนนผู้ขาย', v: o.rating + '%' }, { k: 'จำนวนรีวิวผู้ขาย', v: o.ratingCount.toLocaleString('th-TH') }, { k: 'ประเภทร้าน', v: TYPE[o.type].label }, { k: 'การคุ้มครองผู้ซื้อ', v: o.fees.length ? 'รวมอยู่ในราคาสุทธิแล้ว' : 'ไม่ได้เลือก' }]
+        : [{ k: 'ประเภทร้าน', v: TYPE[o.type].label }, { k: 'การชำระเงิน', v: o.pay.slice(0, 2).join(' · ') }, { k: 'ค่าธรรมเนียมแฝง', v: 'ไม่พบ' }, { k: 'สกุลเงินที่เรียกเก็บ', v: o.id === 'steam' ? 'THB' : 'USD/EUR (แปลงโดยผู้ออกบัตร)' }];
+      const rowStyle = { display: 'grid', gridTemplateColumns: cols, gap: 12, alignItems: 'center', padding: '13px 16px', cursor: 'pointer', background: rowBg, borderLeft: '2px solid ' + (isBest ? 'var(--ok)' : 'transparent') };
+      return {
+        id: o.id, store: o.store, letters: o.letters, edition: o.edition, drm: o.drm, isBest, open,
+        typeLabel: TYPE[o.type].label, typeStyle: typeStyle(o.type), logo: logo(o.type, mobile ? 34 : 30),
+        regionLabel: REGIONS[o.region].label, regionStyle: regionStyle(o.region),
+        thLabel: thLabel(o.th), thStyle: thStyle(o.th), th: o.th,
+        advText: B(o.adv), advStrike: { textDecoration: o.feeTotal ? 'line-through' : 'none', opacity: o.feeTotal ? 1 : 0.55, textDecorationColor: 'var(--mute2)' },
+        feeText: o.feeTotal ? '+ ' + B(o.feeTotal) : '—', hasFees: o.feeTotal > 0, noFees: o.feeTotal === 0,
+        finalText: B(o.final), finalStyle: { fontSize: mobile ? 25 : 17, fontWeight: 700, letterSpacing: '-0.02em', color: isBest ? 'var(--ok)' : 'var(--ink)' },
+        disc: o.disc, discText: '\u2212' + o.disc + '%', hasDisc: o.disc > 0, discStyle: Object.assign({}, tagBase, { fontSize: 10.5, padding: '1.5px 7px', color: o.disc >= 50 ? 'var(--ok)' : '#cfd3e5', background: o.disc >= 50 ? 'var(--ok-dim)' : '#2b2e3f' }),
+        updated: ago(o.mins), inStock: o.stock, oos: !o.stock,
+        rowWrap: { borderBottom: '1px solid var(--line2)' }, row: rowStyle, detailGrid: { display: 'grid', gridTemplateColumns: tablet ? '1fr 1fr' : '1fr 1fr 1fr', gap: 18, padding: '14px 16px', borderRadius: 11, background: 'var(--sunk)', border: '1px solid var(--line2)' },
+        breakdown: breakdown.map(b2 => ({ k: b2.k, v: b2.v, style: { display: 'flex', justifyContent: 'space-between', gap: 12, fontSize: 12.5, paddingBottom: 6, borderBottom: '1px solid var(--line2)', color: b2.strong ? 'var(--ok)' : 'var(--ink)', fontWeight: b2.strong ? 700 : 400 } })),
+        trust: trustRows.map(b2 => ({ k: b2.k, v: b2.v, style: { display: 'flex', justifyContent: 'space-between', gap: 12, fontSize: 12.5, paddingBottom: 6, borderBottom: '1px solid var(--line2)' } })),
+        note: o.th === 'ok' ? o.note : REGIONS[o.region].tip + ' — ' + o.note,
+        noteStyle: { margin: 0, fontSize: 12, lineHeight: 1.65, color: o.th === 'ok' ? 'var(--mute)' : 'var(--warn)' },
+        chev: { display: 'grid', placeItems: 'center', width: 22, height: 22, color: 'var(--mute2)', transform: open ? 'rotate(180deg)' : 'none', transition: 'transform .18s' },
+        buyStyle: { height: 30, padding: '0 11px', borderRadius: 8, fontSize: 12, fontWeight: 600, cursor: 'pointer', border: '1px solid ' + (isBest ? 'var(--ok-line)' : 'var(--line)'), background: isBest ? 'var(--ok-dim)' : 'transparent', color: isBest ? 'var(--ok)' : 'var(--ink)', whiteSpace: 'nowrap' },
+        toggle: () => this.setState(s => ({ expanded: Object.assign({}, s.expanded, { [o.id]: !s.expanded[o.id] }) })),
+        buy: e => { if (e) { e.preventDefault(); e.stopPropagation(); } this.setState({ dialog: o.id }); },
+        steamText: B(o.steamBase), saveText: B(Math.max(0, o.steamBase - o.final)),
+        payText: o.pay.join(' · '), rating: o.rating, ratingCount: o.ratingCount ? o.ratingCount.toLocaleString('th-TH') : null
+      };
+    };
+    const offerRows = offers.map(mkOffer);
+    const bestRow = best ? mkOffer(best, 0) : null;
+    const bestExt = bestRow ? Object.assign({}, bestRow, { isHistLow: hist.cur <= hist.low }) : null;
+
+    const dlg = S.dialog ? rawOffers.find(o => o.id === S.dialog) : null;
+    const exitOffer = dlg ? {
+      store: dlg.store,
+      rows: [
+        { k: 'เกม', v: g.title + ' · ' + dlg.edition },
+        { k: 'ราคาที่โฆษณา', v: B(dlg.adv) },
+        { k: 'ค่าธรรมเนียมที่ทราบ', v: dlg.feeTotal ? '+ ' + B(dlg.feeTotal) : 'ไม่มี' },
+        { k: 'ราคาสุทธิโดยประมาณ', v: B(dlg.final), strong: true },
+        { k: 'ภูมิภาค / DRM', v: REGIONS[dlg.region].label + ' · ' + dlg.drm },
+        { k: 'ประเภทร้าน', v: TYPE[dlg.type].label }
+      ].map((r2, i2) => ({ k: r2.k, v: r2.v, style: { display: 'flex', justifyContent: 'space-between', gap: 12, padding: '9px 13px', fontSize: 12.5, background: r2.strong ? 'color-mix(in srgb,var(--ok) 8%,transparent)' : 'transparent' }, vStyle: { fontWeight: r2.strong ? 700 : 500, color: r2.strong ? 'var(--ok)' : 'var(--ink)', fontSize: r2.strong ? 15 : 12.5, textAlign: 'right' } })),
+      warn: dlg.th === 'ok' ? 'KeyRadar TH ไม่รับประกันผลการเปิดใช้งาน กรุณายืนยันภูมิภาคของคีย์บนหน้าร้านค้าอีกครั้งก่อนชำระเงิน' : 'ข้อเสนอนี้ยังไม่ยืนยันว่าเปิดใช้งานในประเทศไทยได้ — ' + REGIONS[dlg.region].tip,
+      warnStyle: { display: 'flex', gap: 9, padding: '10px 12px', borderRadius: 10, fontSize: 11.5, lineHeight: 1.6, color: dlg.th === 'ok' ? 'var(--warn)' : 'var(--bad)', background: dlg.th === 'ok' ? 'var(--warn-dim)' : 'var(--bad-dim)', border: '1px solid ' + (dlg.th === 'ok' ? 'var(--warn-line)' : 'var(--bad-line)') }
+    } : null;
+
+    const vs = hist.pts.map(p => p.v);
+    const N = hist.pts.length;
+    const vmax = Math.max(hist.steam, ...vs) * 1.06, vmin = Math.min(...vs) * 0.9;
+    const XP = i => (i / (N - 1)) * 100;
+    const YP = v => (1 - (v - vmin) / (vmax - vmin)) * 100;
+    let d = '';
+    hist.pts.forEach((p, i) => { d += (i ? ' L' : 'M') + XP(i).toFixed(2) + ' ' + YP(p.v).toFixed(2); });
+    const area = d + ' L100 100 L0 100 Z';
+    const lowIdx = vs.indexOf(Math.min(...vs));
+    const hoverIdx = S.hover == null ? null : Math.max(0, Math.min(N - 1, S.hover));
+    const chart = {
+      path: d, area, n: N, mobile,
+      steamPct: YP(hist.steam), steamLabel: B(hist.steam),
+      grid: [0, 0.25, 0.5, 0.75, 1].map(f => ({ pct: f * 100, label: B(vmax - f * (vmax - vmin)) })),
+      ticks: [0, 0.25, 0.5, 0.75, 1].map(f => { const i = Math.round(f * (N - 1)); return { pct: XP(i), label: thDate(hist.pts[i].d) }; }),
+      low: { x: XP(lowIdx), y: YP(vs[lowIdx]), label: B(vs[lowIdx]) },
+      cur: { x: 100, y: YP(hist.cur), label: B(hist.cur) },
+      hover: hoverIdx == null ? null : { x: XP(hoverIdx), y: YP(hist.pts[hoverIdx].v), price: B(hist.pts[hoverIdx].v), date: thDate(hist.pts[hoverIdx].d), diff: hist.pts[hoverIdx].v >= hist.steam ? 'เท่ากับราคา Steam' : '−' + Math.round((1 - hist.pts[hoverIdx].v / hist.steam) * 100) + '% จากราคา Steam' }
+    };
+
+    const navItems = [['home', 'หน้าแรก'], ['deals', 'เกมลดราคา'], ['popular', 'เกมยอดนิยม'], ['stores', 'ร้านค้า'], ['how', 'วิธีใช้งาน']];
+    const activeNav = k => (k === 'popular' ? (S.route === 'results' && S.resultsQuery === '*') : k === S.route);
+
+    const filterPills = [];
+    if (fl.thOnly) filterPills.push({ label: 'ใช้งานได้ในประเทศไทย', clear: () => this.toggleF('thOnly') });
+    if (fl.officialOnly) filterPills.push({ label: 'เฉพาะร้านค้าอย่างเป็นทางการ', clear: () => this.toggleF('officialOnly') });
+    if (fl.noMarket) filterPills.push({ label: 'ไม่รวม Marketplace', clear: () => this.toggleF('noMarket') });
+    if (fl.histLow) filterPills.push({ label: 'ราคาต่ำสุดเป็นประวัติการณ์', clear: () => this.toggleF('histLow') });
+    if (fl.minDisc > 0) filterPills.push({ label: `ลดตั้งแต่ ${fl.minDisc}%`, clear: () => this.setState(s => ({ filters: Object.assign({}, s.filters, { minDisc: 0 }) })) });
+    if (fl.maxPrice < 2400) filterPills.push({ label: `ไม่เกิน ${B(fl.maxPrice)}`, clear: () => this.setState(s => ({ filters: Object.assign({}, s.filters, { maxPrice: 2400 }) })) });
+
+    const dealTabDefs = [['featured', 'ดีลแนะนำ'], ['histlow', 'ต่ำสุดเป็นประวัติการณ์'], ['ending', 'ใกล้หมดเวลา'], ['u200', 'ต่ำกว่า ฿200'], ['u500', 'ต่ำกว่า ฿500'], ['d70', 'ลดเกิน 70%'], ['thonly', 'ใช้งานในไทยได้เท่านั้น']];
+
+    return {
+      wide, mobile, tablet, pad, padTight,
+      pageWrap: mobile && S.vw === 'mobile' ? { minHeight: '100vh', display: 'flex', justifyContent: 'center', padding: '26px 16px', background: 'radial-gradient(90% 60% at 50% 0%, #1b1e2e, #101220)' } : {},
+      shell: mobile && S.vw === 'mobile'
+        ? { position: 'relative', width: 392, maxWidth: '100%', height: 846, overflowY: 'auto', overflowX: 'hidden', scrollbarWidth: 'none', msOverflowStyle: 'none', background: 'var(--color-bg)', borderRadius: 22, border: '1px solid #2c2f42', boxShadow: '0 30px 90px rgba(0,0,0,.6)' }
+        : { position: 'relative', minHeight: '100vh', width: '100%' },
+      r: { home: S.route === 'home', results: S.route === 'results', game: S.route === 'game', deals: S.route === 'deals', stores: S.route === 'stores' },
+      st: { normal: demo === 'normal' || demo === 'oos' || demo === 'refreshing', loading: demo === 'loading', empty: demo === 'empty', nothai: demo === 'nothai', noprice: demo === 'noprice', refreshing: demo === 'refreshing' },
+      showPrices: demo !== 'noprice' && demo !== 'nothai',
+      showStickyBar: mobile && S.route === 'game' && demo !== 'noprice' && demo !== 'nothai' && !S.sheet && !S.dialog && !!bestExt,
+
+      nav: navItems.map(([k, label]) => ({
+        label,
+        go: e => { if (e) e.preventDefault(); if (k === 'popular') this.nav('results', { resultsQuery: '*', query: '', sort: 'popular', demo: 'normal' }); else if (k === 'how') { this.setState({ route: 'home', navOpen: false }); setTimeout(() => { const el = document.getElementById('how'); if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 70, behavior: 'smooth' }); }, 60); } else this.nav(k, { demo: 'normal' }); },
+        style: { padding: '7px 11px', borderRadius: 8, fontSize: 13.5, textDecoration: 'none', color: activeNav(k) ? 'var(--color-accent-200)' : 'var(--mute)', background: activeNav(k) ? 'color-mix(in srgb,#9184d9 12%,transparent)' : 'transparent', whiteSpace: 'nowrap' },
+        mStyle: { display: 'block', padding: '12px 12px', borderRadius: 10, fontSize: 15, textDecoration: 'none', color: activeNav(k) ? 'var(--color-accent-200)' : 'var(--ink)', background: activeNav(k) ? 'color-mix(in srgb,#9184d9 12%,transparent)' : 'transparent' }
+      })),
+      navOpen: S.navOpen, toggleNav: e => { if (e) e.preventDefault(); this.setState(s => ({ navOpen: !s.navOpen })); },
+      mShowSearch: S.route !== 'home',
+      navSearchBox: { display: 'flex', alignItems: 'center', gap: 9, height: mobile ? 42 : 38, padding: '0 12px', borderRadius: 11, background: 'var(--sunk)', border: '1px solid ' + (S.focus ? 'var(--color-accent)' : 'var(--line)') },
+
+      query: S.query, acOpen: S.focus, acLoading: S.ac === 'loading', acEmpty: q.length > 0 && acMatches.length === 0, acRows,
+      onType: e => this.setState({ query: e.target.value, focus: true }),
+      onFocus: () => this.setState({ focus: true }),
+      onBlur: () => setTimeout(() => this.setState({ focus: false }), 160),
+      onKey: e => { if (e.key === 'Enter') this.search(e.target.value || 'The Forest'); if (e.key === 'Escape') this.setState({ focus: false }); },
+      clearQuery: e => { if (e) e.preventDefault(); this.setState({ query: '' }); },
+      submitSearch: e => { if (e) e.preventDefault(); this.search(S.query.trim() || 'The Forest'); },
+      goHome: e => { if (e) e.preventDefault(); this.nav('home', { demo: 'normal' }); },
+      goDeals: e => { if (e) e.preventDefault(); this.nav('deals', { demo: 'normal' }); },
+      goStores: e => { if (e) e.preventDefault(); this.nav('stores', { demo: 'normal' }); },
+      goPopular: e => { if (e) e.preventDefault(); this.nav('results', { resultsQuery: '*', sort: 'popular', demo: 'normal' }); },
+
+      h1: { fontSize: mobile ? 30 : tablet ? 40 : 50, lineHeight: 1.24, letterSpacing: '-0.032em', fontWeight: 600, margin: '18px 0 0', textWrap: 'balance' },
+      h1game: { fontSize: mobile ? 25 : tablet ? 31 : 37, lineHeight: 1.26, letterSpacing: '-0.03em', fontWeight: 600, margin: '0 0 12px', textWrap: 'balance' },
+      h2: { fontSize: mobile ? 21 : 27, lineHeight: 1.3, letterSpacing: '-0.025em', fontWeight: 600, margin: 0 },
+      h3: { fontSize: mobile ? 17 : 20, lineHeight: 1.35, letterSpacing: '-0.02em', fontWeight: 600, margin: 0 },
+      heroInner: { maxWidth: 760, padding: mobile ? '26px 0 6px' : '54px 0 10px', position: 'relative' },
+      heroSub: { margin: '16px 0 0', fontSize: mobile ? 13.5 : 15.5, lineHeight: 1.7, color: 'var(--mute)', maxWidth: 620, textWrap: 'pretty' },
+      heroSearchWrap: { position: 'relative', marginTop: mobile ? 22 : 30, maxWidth: 660 },
+      heroSearchBox: { display: 'flex', alignItems: 'center', gap: 12, padding: mobile ? '0 8px 0 14px' : '0 8px 0 18px', height: mobile ? 54 : 62, borderRadius: 15, background: 'linear-gradient(180deg,#1d2030,#191c2a)', border: '1px solid ' + (S.focus ? 'var(--color-accent)' : '#33364a'), boxShadow: S.focus ? '0 0 0 4px color-mix(in srgb,#9184d9 16%,transparent), 0 16px 40px rgba(0,0,0,.45)' : '0 14px 34px rgba(0,0,0,.35)' },
+      heroInput: { flex: 1, minWidth: 0, background: 'transparent', border: 0, outline: 'none', color: 'var(--ink)', fontSize: mobile ? 14.5 : 16 },
+      heroBtn: { flex: 'none', height: mobile ? 40 : 46, padding: mobile ? '0 14px' : '0 20px', borderRadius: 11, border: '1px solid var(--color-accent)', background: 'color-mix(in srgb,#9184d9 16%,transparent)', color: 'var(--color-accent-200)', fontSize: mobile ? 13 : 14.5, fontWeight: 600, cursor: 'pointer', whiteSpace: 'nowrap' },
+      popular: ['Valheim', 'Elden Ring', 'The Forest', 'Sons Of The Forest', 'Palworld', 'Cyberpunk 2077'].map(t => ({ title: t, style: chip(false, { fontSize: 12 }), go: e => { if (e) e.preventDefault(); this.setState({ query: t }); this.search(t); } })),
+
+      sectionHead: { display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 16, marginBottom: 18, flexWrap: 'wrap' },
+      cardGrid: { display: 'grid', gridTemplateColumns: mobile ? 'repeat(2, minmax(0,1fr))' : tablet ? 'repeat(3, minmax(0,1fr))' : 'repeat(4, minmax(0,1fr))', gap: mobile ? 10 : 16 },
+      trending: GAMES.slice().sort((a, b) => cardOf(b).disc0 - cardOf(a).disc0).slice(0, mobile ? 6 : 8).map(cardOf),
+      howWrap: { display: 'flex', gap: mobile ? 20 : 34, flexDirection: mobile || tablet ? 'column' : 'row', alignItems: 'flex-start' },
+      howGrid: { display: 'grid', gridTemplateColumns: mobile ? '1fr' : 'repeat(3, minmax(0,1fr))', gap: 12, flex: 1, width: '100%' },
+      steps: [
+        { n: '1', title: 'ค้นหาเกม', body: 'พิมพ์ชื่อเกมที่ต้องการ ระบบจะจับคู่กับรายการบน Steam และแสดงราคาต่ำสุดทันทีในผลการค้นหา', icon: React.createElement('svg', { width: 17, height: 17, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 2, strokeLinecap: 'round' }, React.createElement('circle', { cx: 11, cy: 11, r: 7 }), React.createElement('path', { d: 'M20 20l-3.6-3.6' })) },
+        { n: '2', title: 'เปรียบเทียบราคาจากหลายร้าน', body: 'เราคำนวณราคาสุทธิโดยประมาณหลังรวมค่าธรรมเนียมที่ทราบ ไม่ใช่แค่ราคาที่โฆษณาไว้หน้าร้าน', icon: React.createElement('svg', { width: 17, height: 17, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 2, strokeLinecap: 'round', strokeLinejoin: 'round' }, React.createElement('path', { d: 'M4 19V9M10 19V5M16 19v-6M22 19H2' })) },
+        { n: '3', title: 'เลือกร้านที่รองรับการเปิดใช้งานในไทย', body: 'ดูภูมิภาคของคีย์และประเภทร้านค้าก่อนตัดสินใจ แล้วกดไปยังร้านค้าเพื่อชำระเงินโดยตรง', icon: React.createElement('svg', { width: 17, height: 17, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 2, strokeLinecap: 'round', strokeLinejoin: 'round' }, React.createElement('path', { d: 'M12 3l7.5 3v5.5c0 4.4-3.1 8.2-7.5 9.5-4.4-1.3-7.5-5.1-7.5-9.5V6z' }), React.createElement('path', { d: 'M9 12l2 2 4-4' })) }
+      ],
+      storeGrid: { display: 'grid', gridTemplateColumns: mobile ? 'repeat(2,minmax(0,1fr))' : tablet ? 'repeat(3,minmax(0,1fr))' : 'repeat(5,minmax(0,1fr))', gap: 10 },
+      storeChips: ORDER.map(k => ({ name: STORES[k].name, letters: STORES[k].letters, logo: logo(STORES[k].type, 34), typeLabel: TYPE[STORES[k].type].label, typeStyle: Object.assign({}, typeStyle(STORES[k].type), { alignSelf: 'flex-start' }), go: e => { if (e) e.preventDefault(); this.nav('stores', { demo: 'normal' }); } })),
+
+      resultsHeading: S.resultsQuery === '*' ? 'เกมยอดนิยม' : `ผลการค้นหา “${S.resultsQuery}”`,
+      resultsCount: demo === 'empty' ? 'ไม่พบเกมที่ตรงกัน' : `พบ ${results.length} เกม`,
+      shownCount: `${results.length} เกม`,
+      updatedAt: '2 ส.ค. 2569 · 14:32 น.',
+      resultsLayout: { display: 'flex', gap: 22, alignItems: 'flex-start' },
+      results: results.map(cardOf),
+      skeletons: [0, 1, 2, 3].map(i => ({ style: { height: 132, borderRadius: 13, border: '1px solid var(--line2)', background: 'linear-gradient(100deg, #1b1e2c 30%, #23273a 50%, #1b1e2c 70%)', backgroundSize: '720px 100%', animation: 'krShimmer 1.25s linear infinite', animationDelay: (i * 0.09) + 's' } })),
+      sort: S.sort, sortLabel: sortLabels[S.sort], onSort: e => this.setState({ sort: e.target.value }),
+      sortOptions: Object.keys(sortLabels).map(k => ({ label: sortLabels[k], active: S.sort === k, go: () => this.setState({ sort: k, sheet: null }), style: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', padding: '15px 18px', border: 0, borderTop: '1px solid var(--line2)', background: 'transparent', color: S.sort === k ? 'var(--color-accent-200)' : 'var(--ink)', fontSize: 15, fontWeight: S.sort === k ? 600 : 400, cursor: 'pointer', textAlign: 'left' } })),
+      mControlBtn: { display: 'inline-flex', alignItems: 'center', gap: 7, height: 42, padding: '0 14px', borderRadius: 11, border: '1px solid var(--line)', background: 'color-mix(in srgb,#e9e9ed 3%,transparent)', color: 'var(--ink)', fontSize: 13.5, cursor: 'pointer', flex: 1, justifyContent: 'center' },
+      filters: fl, activeFilterCount: filterPills.length, hasFilters: filterPills.length > 0, filterPills,
+      toggleFilter: k => this.toggleF(k),
+      toggleThOnly: () => this.toggleF('thOnly'),
+      setMaxPrice: v => this.setState(s => ({ filters: Object.assign({}, s.filters, { maxPrice: +v }) })),
+      setMinDisc: v => this.setState(s => ({ filters: Object.assign({}, s.filters, { minDisc: +v }) })),
+      resetFilters: e => { if (e) e.preventDefault(); this.setState({ filters: { thOnly: false, officialOnly: false, noMarket: false, inStock: true, histLow: false, maxPrice: 2400, minDisc: 0 } }); },
+      openFilterSheet: e => { if (e) e.preventDefault(); this.setState({ sheet: 'filter' }); },
+      openSortSheet: e => { if (e) e.preventDefault(); this.setState({ sheet: 'sort' }); },
+      closeSheet: e => { if (e) e.preventDefault(); this.setState({ sheet: null }); },
+      sheetFilter: S.sheet === 'filter', sheetSort: S.sheet === 'sort',
+      stop: e => e.stopPropagation(),
+
+      game: {
+        title: g.title, review: { pct: g.review.pct, label: g.review.label, countText: g.review.count.toLocaleString('th-TH') },
+        steamText: B(g.steam),
+        reviewPill: { display: 'grid', placeItems: 'center', width: 42, height: 42, borderRadius: 11, fontSize: 14, fontWeight: 700, background: g.review.pct >= 90 ? 'var(--ok-dim)' : 'var(--warn-dim)', color: g.review.pct >= 90 ? 'var(--ok)' : 'var(--warn)', border: '1px solid ' + (g.review.pct >= 90 ? 'var(--ok-line)' : 'var(--warn-line)') },
+        genreTags: g.genres.map(t => ({ label: t, style: tag('#cfd3e5', '#2b2e3f', '#3a3d52') })),
+        meta: [{ k: 'ผู้พัฒนา', v: g.dev }, { k: 'ผู้จัดจำหน่าย', v: g.pub }, { k: 'วันวางจำหน่าย', v: g.released }, { k: 'หมวดหมู่', v: g.genres.join(' · ') }]
+      },
+      badges: {
+        platform: tag('#cfd3e5', '#2b2e3f', '#3a3d52'),
+        drm: tag('#cfd3e5', '#2b2e3f', '#3a3d52'),
+        neutral: tag('#cfd3e5', '#2b2e3f', '#3a3d52'),
+        best: Object.assign({}, tagBase, { fontSize: 9.5, padding: '1px 6px', color: 'var(--ok)', background: 'var(--ok-dim)', border: '1px solid var(--ok-line)' }),
+        histLow: tag('var(--color-accent-200)', 'var(--color-accent-900)', 'color-mix(in srgb,#9184d9 34%,transparent)'),
+        oos: tag('var(--bad)', 'var(--bad-dim)', 'var(--bad-line)')
+      },
+      gameHeader: { display: 'flex', gap: mobile ? 14 : 26, flexDirection: mobile ? 'column' : 'row', alignItems: 'flex-start', marginBottom: mobile ? 18 : 26 },
+      coverBig: Object.assign({}, cover(g.hue, mobile ? 168 : 232), { width: mobile ? '100%' : 400, flex: 'none' }),
+      coverBigText: coverText(mobile ? 22 : 28),
+      metaGrid: { display: 'grid', gridTemplateColumns: mobile ? 'repeat(2,minmax(0,1fr))' : 'repeat(4,minmax(0,1fr))', gap: 12, marginTop: 14 },
+      reviewRow: { display: 'flex', gap: 12, flexWrap: 'wrap', alignItems: 'center' },
+      thStatusBig: Object.assign({ display: 'flex', alignItems: 'center', gap: 10, padding: '9px 14px 9px 10px', borderRadius: 12, flex: mobile ? '1 1 100%' : '0 1 auto' },
+        (demo === 'nothai' ? { background: 'var(--bad-dim)', color: 'var(--bad)', border: '1px solid var(--bad-line)' }
+          : demo === 'uncertain' ? { background: 'var(--warn-dim)', color: 'var(--warn)', border: '1px solid var(--warn-line)' }
+            : { background: 'var(--ok-dim)', color: 'var(--ok)', border: '1px solid var(--ok-line)' })),
+      thIconWrap: { display: 'grid', placeItems: 'center', width: 30, height: 30, borderRadius: 9, background: 'rgba(0,0,0,.22)', flex: 'none' },
+      thIcon: React.createElement('svg', { width: 16, height: 16, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 2.2, strokeLinecap: 'round', strokeLinejoin: 'round' }, demo === 'nothai' ? React.createElement('path', { d: 'M18 6L6 18M6 6l12 12' }) : demo === 'uncertain' ? React.createElement('path', { d: 'M12 8v5M12 17h.01' }) : React.createElement('path', { d: 'M20 6L9 17l-5-5' })),
+      thStatusTitle: demo === 'nothai' ? 'ยังไม่พบข้อเสนอที่ใช้งานในไทยได้' : demo === 'uncertain' ? 'ควรตรวจสอบรายละเอียดภูมิภาคก่อนซื้อ' : 'สามารถเปิดใช้งานในประเทศไทยได้',
+      thStatusSub: demo === 'nothai' ? 'ทุกข้อเสนอที่พบล็อกภูมิภาคอื่น' : demo === 'uncertain' ? 'ผู้ขายไม่ได้ระบุภูมิภาคอย่างชัดเจน' : `ยืนยันแล้ว ${rawOffers.filter(o => o.th === 'ok' && o.stock).length} ข้อเสนอ`,
+      editionBar: { display: 'flex', alignItems: 'center', gap: 12, padding: '12px 0 18px', borderTop: '1px solid var(--line2)', overflow: 'hidden' },
+      editions,
+
+      best: bestExt, offers: offerRows,
+      offerCountText: `${rawOffers.length} ร้าน`,
+      thOkCountText: `${rawOffers.filter(o => o.th === 'ok' && o.stock).length} ร้าน`,
+      summaryWrap: { display: 'grid', gridTemplateColumns: mobile || tablet ? '1fr' : '1.85fr 1fr', gap: 14, marginBottom: 26 },
+      summaryCard: { position: 'relative', overflow: 'hidden', padding: mobile ? 16 : 20, borderRadius: 16, border: '1px solid var(--ok-line)', background: 'linear-gradient(160deg,#1d2130,#191c29)' },
+      summaryTop: { display: 'flex', gap: 16, justifyContent: 'space-between', flexDirection: mobile ? 'column' : 'row', alignItems: mobile ? 'stretch' : 'flex-start' },
+      summaryPriceCol: { display: 'flex', flexDirection: 'column', gap: 5, alignItems: mobile ? 'flex-start' : 'flex-end', textAlign: mobile ? 'left' : 'right' },
+      bigPrice: { fontSize: mobile ? 40 : 46, fontWeight: 700, letterSpacing: '-0.035em', color: 'var(--ok)', lineHeight: 1 },
+      summaryFoot: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap', paddingTop: 13, borderTop: '1px solid var(--line2)' },
+      ctaBtn: { display: 'inline-flex', alignItems: 'center', gap: 8, height: 46, padding: '0 20px', borderRadius: 12, border: '1px solid var(--ok-line)', background: 'var(--ok-dim)', color: 'var(--ok)', fontSize: 14.5, fontWeight: 600, cursor: 'pointer', flex: mobile ? '1 1 100%' : 'none', justifyContent: 'center' },
+      steamRefCard: { display: 'flex', flexDirection: 'column', gap: 7, padding: mobile ? 16 : 20, borderRadius: 16, border: '1px solid var(--line)', background: 'color-mix(in srgb,#e9e9ed 2.5%,transparent)' },
+      tableHead: { display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 14, flexWrap: 'wrap', marginBottom: 12 },
+      thRow: { display: 'grid', gridTemplateColumns: '186px 128px 132px 88px 92px 116px 78px 118px', gap: 12, padding: '10px 16px', fontSize: 10.5, letterSpacing: '.08em', textTransform: 'uppercase', color: 'var(--mute2)', borderBottom: '1px solid var(--line)', background: 'var(--sunk)' },
+      refreshSpin: demo === 'refreshing' ? { animation: 'krSpin 1s linear infinite' } : {},
+      refreshPrices: e => { if (e) e.preventDefault(); this.setState({ demo: 'refreshing' }); clearTimeout(this._t2); this._t2 = setTimeout(() => this.setState({ demo: 'normal' }), 1800); },
+      showAllOffers: e => { if (e) e.preventDefault(); this.setState({ demo: 'normal', filters: Object.assign({}, S.filters, { thOnly: false }) }); },
+      noticeBox: { display: 'flex', gap: 10, alignItems: 'flex-start', marginTop: 16, padding: '12px 14px', borderRadius: 12, border: '1px solid var(--warn-line)', background: 'var(--warn-dim)', color: 'var(--warn)', fontSize: 12.5, lineHeight: 1.6 },
+      chartHead: { display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 14, flexWrap: 'wrap', marginBottom: 14 },
+      ranges: [['30d', '30 วัน'], ['3m', '3 เดือน'], ['6m', '6 เดือน'], ['1y', '1 ปี'], ['all', 'ทั้งหมด']].map(([k, label]) => ({
+        label, go: e => { if (e) e.preventDefault(); this.setState({ range: k, hover: null }); },
+        style: { padding: '6px 11px', borderRadius: 8, border: 0, cursor: 'pointer', fontSize: 12, whiteSpace: 'nowrap', background: S.range === k ? 'color-mix(in srgb,#9184d9 18%,transparent)' : 'transparent', color: S.range === k ? 'var(--color-accent-200)' : 'var(--mute)', fontWeight: S.range === k ? 600 : 400 }
+      })),
+      chart, hover: S.hover, setHover: i => this.setState({ hover: i }),
+      chartStats: { display: 'grid', gridTemplateColumns: mobile ? 'repeat(2,minmax(0,1fr))' : 'repeat(4,minmax(0,1fr))', gap: 10, marginTop: 12 },
+      chartStats2: [
+        { k: 'ราคาต่ำสุดตอนนี้', v: B(hist.cur), sub: bestExt ? bestExt.store : '', style: { fontSize: 20, fontWeight: 700, color: 'var(--ok)', letterSpacing: '-0.02em' } },
+        { k: 'ต่ำสุดในช่วงนี้', v: B(hist.low), sub: 'จากข้อมูลที่เก็บได้', style: { fontSize: 20, fontWeight: 600, letterSpacing: '-0.02em' } },
+        { k: 'ราคาเฉลี่ย', v: B(hist.avg), sub: 'ตลอดช่วงที่เลือก', style: { fontSize: 20, fontWeight: 600, letterSpacing: '-0.02em' } },
+        { k: 'ราคาบน Steam', v: B(hist.steam), sub: 'ร้านค้าประเทศไทย', style: { fontSize: 20, fontWeight: 600, color: 'var(--mute)', letterSpacing: '-0.02em' } }
+      ],
+
+      dealTabs: dealTabDefs.map(([k, label]) => ({ label, count: (dealPools[k] || []).length, go: e => { if (e) e.preventDefault(); this.setState({ dealTab: k }); }, style: chip(S.dealTab === k), countStyle: { fontSize: 10.5, padding: '1px 6px', borderRadius: 99, background: S.dealTab === k ? 'color-mix(in srgb,#9184d9 26%,transparent)' : '#2b2e3f', color: S.dealTab === k ? 'var(--color-accent-100)' : 'var(--mute)' } })),
+      deals, dealsEmpty: deals.length === 0,
+      resetDealTab: e => { if (e) e.preventDefault(); this.setState({ dealTab: 'featured' }); },
+
+      storeLegend: [
+        { title: 'ร้านค้าอย่างเป็นทางการ', body: 'ได้รับสิทธิ์จำหน่ายคีย์จากผู้จัดจำหน่ายโดยตรง', dot: { width: 11, height: 11, borderRadius: 3, background: 'var(--ok)', flex: 'none', marginTop: 4 } },
+        { title: 'ตัวแทนจำหน่ายคีย์', body: 'ซื้อคีย์จำนวนมากมาขายต่อ ไม่ใช่ตัวแทนอย่างเป็นทางการทุกเกม', dot: { width: 11, height: 11, borderRadius: 3, background: 'var(--warn)', flex: 'none', marginTop: 4 } },
+        { title: 'Marketplace', body: 'ผู้ขายรายย่อยเป็นผู้ตั้งราคาและกำหนดภูมิภาคเอง มีค่าธรรมเนียมเพิ่ม', dot: { width: 11, height: 11, borderRadius: 3, background: '#8b90ab', flex: 'none', marginTop: 4 } }
+      ],
+      storeCardGrid: { display: 'grid', gridTemplateColumns: mobile ? '1fr' : tablet ? 'repeat(2,minmax(0,1fr))' : 'repeat(3,minmax(0,1fr))', gap: 12 },
+      storeCards: ORDER.map(k => {
+        const s = STORES[k];
+        return {
+          name: s.name, letters: s.letters, logo: logo(s.type, 42), typeLabel: TYPE[s.type].label, typeStyle: typeStyle(s.type),
+          rows: [
+            { k: 'สถานะ', v: s.type === 'official' ? 'ตัวแทนจำหน่ายที่ได้รับอนุญาต' : s.type === 'steam' ? 'ร้านค้าอย่างเป็นทางการของแพลตฟอร์ม' : s.type === 'reseller' ? 'ผู้จำหน่ายคีย์ (ไม่ใช่ตัวแทนอย่างเป็นทางการทุกเกม)' : 'ตลาดกลางผู้ขายรายย่อย' },
+            { k: 'ภูมิภาคที่พบบ่อย', v: k === 'gamesplanet' ? 'ยุโรป (EU) เป็นหลัก' : k === 'steam' ? 'ไทย' : k === 'eneba' ? 'Global / EU / SEA แล้วแต่ผู้ขาย' : 'Global' },
+            { k: 'ค่าธรรมเนียมเพิ่ม', v: s.fee ? 'มี — ' + s.feeLabel : 'ไม่พบ' },
+            { k: 'การชำระเงิน', v: s.pay.join(' · ') }
+          ].map(r2 => ({ k: r2.k, v: r2.v, style: { display: 'flex', gap: 10, justifyContent: 'space-between', fontSize: 12, paddingBottom: 7, borderBottom: '1px solid var(--line2)' }, vStyle: { textAlign: 'right', color: 'var(--ink)', maxWidth: '62%' } })),
+          note: s.note,
+          go: e => { if (e) e.preventDefault(); this.nav('deals', { demo: 'normal' }); }
+        };
+      }),
+
+      exitOffer, closeDialog: e => { if (e) e.preventDefault(); this.setState({ dialog: null }); },
+      dialogBox: { width: 'min(430px,100%)', display: 'flex', flexDirection: 'column', gap: 14, padding: 18, borderRadius: 18, background: 'var(--raise)', border: '1px solid var(--line)', boxShadow: '0 28px 70px rgba(0,0,0,.66)', animation: 'krRise .18s ease-out' },
+
+      footerWrap: { marginTop: mobile ? 30 : 48, borderTop: '1px solid var(--line)', background: 'linear-gradient(180deg, rgba(233,233,237,.015), transparent)' },
+      footGrid: { display: 'grid', gridTemplateColumns: mobile ? '1fr' : tablet ? '1.2fr 1fr 1fr' : '1.4fr 1fr 1fr 1fr', gap: mobile ? 22 : 28 },
+      footCols: [
+        { head: 'แพลตฟอร์ม', links: [['เกี่ยวกับ KeyRadar TH', 'home'], ['วิธีเปรียบเทียบราคา', 'how'], ['ร้านค้าที่รองรับ', 'stores'], ['เกมลดราคา', 'deals']] },
+        { head: 'คู่มือ', links: [['คู่มือภูมิภาคการเปิดใช้งาน', 'how'], ['Steam Key คืออะไร', 'how'], ['Global / SEA ต่างกันอย่างไร', 'how'], ['ค่าธรรมเนียมที่ควรรู้', 'how']] },
+        { head: 'ข้อมูล', links: [['ติดต่อเรา', 'home'], ['นโยบายความเป็นส่วนตัว', 'home'], ['เงื่อนไขการใช้งาน', 'home'], ['การเปิดเผยข้อมูลพันธมิตร', 'home']] }
+      ].map(c => ({ head: c.head, links: c.links.map(([label, to]) => ({ label, go: e => { if (e) e.preventDefault(); if (to === 'how') { this.nav('home'); setTimeout(() => { const el = document.getElementById('how'); if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 70, behavior: 'smooth' }); }, 60); } else this.nav(to); } })) })),
+
+      showDemoBar: P.showDemoBar !== false,
+      demoOpen: S.demoOpen, demoChevron: S.demoOpen ? '▾' : '▸',
+      demoSummary: S.demoOpen ? '' : (S.vw === 'auto' ? 'Auto' : S.vw) + ' · ' + ({ normal: 'ปกติ', loading: 'กำลังค้นหา', empty: 'ไม่พบผลลัพธ์', nothai: 'ไม่มีในไทย', noprice: 'ไม่มีราคา', refreshing: 'รีเฟรช', oos: 'สินค้าหมด' }[S.demo] || ''),
+      toggleDemo: e => { if (e) e.preventDefault(); this.setState(s => ({ demoOpen: !s.demoOpen })); },
+      demoBar: { position: 'fixed', right: 16, bottom: 16, zIndex: 90, width: 208, borderRadius: 13, background: 'rgba(20,22,34,.94)', backdropFilter: 'blur(14px)', border: '1px solid #33364a', boxShadow: '0 18px 44px rgba(0,0,0,.55)', fontSize: 12 },
+      vwOptions: [['auto', 'Auto'], ['desktop', 'Desktop'], ['tablet', 'Tablet'], ['mobile', 'Mobile']].map(([k, label]) => ({ label, go: e => { if (e) e.preventDefault(); this.setState({ vw: k }); }, style: { padding: '5px 9px', borderRadius: 7, fontSize: 11, cursor: 'pointer', border: '1px solid ' + (S.vw === k ? 'var(--color-accent)' : 'var(--line)'), background: S.vw === k ? 'color-mix(in srgb,#9184d9 16%,transparent)' : 'transparent', color: S.vw === k ? 'var(--color-accent-200)' : 'var(--mute)' } })),
+      demoStates: [['normal', 'ปกติ'], ['loading', 'กำลังค้นหา'], ['empty', 'ไม่พบผลลัพธ์'], ['nothai', 'ไม่มีข้อเสนอที่ใช้ในไทยได้'], ['noprice', 'ไม่มีข้อมูลราคา'], ['refreshing', 'กำลังรีเฟรชราคา'], ['oos', 'ข้อเสนอสินค้าหมด']].map(([k, label]) => ({ label, go: e => { if (e) e.preventDefault(); this.setState({ demo: k }); }, style: { padding: '6px 9px', borderRadius: 7, fontSize: 11.5, cursor: 'pointer', textAlign: 'left', border: 0, background: S.demo === k ? 'color-mix(in srgb,#9184d9 16%,transparent)' : 'transparent', color: S.demo === k ? 'var(--color-accent-200)' : 'var(--mute)' } }))
+    };
+  }
+
+  toggleF(k) { this.setState(s => ({ filters: Object.assign({}, s.filters, { [k]: !s.filters[k] }) })); }
+}
+</script>
+</body>
+</html>

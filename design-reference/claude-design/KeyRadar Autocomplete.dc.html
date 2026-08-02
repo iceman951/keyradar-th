@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/nocturne-95162a03-9854-4dfd-88ea-ddfb17d8311d/styles.css">
+<style>:root{--ok:oklch(0.80 0.135 158);--ok-dim:oklch(0.345 0.055 158);--ok-line:oklch(0.46 0.075 158);--warn:oklch(0.845 0.135 82);--warn-dim:oklch(0.345 0.055 74);--ink:#e9e9ed;--mute:color-mix(in srgb,#e9e9ed 55%,transparent);--mute2:color-mix(in srgb,#e9e9ed 38%,transparent);--line2:color-mix(in srgb,#e9e9ed 7%,transparent);--raise:#1d2030}body{margin:0;font-family:"Inter","Anuphan","Noto Sans Thai",system-ui,sans-serif;background:var(--raise);color:var(--ink)}a{color:#9184d9}a:hover{color:#b5abfc}</style>
+</helmet>
+<div style="padding:6px">
+<div style="display:flex;align-items:center;justify-content:space-between;padding:6px 10px 7px;font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--mute2)">
+<span>{{ heading }}</span>
+<span>ราคาสุทธิต่ำสุด</span>
+</div>
+
+<sc-if value="{{ loading }}">
+<div style="display:flex;flex-direction:column;gap:4px;padding:2px 4px 6px">
+<sc-for list="{{ skels }}" as="s" hint-placeholder-count="3">
+<div style="{{ s.style }}"></div>
+</sc-for>
+</div>
+</sc-if>
+
+<sc-if value="{{ show }}">
+<div style="display:flex;flex-direction:column;gap:2px">
+<sc-for list="{{ rows }}" as="r" hint-placeholder-count="5">
+<a href="#" onClick="{{ r.go }}" style="display:flex;align-items:center;gap:11px;padding:7px 8px;border-radius:10px;text-decoration:none;color:var(--ink)" style-hover="background:color-mix(in srgb,#9184d9 12%,transparent);text-decoration:none">
+<span style="width:78px;flex:none">
+<span style="{{ r.cover }}"><span style="padding:0 6px;text-align:center;font-size:8.5px;font-weight:700;line-height:1.1;color:rgba(255,255,255,.9);letter-spacing:.02em">{{ r.title }}</span></span>
+</span>
+<span style="display:flex;flex-direction:column;gap:3px;min-width:0;flex:1">
+<span style="font-size:13.5px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.title }}</span>
+<span style="display:flex;align-items:center;gap:7px">
+<span style="font-size:11px;color:var(--mute2)">{{ r.year }}</span>
+<sc-if value="{{ r.thOk }}"><span style="display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:600;color:var(--ok)"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"></path></svg>ใช้งานในไทยได้</span></sc-if>
+</span>
+</span>
+<span style="display:flex;flex-direction:column;align-items:flex-end;gap:2px;flex:none">
+<span style="font-size:14.5px;font-weight:700;color:var(--ok);letter-spacing:-0.02em">{{ r.price }}</span>
+<span style="font-size:9.5px;color:var(--mute2)">ราคาสุทธิ</span>
+</span>
+</a>
+</sc-for>
+</div>
+</sc-if>
+
+<sc-if value="{{ empty }}">
+<div style="padding:22px 14px;text-align:center">
+<div style="font-size:13.5px;font-weight:600;margin-bottom:5px">ไม่พบเกมที่ตรงกับ “{{ q }}”</div>
+<div style="font-size:12px;color:var(--mute);line-height:1.6">ลองพิมพ์ชื่อเกมเป็นภาษาอังกฤษ หรือตรวจสอบตัวสะกดอีกครั้ง</div>
+</div>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:520,&quot;height&quot;:300},&quot;rows&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;any[]&quot;},&quot;loading&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;empty&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;q&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const p = this.props;
+    return {
+      show: !p.loading && !p.empty,
+      heading: p.q ? 'เกมที่ตรงกับคำค้นหา' : 'ค้นหายอดนิยม',
+      skels: [0, 1, 2].map(i => ({ style: { height: 58, borderRadius: 10, background: 'linear-gradient(100deg,#212436 30%,#2b2f45 50%,#212436 70%)', backgroundSize: '520px 100%', animation: 'krShimmer 1.2s linear infinite', animationDelay: (i * .08) + 's' } }))
+    };
+  }
+}
+</script>
+</body>
+</html>

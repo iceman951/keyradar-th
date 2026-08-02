@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/nocturne-95162a03-9854-4dfd-88ea-ddfb17d8311d/styles.css">
+<style>:root{--ok:oklch(0.80 0.135 158);--ok-dim:oklch(0.345 0.055 158);--ok-line:oklch(0.46 0.075 158);--ink:#e9e9ed;--mute:color-mix(in srgb,#e9e9ed 55%,transparent);--mute2:color-mix(in srgb,#e9e9ed 38%,transparent);--line:color-mix(in srgb,#e9e9ed 12%,transparent);--line2:color-mix(in srgb,#e9e9ed 7%,transparent)}body{margin:0;font-family:"Inter","Anuphan","Noto Sans Thai",system-ui,sans-serif;background:#161826;color:var(--ink)}a{color:#9184d9}a:hover{color:#b5abfc}</style>
+</helmet>
+<a href="#" onClick="{{ g.go }}" style="{{ wrap }}" style-hover="border-color:color-mix(in srgb,#9184d9 46%,transparent);text-decoration:none">
+<span style="{{ coverWrap }}">
+<span style="{{ g.cover }}"><span style="{{ g.coverText }}">{{ g.title }}</span></span>
+</span>
+<span style="display:flex;flex-direction:column;gap:7px;flex:1;min-width:0">
+<span style="display:flex;align-items:center;gap:7px;flex-wrap:wrap">
+<span style="display:inline-flex;align-items:center;gap:4px;padding:2px 7px;border-radius:6px;background:#2b2e3f;border:1px solid #3a3d52;font-size:9.5px;font-weight:700;letter-spacing:.07em;color:#cfd3e5">
+<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 00-9.94 9.02l5.3 2.19a2.83 2.83 0 011.6-.49h.14l2.36-3.42v-.05a3.78 3.78 0 113.78 3.78h-.09l-3.37 2.4v.12a2.84 2.84 0 01-5.63.5l-3.79-1.57A10 10 0 1012 2z"></path></svg>STEAM</span>
+<span style="{{ g.thStyle }}">{{ g.thLabel }}</span>
+</span>
+<span style="font-size:17px;font-weight:600;letter-spacing:-0.015em;line-height:1.25">{{ g.title }}</span>
+<span style="font-size:12px;color:var(--mute)">วางจำหน่าย {{ g.released }} · {{ g.genres }}</span>
+<span style="display:flex;align-items:center;gap:8px;min-width:0;margin-top:2px">
+<span style="{{ g.logo }}">{{ g.letters }}</span>
+<span style="font-size:12px;color:var(--mute)">ถูกที่สุดที่ {{ g.store }}</span>
+<span style="{{ g.typeStyle }}">{{ g.storeTypeLabel }}</span>
+</span>
+</span>
+<span style="{{ priceCol }}">
+<span style="font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute2)">ราคาสุทธิโดยประมาณ</span>
+<span style="display:flex;align-items:baseline;gap:9px;flex-wrap:wrap">
+<span style="font-size:27px;font-weight:700;color:var(--ok);letter-spacing:-0.03em;line-height:1">{{ g.finalText }}</span>
+<sc-if value="{{ g.hasDisc }}"><span style="{{ g.discStyle }}">−{{ g.disc }}%</span></sc-if>
+</span>
+<span style="font-size:12px;color:var(--mute2)">ราคา Steam <s>{{ g.steamText }}</s> · {{ g.storesText }}</span>
+<span style="{{ btn }}">เปรียบเทียบราคา
+<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span>
+</span>
+</a>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:820,&quot;height&quot;:170},&quot;g&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;any&quot;},&quot;mobile&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const m = !!this.props.mobile;
+    return {
+      wrap: { display: 'flex', gap: m ? 12 : 16, flexDirection: m ? 'column' : 'row', alignItems: m ? 'stretch' : 'center', padding: m ? 12 : 14, border: '1px solid var(--line)', borderRadius: 14, background: 'linear-gradient(120deg,rgba(233,233,237,.035),rgba(233,233,237,.01))', textDecoration: 'none', color: 'var(--ink)' },
+      coverWrap: { width: m ? '100%' : 168, flex: 'none', display: 'block' },
+      priceCol: { display: 'flex', flexDirection: 'column', gap: 5, alignItems: m ? 'flex-start' : 'flex-end', textAlign: m ? 'left' : 'right', flex: 'none', minWidth: m ? 0 : 200, paddingTop: m ? 10 : 0, borderTop: m ? '1px solid var(--line2)' : 'none', width: m ? '100%' : 'auto' },
+      btn: { display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 6, marginTop: 6, height: m ? 44 : 36, padding: '0 15px', borderRadius: 10, border: '1px solid var(--color-accent)', background: 'color-mix(in srgb,#9184d9 13%,transparent)', color: 'var(--color-accent-200)', fontSize: 13, fontWeight: 600, width: m ? '100%' : 'auto' }
+    };
+  }
+}
+</script>
+</body>
+</html>

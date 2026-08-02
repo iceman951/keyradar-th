@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/nocturne-95162a03-9854-4dfd-88ea-ddfb17d8311d/styles.css">
+<style>:root{--ok:oklch(0.80 0.135 158);--ok-dim:oklch(0.345 0.055 158);--warn:oklch(0.845 0.135 82);--warn-dim:oklch(0.345 0.055 74);--warn-line:oklch(0.46 0.075 74);--bad:oklch(0.72 0.155 24);--bad-dim:oklch(0.335 0.070 24);--bad-line:oklch(0.45 0.095 24);--ink:#e9e9ed;--mute:color-mix(in srgb,#e9e9ed 55%,transparent);--mute2:color-mix(in srgb,#e9e9ed 38%,transparent);--line:color-mix(in srgb,#e9e9ed 12%,transparent)}body{margin:0;font-family:"Inter","Anuphan","Noto Sans Thai",system-ui,sans-serif;background:#161826;color:var(--ink)}a{color:#9184d9}a:hover{color:#b5abfc}</style>
+</helmet>
+<div style="{{ box }}">
+<div style="{{ iconWrap }}">{{ icon }}</div>
+<h3 style="font-size:18px;font-weight:600;letter-spacing:-0.02em;margin:0;text-wrap:balance">{{ title }}</h3>
+<p style="margin:0;font-size:13px;line-height:1.7;color:var(--mute);max-width:440px;text-wrap:pretty">{{ body }}</p>
+<sc-if value="{{ tips }}">
+<div style="display:flex;gap:7px;flex-wrap:wrap;justify-content:center;margin-top:2px">
+<sc-for list="{{ tips }}" as="t" hint-placeholder-count="3">
+<span style="padding:4px 10px;border-radius:999px;border:1px solid var(--line);font-size:11.5px;color:var(--mute)">{{ t.label }}</span>
+</sc-for>
+</div>
+</sc-if>
+<sc-if value="{{ cta }}">
+<button onClick="{{ onAction }}" style="{{ ctaStyle }}">{{ cta }}</button>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:620,&quot;height&quot;:320},&quot;kind&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;no-results&quot;,&quot;no-th&quot;,&quot;no-price&quot;,&quot;no-deals&quot;,&quot;store-down&quot;],&quot;default&quot;:&quot;no-results&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;q&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;The Forest&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;onAction&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;() =&gt; void&quot;}}">
+const ICON = (paths, color) => React.createElement('svg', { width: 24, height: 24, viewBox: '0 0 24 24', fill: 'none', stroke: color, strokeWidth: 1.8, strokeLinecap: 'round', strokeLinejoin: 'round' }, paths.map((d, i) => React.createElement('path', { key: i, d })));
+const CIRC = (color, extra) => React.createElement('svg', { width: 24, height: 24, viewBox: '0 0 24 24', fill: 'none', stroke: color, strokeWidth: 1.8, strokeLinecap: 'round', strokeLinejoin: 'round' }, React.createElement('circle', { cx: 11, cy: 11, r: 7 }), React.createElement('path', { d: extra }));
+
+class Component extends DCLogic {
+  renderVals() {
+    const k = this.props.kind || 'no-results';
+    const q = this.props.q || '';
+    const map = {
+      'no-results': {
+        tone: 'neutral', icon: CIRC('#9397ab', 'M20 20l-3.6-3.6'),
+        title: q ? `ไม่พบเกมที่ตรงกับ “${q}”` : 'ไม่พบเกมที่ตรงกับคำค้นหา',
+        body: 'ลองพิมพ์ชื่อเกมเป็นภาษาอังกฤษ ตัดคำต่อท้ายอย่าง Edition หรือ Bundle ออก หรือเลือกจากเกมยอดนิยมด้านล่าง',
+        tips: ['Elden Ring', 'Valheim', 'Palworld'], cta: 'กลับไปหน้าแรก'
+      },
+      'no-th': {
+        tone: 'bad', icon: ICON(['M12 9v4', 'M12 17h.01', 'M10.3 3.9L1.8 18a2 2 0 001.7 3h17a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z'], 'oklch(0.72 0.155 24)'),
+        title: 'ยังไม่พบข้อเสนอที่ยืนยันว่าเปิดใช้งานในประเทศไทยได้',
+        body: `ข้อเสนอทั้งหมดของ ${q} ที่เรารวบรวมได้ตอนนี้เป็นคีย์ล็อกภูมิภาคอื่น หรือผู้ขายยังไม่ได้ระบุภูมิภาคอย่างชัดเจน เราไม่แนะนำให้ซื้อจนกว่าจะตรวจสอบกับร้านค้าโดยตรง`,
+        tips: null, cta: 'ดูข้อเสนอทั้งหมดพร้อมคำเตือน'
+      },
+      'no-price': {
+        tone: 'warn', icon: ICON(['M21 12a9 9 0 11-2.64-6.36', 'M21 4v5h-5'], 'oklch(0.845 0.135 82)'),
+        title: 'ยังไม่มีข้อมูลราคาสำหรับเกมนี้',
+        body: 'เรายังดึงราคาจากร้านค้าไม่สำเร็จ อาจเป็นเพราะร้านค้าปลายทางไม่ตอบสนองชั่วคราว ลองรีเฟรชอีกครั้งในอีกสักครู่',
+        tips: null, cta: 'ลองดึงราคาอีกครั้ง'
+      },
+      'no-deals': {
+        tone: 'neutral', icon: ICON(['M4 19V9', 'M10 19V5', 'M16 19v-6', 'M22 19H2'], '#9397ab'),
+        title: 'ไม่มีดีลในหมวดนี้ตอนนี้',
+        body: 'เงื่อนไขที่เลือกยังไม่ตรงกับดีลที่กำลังใช้งานอยู่ ลองเลือกหมวดอื่นหรือกลับไปดูดีลแนะนำ',
+        tips: null, cta: 'ดูดีลแนะนำ'
+      },
+      'store-down': {
+        tone: 'warn', icon: ICON(['M12 9v4', 'M12 17h.01', 'M10.3 3.9L1.8 18a2 2 0 001.7 3h17a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z'], 'oklch(0.845 0.135 82)'),
+        title: 'ร้านค้านี้ไม่ตอบสนองชั่วคราว',
+        body: 'เราไม่สามารถยืนยันราคาและสต็อกล่าสุดจากร้านนี้ได้ ราคาที่แสดงเป็นข้อมูลจากการดึงครั้งก่อน',
+        tips: null, cta: 'ลองอีกครั้ง'
+      }
+    };
+    const d = map[k] || map['no-results'];
+    const tone = { neutral: { bg: '#2b2e3f', bd: '#3a3d52' }, warn: { bg: 'var(--warn-dim)', bd: 'var(--warn-line)' }, bad: { bg: 'var(--bad-dim)', bd: 'var(--bad-line)' } }[d.tone];
+    return {
+      icon: d.icon, title: d.title, body: d.body, cta: d.cta,
+      tips: d.tips ? d.tips.map(t => ({ label: t })) : null,
+      onAction: this.props.onAction || (e => { if (e) e.preventDefault(); }),
+      box: { display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', gap: 11, padding: '44px 22px', border: '1px dashed var(--line)', borderRadius: 16, background: 'color-mix(in srgb,#e9e9ed 2%,transparent)' },
+      iconWrap: { display: 'grid', placeItems: 'center', width: 52, height: 52, borderRadius: 15, background: tone.bg, border: '1px solid ' + tone.bd, marginBottom: 3 },
+      ctaStyle: { marginTop: 6, height: 42, padding: '0 20px', borderRadius: 11, border: '1px solid var(--color-accent)', background: 'color-mix(in srgb,#9184d9 13%,transparent)', color: 'var(--color-accent-200)', fontSize: 13.5, fontWeight: 600, cursor: 'pointer' }
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/nocturne-95162a03-9854-4dfd-88ea-ddfb17d8311d/styles.css">
+<style>:root{--ok:oklch(0.80 0.135 158);--ok-dim:oklch(0.345 0.055 158);--ok-line:oklch(0.46 0.075 158);--warn:oklch(0.845 0.135 82);--warn-dim:oklch(0.345 0.055 74);--warn-line:oklch(0.46 0.075 74);--bad:oklch(0.72 0.155 24);--bad-dim:oklch(0.335 0.070 24);--bad-line:oklch(0.45 0.095 24);--ink:#e9e9ed;--mute:color-mix(in srgb,#e9e9ed 55%,transparent);--mute2:color-mix(in srgb,#e9e9ed 38%,transparent);--line:color-mix(in srgb,#e9e9ed 12%,transparent);--line2:color-mix(in srgb,#e9e9ed 7%,transparent);--sunk:#12141f}body{margin:0;font-family:"Inter","Anuphan","Noto Sans Thai",system-ui,sans-serif;background:#161826;color:var(--ink)}</style>
+</helmet>
+<div style="{{ card }}">
+<sc-if value="{{ o.isBest }}">
+<div style="display:flex;align-items:center;gap:6px;padding:6px 13px;background:var(--ok-dim);color:var(--ok);font-size:11px;font-weight:700;letter-spacing:.03em">
+<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"></path></svg>ถูกที่สุดที่ใช้งานในไทยได้
+</div>
+</sc-if>
+<div style="padding:13px 13px 14px;display:flex;flex-direction:column;gap:12px">
+<div style="display:flex;align-items:flex-start;gap:11px">
+<span style="{{ o.logo }}">{{ o.letters }}</span>
+<span style="display:flex;flex-direction:column;gap:4px;min-width:0;flex:1">
+<span style="font-size:14.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ o.store }}</span>
+<span style="{{ o.typeStyle }}">{{ o.typeLabel }}</span>
+</span>
+<span style="font-size:10.5px;color:var(--mute2);white-space:nowrap;padding-top:3px">{{ o.updated }}</span>
+</div>
+
+<div style="display:flex;align-items:flex-end;justify-content:space-between;gap:12px">
+<span style="display:flex;flex-direction:column;gap:2px;min-width:0">
+<span style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute2)">ราคาสุทธิโดยประมาณ</span>
+<span style="{{ o.finalStyle }}">{{ o.finalText }}</span>
+<span style="font-size:11.5px;color:var(--mute)">โฆษณา <s>{{ o.advText }}</s> · ค่าธรรมเนียม {{ o.feeText }}</span>
+</span>
+<sc-if value="{{ o.hasDisc }}">
+<span style="display:inline-flex;align-items:center;padding:4px 10px;border-radius:9px;background:var(--ok-dim);color:var(--ok);font-size:14px;font-weight:700;border:1px solid var(--ok-line)">{{ o.discText }}</span>
+</sc-if>
+</div>
+
+<div style="display:flex;gap:6px;flex-wrap:wrap">
+<span style="{{ o.regionStyle }}">{{ o.regionLabel }}</span>
+<span style="{{ o.thStyle }}">{{ o.thLabel }}</span>
+<span style="display:inline-flex;align-items:center;padding:2.5px 8px;border-radius:7px;background:#2b2e3f;border:1px solid #3a3d52;font-size:10.5px;font-weight:600;color:#cfd3e5">{{ o.drm }}</span>
+<span style="display:inline-flex;align-items:center;padding:2.5px 8px;border-radius:7px;background:#2b2e3f;border:1px solid #3a3d52;font-size:10.5px;font-weight:600;color:#cfd3e5">{{ o.edition }}</span>
+</div>
+
+<sc-if value="{{ o.open }}">
+<div style="display:flex;flex-direction:column;gap:14px;padding:12px;border-radius:11px;background:var(--sunk);border:1px solid var(--line2);animation:krFade .16s ease-out">
+<div style="display:flex;flex-direction:column;gap:7px">
+<span style="font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:var(--mute2)">รายละเอียดราคา</span>
+<sc-for list="{{ o.breakdown }}" as="b" hint-placeholder-count="3">
+<div style="{{ b.style }}"><span>{{ b.k }}</span><span>{{ b.v }}</span></div>
+</sc-for>
+</div>
+<div style="display:flex;flex-direction:column;gap:7px">
+<span style="font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:var(--mute2)">ผู้ขายและความน่าเชื่อถือ</span>
+<sc-for list="{{ o.trust }}" as="b" hint-placeholder-count="3">
+<div style="{{ b.style }}"><span>{{ b.k }}</span><span>{{ b.v }}</span></div>
+</sc-for>
+</div>
+<p style="{{ o.noteStyle }}">{{ o.note }}</p>
+</div>
+</sc-if>
+
+<div style="display:flex;gap:8px;align-items:stretch">
+<button onClick="{{ o.toggle }}" style="{{ detailBtn }}">{{ detailLabel }}
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="{{ o.chev }}"><path d="M6 9l6 6 6-6"></path></svg>
+</button>
+<sc-if value="{{ o.inStock }}">
+<button onClick="{{ o.buy }}" style="{{ buyBtn }}">ไปยังร้านค้า
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M20 4l-9 9"></path></svg></button>
+</sc-if>
+<sc-if value="{{ o.oos }}">
+<span style="flex:1.6;height:46px;display:inline-flex;align-items:center;justify-content:center;border-radius:11px;background:var(--bad-dim);border:1px solid var(--bad-line);color:var(--bad);font-size:13.5px;font-weight:600">สินค้าหมด</span>
+</sc-if>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:362,&quot;height&quot;:260},&quot;o&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;any&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const o = this.props.o || {};
+    return {
+      card: { overflow: 'hidden', borderRadius: 15, border: '1px solid ' + (o.isBest ? 'var(--ok-line)' : 'var(--line)'), background: o.isBest ? 'linear-gradient(170deg,#1d2231,#191c29)' : 'linear-gradient(170deg,rgba(233,233,237,.035),rgba(233,233,237,.01))' },
+      detailLabel: o.open ? 'ซ่อนรายละเอียด' : 'รายละเอียด',
+      detailBtn: { flex: 1, height: 46, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 6, borderRadius: 11, border: '1px solid var(--line)', background: 'transparent', color: 'var(--ink)', fontSize: 13, cursor: 'pointer' },
+      buyBtn: { flex: 1.6, height: 46, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 7, borderRadius: 11, border: '1px solid ' + (o.isBest ? 'var(--ok-line)' : 'var(--color-accent)'), background: o.isBest ? 'var(--ok-dim)' : 'color-mix(in srgb,#9184d9 13%,transparent)', color: o.isBest ? 'var(--ok)' : 'var(--color-accent-200)', fontSize: 13.5, fontWeight: 600, cursor: 'pointer' }
+    };
+  }
+}
+</script>
+</body>
+</html>
