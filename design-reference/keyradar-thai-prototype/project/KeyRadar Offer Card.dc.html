@@ -14,7 +14,7 @@
 <div style="{{ card }}">
 <sc-if value="{{ o.isBest }}">
 <div style="display:flex;align-items:center;gap:6px;padding:6px 13px;background:var(--ok-dim);color:var(--ok);font-size:11px;font-weight:700;letter-spacing:.03em">
-<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"></path></svg>ถูกที่สุดที่ใช้งานในไทยได้
+<svg width="12" height="12" viewBox="0 0 256 256" fill="currentColor"><path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"></path></svg>ถูกที่สุดที่ใช้งานในไทยได้
 </div>
 </sc-if>
 <div style="padding:13px 13px 14px;display:flex;flex-direction:column;gap:12px">
@@ -65,11 +65,11 @@
 
 <div style="display:flex;gap:8px;align-items:stretch">
 <button onClick="{{ o.toggle }}" style="{{ detailBtn }}">{{ detailLabel }}
-<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="{{ o.chev }}"><path d="M6 9l6 6 6-6"></path></svg>
+<svg width="14" height="14" viewBox="0 0 256 256" fill="currentColor" style="{{ o.chev }}"><path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"></path></svg>
 </button>
 <sc-if value="{{ o.inStock }}">
 <button onClick="{{ o.buy }}" style="{{ buyBtn }}">ไปยังร้านค้า
-<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M20 4l-9 9"></path></svg></button>
+<svg width="14" height="14" viewBox="0 0 256 256" fill="currentColor"><path d="M216,104a8,8,0,0,1-16,0V59.32l-66.33,66.34a8,8,0,0,1-11.32-11.32L188.68,48H144a8,8,0,0,1,0-16h64a8,8,0,0,1,8,8Zm-24,24a8,8,0,0,0-8,8v72H48V72h72a8,8,0,0,0,0-16H48A16,16,0,0,0,32,72V208a16,16,0,0,0,16,16H184a16,16,0,0,0,16-16V136A8,8,0,0,0,192,128Z"></path></svg></button>
 </sc-if>
 <sc-if value="{{ o.oos }}">
 <span style="flex:1.6;height:46px;display:inline-flex;align-items:center;justify-content:center;border-radius:11px;background:var(--bad-dim);border:1px solid var(--bad-line);color:var(--bad);font-size:13.5px;font-weight:600">สินค้าหมด</span>

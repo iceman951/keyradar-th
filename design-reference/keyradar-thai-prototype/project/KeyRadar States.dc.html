@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="stylesheet" href="_ds/nocturne-95162a03-9854-4dfd-88ea-ddfb17d8311d/styles.css">
+<script src="_ds/nocturne-95162a03-9854-4dfd-88ea-ddfb17d8311d/_ds_bundle.js"></script>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Anuphan:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  color-scheme: dark;
+  --ok: oklch(0.80 0.135 158); --ok-dim: oklch(0.345 0.055 158); --ok-line: oklch(0.46 0.075 158);
+  --warn: oklch(0.845 0.135 82); --warn-dim: oklch(0.345 0.055 74); --warn-line: oklch(0.46 0.075 74);
+  --bad: oklch(0.72 0.155 24); --bad-dim: oklch(0.335 0.070 24); --bad-line: oklch(0.45 0.095 24);
+  --ink:#e9e9ed;
+  --mute: color-mix(in srgb,#e9e9ed 55%,transparent);
+  --mute2: color-mix(in srgb,#e9e9ed 38%,transparent);
+  --line: color-mix(in srgb,#e9e9ed 12%,transparent);
+  --line2: color-mix(in srgb,#e9e9ed 7%,transparent);
+  --sunk:#12141f; --raise:#1d2030;
+}
+html,body{margin:0;padding:0}
+body{background:#101220;color:var(--ink);font-family:"Inter","Anuphan","Noto Sans Thai",system-ui,sans-serif;font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:"Inter","Anuphan","Noto Sans Thai",system-ui,sans-serif;font-weight:600;letter-spacing:-0.02em;margin:0}
+a{color:var(--color-accent);text-decoration:none}
+a:hover{color:var(--color-accent-400);text-decoration:underline}
+button{font-family:inherit}
+:focus-visible{outline:2px solid var(--color-accent);outline-offset:2px}
+@keyframes krShimmer{0%{background-position:-360px 0}100%{background-position:360px 0}}
+@keyframes krSpin{to{transform:rotate(360deg)}}
+@keyframes krPulse{0%,100%{opacity:.35}50%{opacity:.9}}
+</style>
+</helmet>
+
+<div style="padding:44px 48px 80px;background:#101220;color:#e9e9ed;min-height:100vh;box-sizing:border-box">
+
+<header style="display:flex;flex-direction:column;gap:12px;margin-bottom:38px;max-width:720px">
+<div style="display:flex;align-items:center;gap:9px">
+<svg width="24" height="24" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+<circle cx="13" cy="13" r="11.2" stroke="#3a3d55" stroke-width="1.2"></circle>
+<circle cx="13" cy="13" r="6.6" stroke="#3a3d55" stroke-width="1.2"></circle>
+<path d="M13 13 L13 1.8 A11.2 11.2 0 0 1 22.9 8.1 Z" fill="#9184d9" opacity="0.28"></path>
+<path d="M13 13 L22.9 8.1" stroke="#9184d9" stroke-width="1.4" stroke-linecap="round"></path>
+<circle cx="18.4" cy="16.9" r="2" fill="#9184d9"></circle>
+</svg>
+<span style="font-size:14px;font-weight:700;letter-spacing:.07em">KEYRADAR<span style="color:var(--color-accent);font-size:9px;letter-spacing:.2em;margin-left:4px">TH</span></span>
+</div>
+<h1 style="font-size:34px;line-height:1.28">แกลเลอรีสถานะและคอมโพเนนต์</h1>
+<p style="margin:0;font-size:14px;line-height:1.7;color:var(--mute);text-wrap:pretty">ทุกสถานะขอบและคอมโพเนนต์ที่ใช้ซ้ำในต้นแบบ KeyRadar TH — สำหรับตรวจสอบข้อความ สี และลำดับความสำคัญก่อนส่งต่อให้ทีมพัฒนา · <a href="KeyRadar TH.dc.html">กลับไปที่ต้นแบบ</a></p>
+</header>
+
+<sc-for list="{{ groups }}" as="grp" hint-placeholder-count="3">
+<section style="margin-bottom:46px">
+<div style="display:flex;align-items:baseline;gap:12px;margin-bottom:5px">
+<h2 style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--color-accent)">{{ grp.kicker }}</h2>
+<span style="height:1px;flex:1;background:linear-gradient(to right,var(--line2),transparent)"></span>
+</div>
+<p style="margin:0 0 22px;font-size:13px;color:var(--mute);max-width:640px">{{ grp.note }}</p>
+<div style="display:flex;flex-wrap:wrap;gap:22px;align-items:flex-start">
+
+<sc-for list="{{ grp.frames }}" as="f" hint-placeholder-count="4">
+<div style="{{ f.wrap }}">
+<div style="display:flex;flex-direction:column;gap:3px">
+<div style="display:flex;align-items:center;gap:8px">
+<span style="{{ f.dot }}"></span>
+<span style="font-size:12.5px;font-weight:600">{{ f.title }}</span>
+</div>
+<span style="font-size:11.5px;color:var(--mute2);line-height:1.5">{{ f.desc }}</span>
+</div>
+<div style="{{ f.stage }}">
+
+<sc-if value="{{ f.isAutocomplete }}">
+<div style="border:1px solid var(--line);border-radius:13px;background:var(--raise);overflow:hidden">
+<div style="display:flex;align-items:center;gap:10px;height:44px;padding:0 13px;border-bottom:1px solid var(--line2);background:var(--sunk)">
+<svg width="16" height="16" viewBox="0 0 256 256" fill="var(--color-accent)"><path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"></path></svg>
+<span style="font-size:13.5px;color:{{ f.qColor }}">{{ f.qText }}</span>
+<span style="width:1px;height:16px;background:var(--color-accent);animation:krPulse 1.1s ease-in-out infinite"></span>
+</div>
+<dc-import name="KeyRadar Autocomplete" rows="{{ f.rows }}" loading="{{ f.loading }}" empty="{{ f.empty }}" q="{{ f.q }}" hint-size="100%,240px"></dc-import>
+</div>
+</sc-if>
+
+<sc-if value="{{ f.isEmpty }}">
+<dc-import name="KeyRadar Empty" kind="{{ f.kind }}" q="{{ f.q }}" hint-size="100%,290px"></dc-import>
+</sc-if>
+
+<sc-if value="{{ f.isSkeleton }}">
+<div style="display:flex;flex-direction:column;gap:10px">
+<sc-for list="{{ f.bars }}" as="b" hint-placeholder-count="3">
+<div style="{{ b.style }}"></div>
+</sc-for>
+</div>
+</sc-if>
+
+<sc-if value="{{ f.isOffer }}">
+<dc-import name="KeyRadar Offer Card" o="{{ f.offer }}" hint-size="100%,240px"></dc-import>
+</sc-if>
+
+<sc-if value="{{ f.isBanner }}">
+<div style="{{ f.bannerStyle }}">
+<span style="{{ f.bannerIconWrap }}">{{ f.bannerIcon }}</span>
+<span style="display:flex;flex-direction:column;gap:2px;min-width:0">
+<span style="font-size:13px;font-weight:600">{{ f.bannerTitle }}</span>
+<span style="font-size:11.5px;opacity:.85;line-height:1.55">{{ f.bannerBody }}</span>
+</span>
+</div>
+</sc-if>
+
+<sc-if value="{{ f.isSheet }}">
+<div style="position:relative;width:390px;height:520px;border-radius:20px;border:1px solid #2c2f42;overflow:hidden;background:#161826">
+<div style="position:absolute;inset:0;background:rgba(9,11,18,.66)"></div>
+<div style="position:absolute;left:0;right:0;bottom:0;max-height:88%;overflow:hidden;background:var(--raise);border-radius:20px 20px 0 0;border-top:1px solid var(--line)">
+<div style="padding:10px 16px 12px;border-bottom:1px solid var(--line2)">
+<div style="width:38px;height:4px;border-radius:99px;background:#3d4054;margin:0 auto 12px"></div>
+<div style="display:flex;align-items:center;justify-content:space-between"><h3 style="font-size:16px">ตัวกรอง</h3><span style="color:var(--color-accent);font-size:12.5px">ล้างทั้งหมด</span></div>
+</div>
+<div style="padding:6px 16px 12px;max-height:330px;overflow:hidden">
+<dc-import name="KeyRadar Filters" f="{{ f.filters }}" bare="{{ true }}" hint-size="100%,320px"></dc-import>
+</div>
+<div style="padding:12px 16px 16px;border-top:1px solid var(--line2);background:var(--raise)">
+<div style="height:48px;border-radius:12px;border:1px solid var(--color-accent);background:color-mix(in srgb,#9184d9 14%,transparent);color:var(--color-accent-200);font-size:15px;font-weight:600;display:grid;place-items:center">ดูผลลัพธ์ 6 เกม</div>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ f.isDialog }}">
+<div style="width:min(430px,100%);display:flex;flex-direction:column;gap:14px;padding:18px;border-radius:18px;background:var(--raise);border:1px solid var(--line);box-shadow:0 28px 70px rgba(0,0,0,.66)">
+<div style="display:flex;align-items:flex-start;gap:12px">
+<span style="width:38px;height:38px;flex:none;display:grid;place-items:center;border-radius:11px;background:var(--color-accent-900);color:var(--color-accent-300);border:1px solid color-mix(in srgb,#9184d9 30%,transparent)">
+<svg width="18" height="18" viewBox="0 0 256 256" fill="currentColor"><path d="M216,104a8,8,0,0,1-16,0V59.32l-66.33,66.34a8,8,0,0,1-11.32-11.32L188.68,48H144a8,8,0,0,1,0-16h64a8,8,0,0,1,8,8Zm-24,24a8,8,0,0,0-8,8v72H48V72h72a8,8,0,0,0,0-16H48A16,16,0,0,0,32,72V208a16,16,0,0,0,16,16H184a16,16,0,0,0,16-16V136A8,8,0,0,0,192,128Z"></path></svg>
+</span>
+<span style="min-width:0">
+<h3 style="font-size:17px;margin-bottom:5px">คุณกำลังออกจาก KeyRadar TH</h3>
+<p style="margin:0;font-size:12.5px;color:var(--mute);line-height:1.6">เรากำลังพาคุณไปที่ <strong style="color:var(--ink);font-weight:600">Kinguin</strong> เพื่อทำรายการซื้อ การชำระเงินและการรับคีย์ทั้งหมดเกิดขึ้นบนเว็บไซต์ของร้านค้า</p>
+</span>
+</div>
+<div style="display:flex;flex-direction:column;gap:1px;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--sunk)">
+<sc-for list="{{ f.rows2 }}" as="r" hint-placeholder-count="5">
+<div style="{{ r.style }}"><span style="color:var(--mute)">{{ r.k }}</span><span style="{{ r.vStyle }}">{{ r.v }}</span></div>
+</sc-for>
+</div>
+<div style="display:flex;gap:9px;padding:10px 12px;border-radius:10px;font-size:11.5px;line-height:1.6;color:var(--warn);background:var(--warn-dim);border:1px solid var(--warn-line)">
+<svg width="15" height="15" viewBox="0 0 256 256" fill="currentColor" style="flex:none;margin-top:1px"><path d="M236.8,188.09,149.35,36.22h0a24.76,24.76,0,0,0-42.7,0L19.2,188.09a23.51,23.51,0,0,0,0,23.72A24.35,24.35,0,0,0,40.55,224h174.9a24.35,24.35,0,0,0,21.33-12.19A23.51,23.51,0,0,0,236.8,188.09Zm-13.87,15.71a8.5,8.5,0,0,1-7.48,4.2H40.55a8.5,8.5,0,0,1-7.48-4.2,7.59,7.59,0,0,1,0-7.72L120.52,44.21a8.75,8.75,0,0,1,15,0l87.45,151.87A7.59,7.59,0,0,1,222.93,203.8ZM120,144V104a8,8,0,0,1,16,0v40a8,8,0,0,1-16,0Zm20,36a12,12,0,1,1-12-12A12,12,0,0,1,140,180Z"></path></svg>
+<span>KeyRadar TH ไม่รับประกันผลการเปิดใช้งาน กรุณายืนยันภูมิภาคของคีย์บนหน้าร้านค้าอีกครั้งก่อนชำระเงิน</span>
+</div>
+<div style="display:flex;gap:9px">
+<span style="flex:1;height:44px;display:grid;place-items:center;border-radius:10px;border:1px solid var(--line);font-size:14px">ยกเลิก</span>
+<span style="flex:1.4;height:44px;display:inline-flex;align-items:center;justify-content:center;gap:7px;border-radius:10px;border:1px solid var(--ok-line);background:var(--ok-dim);color:var(--ok);font-size:14px;font-weight:600">ไปยัง Kinguin
+<svg width="14" height="14" viewBox="0 0 256 256" fill="currentColor"><path d="M216,104a8,8,0,0,1-16,0V59.32l-66.33,66.34a8,8,0,0,1-11.32-11.32L188.68,48H144a8,8,0,0,1,0-16h64a8,8,0,0,1,8,8Zm-24,24a8,8,0,0,0-8,8v72H48V72h72a8,8,0,0,0,0-16H48A16,16,0,0,0,32,72V208a16,16,0,0,0,16,16H184a16,16,0,0,0,16-16V136A8,8,0,0,0,192,128Z"></path></svg></span>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ f.isSticky }}">
+<div style="width:390px;border-radius:16px;overflow:hidden;border:1px solid #2c2f42;background:#161826">
+<div style="height:96px;background:linear-gradient(180deg,rgba(233,233,237,.03),transparent);display:grid;place-items:center;font-size:11.5px;color:var(--mute2)">…เนื้อหาหน้าเปรียบเทียบราคา…</div>
+<div style="padding:10px 14px;background:color-mix(in srgb,#161826 94%,transparent);border-top:1px solid var(--line);display:flex;align-items:center;gap:12px">
+<span style="display:flex;flex-direction:column;line-height:1.25;min-width:0;flex:1">
+<span style="font-size:10.5px;color:var(--mute2)">ถูกที่สุดที่ใช้งานในไทยได้ · Kinguin</span>
+<span style="display:flex;align-items:baseline;gap:7px"><span style="font-size:21px;font-weight:700;color:var(--ok);letter-spacing:-0.02em">฿887</span><s style="font-size:11.5px;color:var(--mute2)">฿1,590</s></span>
+</span>
+<span style="flex:none;height:46px;padding:0 18px;border-radius:12px;border:1px solid var(--ok-line);background:var(--ok-dim);color:var(--ok);font-size:14px;font-weight:600;display:inline-flex;align-items:center;gap:7px">ไปยังร้านค้า
+<svg width="14" height="14" viewBox="0 0 256 256" fill="currentColor"><path d="M216,104a8,8,0,0,1-16,0V59.32l-66.33,66.34a8,8,0,0,1-11.32-11.32L188.68,48H144a8,8,0,0,1,0-16h64a8,8,0,0,1,8,8Zm-24,24a8,8,0,0,0-8,8v72H48V72h72a8,8,0,0,0,0-16H48A16,16,0,0,0,32,72V208a16,16,0,0,0,16,16H184a16,16,0,0,0,16-16V136A8,8,0,0,0,192,128Z"></path></svg></span>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ f.isSwatches }}">
+<div style="display:flex;flex-direction:column;gap:16px">
+<sc-for list="{{ f.rows3 }}" as="row" hint-placeholder-count="4">
+<div style="display:flex;flex-direction:column;gap:8px">
+<span style="font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--mute2)">{{ row.head }}</span>
+<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+<sc-for list="{{ row.items }}" as="it" hint-placeholder-count="4">
+<span style="{{ it.style }}">{{ it.label }}</span>
+</sc-for>
+</div>
+</div>
+</sc-for>
+</div>
+</sc-if>
+
+</div>
+</div>
+</sc-for>
+
+</div>
+</section>
+</sc-for>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+const B = n => '฿' + Math.round(n).toLocaleString('th-TH');
+const TYPE = {
+  steam: { label: 'Steam โดยตรง', color: 'var(--color-accent-300)', bg: 'var(--color-accent-900)', bd: 'color-mix(in srgb,#9184d9 30%,transparent)' },
+  official: { label: 'ร้านค้าอย่างเป็นทางการ', color: 'var(--ok)', bg: 'var(--ok-dim)', bd: 'var(--ok-line)' },
+  reseller: { label: 'ตัวแทนจำหน่ายคีย์', color: 'var(--warn)', bg: 'var(--warn-dim)', bd: 'var(--warn-line)' },
+  market: { label: 'Marketplace', color: '#cfd3e5', bg: '#31344a', bd: '#454a66' }
+};
+const tagBase = { display: 'inline-flex', alignItems: 'center', gap: 5, padding: '2.5px 8px', borderRadius: 7, fontSize: 10.5, fontWeight: 600, lineHeight: 1.5, whiteSpace: 'nowrap' };
+const tag = (color, bg, bd) => Object.assign({}, tagBase, { color, background: bg, border: '1px solid ' + (bd || 'transparent') });
+const typeStyle = t => Object.assign({}, tagBase, { fontSize: 10, padding: '1.5px 7px', color: TYPE[t].color, background: TYPE[t].bg, border: '1px solid ' + TYPE[t].bd });
+const logo = (t, size) => ({ width: size, height: size, flex: 'none', display: 'grid', placeItems: 'center', borderRadius: size > 34 ? 11 : 9, background: `linear-gradient(150deg, ${TYPE[t].bg}, color-mix(in srgb, ${TYPE[t].bg} 40%, #12141f))`, border: '1px solid ' + TYPE[t].bd, color: TYPE[t].color, fontSize: size > 34 ? 13 : 11, fontWeight: 700 });
+const cover = (hue, h) => ({ position: 'relative', width: '100%', height: h, borderRadius: 10, overflow: 'hidden', display: 'grid', placeItems: 'center', background: `linear-gradient(150deg, hsl(${hue} 34% 26%) 0%, hsl(${(hue + 34) % 360} 40% 14%) 52%, hsl(${(hue + 300) % 360} 30% 9%) 100%)`, boxShadow: 'inset 0 0 0 1px rgba(233,233,237,.07)' });
+const kv = strong => ({ display: 'flex', justifyContent: 'space-between', gap: 12, fontSize: 12.5, paddingBottom: 6, borderBottom: '1px solid var(--line2)', color: strong ? 'var(--ok)' : 'var(--ink)', fontWeight: strong ? 700 : 400 });
+
+function offer(o) {
+  const t = o.type;
+  return Object.assign({
+    store: o.store, letters: o.letters, edition: 'Standard Edition', drm: 'Steam Key', open: !!o.open,
+    typeLabel: TYPE[t].label, typeStyle: typeStyle(t), logo: logo(t, 34),
+    regionLabel: o.region, regionStyle: o.th === 'ok' ? tag('#cfd3e5', '#2b2e3f', '#3d4054') : tag('var(--warn)', 'var(--warn-dim)', 'var(--warn-line)'),
+    thLabel: o.th === 'ok' ? 'ใช้งานในไทยได้' : o.th === 'check' ? 'ตรวจสอบภูมิภาค' : 'ไม่รองรับไทย',
+    thStyle: o.th === 'ok' ? tag('var(--ok)', 'var(--ok-dim)', 'var(--ok-line)') : o.th === 'check' ? tag('var(--warn)', 'var(--warn-dim)', 'var(--warn-line)') : tag('var(--bad)', 'var(--bad-dim)', 'var(--bad-line)'),
+    advText: B(o.adv), feeText: o.fee ? '+ ' + B(o.fee) : '—',
+    finalText: B(o.adv + (o.fee || 0)),
+    finalStyle: { fontSize: 25, fontWeight: 700, letterSpacing: '-0.02em', color: o.isBest ? 'var(--ok)' : 'var(--ink)' },
+    disc: o.disc, discText: '\u2212' + o.disc + '%', hasDisc: o.disc > 0,
+    updated: o.updated, inStock: o.stock !== false, oos: o.stock === false, isBest: !!o.isBest,
+    chev: { display: 'grid', placeItems: 'center', transform: o.open ? 'rotate(180deg)' : 'none' },
+    breakdown: [{ k: 'ราคาที่โฆษณา', v: B(o.adv) }].concat(o.fee ? [{ k: 'Buyer Protection', v: '+ ' + B(o.fee) }] : [], [{ k: 'ราคาสุทธิโดยประมาณ', v: B(o.adv + (o.fee || 0)), s: true }]).map(r => ({ k: r.k, v: r.v, style: kv(r.s) })),
+    trust: (t === 'market' ? [{ k: 'คะแนนผู้ขาย', v: '98.6%' }, { k: 'จำนวนรีวิวผู้ขาย', v: '12,480' }, { k: 'ประเภทร้าน', v: TYPE[t].label }] : [{ k: 'ประเภทร้าน', v: TYPE[t].label }, { k: 'ค่าธรรมเนียมแฝง', v: 'ไม่พบ' }]).map(r => ({ k: r.k, v: r.v, style: kv(false) })),
+    note: o.note, noteStyle: { margin: 0, fontSize: 12, lineHeight: 1.65, color: o.th === 'ok' ? 'var(--mute)' : 'var(--warn)' },
+    toggle: () => { }, buy: () => { }
+  });
+}
+
+const PH = { refresh: 'M240,56v48a8,8,0,0,1-8,8H184a8,8,0,0,1,0-16h28.69L184.32,71.63l-.4-.42a80,80,0,1,0-1.67,114.78,8,8,0,0,1,11,11.63A95.44,95.44,0,0,1,128,224h-1.32A96,96,0,1,1,195.75,60L224,86.05V56a8,8,0,1,1,16,0Z', warning: 'M236.8,188.09,149.35,36.22h0a24.76,24.76,0,0,0-42.7,0L19.2,188.09a23.51,23.51,0,0,0,0,23.72A24.35,24.35,0,0,0,40.55,224h174.9a24.35,24.35,0,0,0,21.33-12.19A23.51,23.51,0,0,0,236.8,188.09Zm-13.87,15.71a8.5,8.5,0,0,1-7.48,4.2H40.55a8.5,8.5,0,0,1-7.48-4.2,7.59,7.59,0,0,1,0-7.72L120.52,44.21a8.75,8.75,0,0,1,15,0l87.45,151.87A7.59,7.59,0,0,1,222.93,203.8ZM120,144V104a8,8,0,0,1,16,0v40a8,8,0,0,1-16,0Zm20,36a12,12,0,1,1-12-12A12,12,0,0,1,140,180Z', x: 'M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z' };
+const ICON = (name, w) => React.createElement('svg', { width: w || 17, height: w || 17, viewBox: '0 0 256 256', fill: 'currentColor' }, React.createElement('path', { d: PH[name] }));
+
+class Component extends DCLogic {
+  renderVals() {
+    const frame = (w, o) => Object.assign({
+      wrap: { display: 'flex', flexDirection: 'column', gap: 10, width: w, flex: 'none' },
+      stage: { padding: 0 }, dot: { width: 7, height: 7, borderRadius: 2, background: 'var(--color-accent)', flex: 'none' }
+    }, o);
+    const acRows = [
+      { id: 'a', title: 'ELDEN RING', year: 2022, cover: cover(36, 44), price: '฿944', thOk: true, go: e => e && e.preventDefault() },
+      { id: 'b', title: "Baldur's Gate 3", year: 2023, cover: cover(18, 44), price: '฿1,043', thOk: true, go: e => e && e.preventDefault() },
+      { id: 'c', title: 'Palworld', year: 2024, cover: cover(202, 44), price: '฿549', thOk: true, go: e => e && e.preventDefault() }
+    ];
+    const bars = n => Array.from({ length: n }, (_, i) => ({ style: { height: 118, borderRadius: 13, border: '1px solid var(--line2)', background: 'linear-gradient(100deg,#1b1e2c 30%,#23273a 50%,#1b1e2c 70%)', backgroundSize: '720px 100%', animation: 'krShimmer 1.25s linear infinite', animationDelay: (i * .09) + 's' } }));
+    const banner = (tone, title, body, icon) => ({
+      isBanner: true, bannerTitle: title, bannerBody: body, bannerIcon: icon,
+      bannerStyle: { display: 'flex', gap: 11, alignItems: 'flex-start', padding: '13px 15px', borderRadius: 13, color: `var(--${tone})`, background: `var(--${tone}-dim)`, border: `1px solid var(--${tone}-line)` },
+      bannerIconWrap: { display: 'grid', placeItems: 'center', width: 30, height: 30, flex: 'none', borderRadius: 9, background: 'rgba(0,0,0,.22)' }
+    });
+
+    return {
+      groups: [
+        {
+          kicker: 'การค้นหา', note: 'สถานะของช่องค้นหาและผลการค้นหา ตั้งแต่กำลังพิมพ์จนถึงไม่พบผลลัพธ์',
+          frames: [
+            frame(430, { title: 'Search autocomplete opened', desc: 'กำลังพิมพ์ — แสดงปกเกม ปีที่วางจำหน่าย และราคาสุทธิต่ำสุด', isAutocomplete: true, rows: acRows, loading: false, empty: false, q: 'eld', qText: 'eld', qColor: 'var(--ink)' }),
+            frame(430, { title: 'Search loading', desc: 'กำลังดึงรายการที่ตรงกัน — โครงร่างแทนเนื้อหาเพื่อไม่ให้เลย์เอาต์กระโดด', isAutocomplete: true, rows: [], loading: true, empty: false, q: 'palw', qText: 'palw', qColor: 'var(--ink)' }),
+            frame(430, { title: 'Autocomplete — ไม่พบผลลัพธ์', desc: 'ไม่มีเกมที่ตรงกับคำค้นหาในคลัง', isAutocomplete: true, rows: [], loading: false, empty: true, q: 'zzxq', qText: 'zzxq', qColor: 'var(--ink)' }),
+            frame(560, { title: 'Search loading — หน้าผลการค้นหา', desc: 'โครงร่างแถวผลลัพธ์ระหว่างรอข้อมูลราคา', isSkeleton: true, bars: bars(3) }),
+            frame(560, { title: 'No search results', desc: 'สถานะว่าง พร้อมคำแนะนำและทางออกกลับไปยังเกมยอดนิยม', isEmpty: true, kind: 'no-results', q: 'Skyrimm' })
+          ]
+        },
+        {
+          kicker: 'ข้อมูลราคาและภูมิภาค', note: 'สถานะที่กระทบความไว้วางใจโดยตรง — เมื่อข้อมูลไม่ครบ เราจะไม่ยืนยันการเปิดใช้งานในไทย',
+          frames: [
+            frame(560, { title: 'ไม่มีข้อเสนอที่ใช้งานในไทยได้', desc: 'พบเกมแต่ทุกคีย์ล็อกภูมิภาคอื่น — ไม่แนะนำให้ซื้อจนกว่าจะตรวจสอบ', isEmpty: true, kind: 'no-th', q: 'HELLDIVERS 2' }),
+            frame(560, { title: 'ไม่มีข้อมูลราคา', desc: 'ดึงราคาจากร้านค้าไม่สำเร็จ — เสนอให้ลองใหม่แทนที่จะแสดงหน้าว่าง', isEmpty: true, kind: 'no-price', q: 'Terraria' }),
+            frame(560, { title: 'ร้านค้าไม่ตอบสนองชั่วคราว', desc: 'ราคาที่แสดงเป็นข้อมูลจากการดึงครั้งก่อน ไม่ใช่ราคาปัจจุบัน', isEmpty: true, kind: 'store-down', q: '' }),
+            frame(430, Object.assign({ title: 'Price data being refreshed', desc: 'แถบแจ้งเตือนเหนือตารางเปรียบเทียบระหว่างรีเฟรช' }, banner('warn', 'กำลังดึงราคาล่าสุดจากร้านค้า', 'ข้อมูลที่แสดงอาจยังไม่ใช่ราคาปัจจุบัน จะอัปเดตอัตโนมัติเมื่อดึงเสร็จ', React.createElement('span', { style: { display: 'grid', placeItems: 'center', animation: 'krSpin 1s linear infinite' } }, ICON('refresh'))))),
+            frame(430, Object.assign({ title: 'Region information uncertain', desc: 'ผู้ขายไม่ได้ระบุประเทศที่รองรับ — ใช้คำว่า “ควรตรวจสอบ” ไม่ใช่ “ใช้ได้”' }, banner('warn', 'ควรตรวจสอบรายละเอียดภูมิภาคก่อนซื้อ', 'ผู้ขายไม่ได้ระบุรายชื่อประเทศที่รองรับอย่างชัดเจน', ICON('warning')))),
+            frame(430, Object.assign({ title: 'ไม่รองรับภูมิภาคไทย', desc: 'สถานะปฏิเสธชัดเจน ใช้สีแดงและไม่แสดงปุ่มซื้อเป็นสีเขียว' }, banner('bad', 'คีย์นี้เปิดใช้งานจากประเทศไทยไม่ได้', 'ล็อกเฉพาะอเมริกาเหนือ — Steam จะปฏิเสธการเปิดใช้งานจาก IP ไทย', ICON('x'))))
+          ]
+        },
+        {
+          kicker: 'ข้อเสนอบนมือถือ', note: 'แถวตารางเปรียบเทียบถูกแปลงเป็นการ์ดแนวตั้ง โดยราคาสุทธิเป็นองค์ประกอบที่ใหญ่ที่สุดเสมอ',
+          frames: [
+            frame(390, { title: 'Offer card — ถูกที่สุดที่ใช้ในไทยได้', desc: 'สถานะปกติ ปักหมุดไว้บนสุด มีแถบเขียวกำกับ', isOffer: true, offer: offer({ store: 'Kinguin', letters: 'KG', type: 'market', region: 'Global', th: 'ok', adv: 845, fee: 42, disc: 44, updated: '6 นาทีที่แล้ว', isBest: true, note: 'ค่า Buyer Protection เป็นตัวเลือกเสริมแต่ถูกติ๊กไว้ล่วงหน้าที่หน้าชำระเงิน' }) }),
+            frame(390, { title: 'Offer card — ขยายรายละเอียด', desc: 'แจกแจงค่าธรรมเนียม คะแนนผู้ขาย และข้อควรทราบ', isOffer: true, offer: offer({ store: 'Eneba', letters: 'EN', type: 'market', region: 'ยุโรป (EU)', th: 'check', adv: 779, fee: 54, disc: 48, updated: '4 นาทีที่แล้ว', open: true, note: 'คีย์ล็อกภูมิภาคยุโรป อาจเปิดใช้งานจากไทยไม่ได้ ควรสอบถามร้านค้าก่อนซื้อ' }) }),
+            frame(390, { title: 'Offer out of stock', desc: 'ปุ่มซื้อถูกแทนที่ด้วยสถานะสินค้าหมด ไม่ใช่ปุ่มที่กดไม่ได้', isOffer: true, offer: offer({ store: 'GamersGate', letters: 'GG', type: 'official', region: 'Global', th: 'ok', adv: 1150, fee: 0, disc: 27, updated: '2 ชม.ที่แล้ว', stock: false, note: 'ตัวแทนจำหน่ายที่ได้รับอนุญาต สต็อกคีย์บางรายการมีจำกัด' }) }),
+            frame(390, { title: 'Sticky bottom summary', desc: 'ราคาต่ำสุดที่ใช้ในไทยได้ติดอยู่ท้ายจอเสมอ ปุ่มสูง 46px', isSticky: true })
+          ]
+        },
+        {
+          kicker: 'การโต้ตอบ', note: 'Bottom sheet สำหรับตัวกรอง และการยืนยันก่อนออกไปยังร้านค้าภายนอก',
+          frames: [
+            frame(390, { title: 'Mobile filter opened', desc: 'Bottom sheet เต็มความกว้าง ปุ่มยืนยันติดขอบล่างในระยะนิ้วโป้ง', isSheet: true, filters: { thOnly: true, officialOnly: false, noMarket: false, inStock: true, histLow: false, maxPrice: 1500, minDisc: 20 } }),
+            frame(430, {
+              title: 'External-link confirmation', desc: 'สรุปราคาสุทธิ ภูมิภาค และประเภทร้านอีกครั้งก่อนออกจากเว็บไซต์', isDialog: true,
+              rows2: [
+                { k: 'เกม', v: 'ELDEN RING · Standard Edition' },
+                { k: 'ราคาที่โฆษณา', v: '฿845' },
+                { k: 'ค่าธรรมเนียมที่ทราบ', v: '+ ฿42' },
+                { k: 'ราคาสุทธิโดยประมาณ', v: '฿887', s: true },
+                { k: 'ภูมิภาค / DRM', v: 'Global · Steam Key' },
+                { k: 'ประเภทร้าน', v: 'Marketplace' }
+              ].map(r => ({ k: r.k, v: r.v, style: { display: 'flex', justifyContent: 'space-between', gap: 12, padding: '9px 13px', fontSize: 12.5, background: r.s ? 'color-mix(in srgb,var(--ok) 8%,transparent)' : 'transparent' }, vStyle: { fontWeight: r.s ? 700 : 500, color: r.s ? 'var(--ok)' : 'var(--ink)', fontSize: r.s ? 15 : 12.5, textAlign: 'right' } }))
+            })
+          ]
+        },
+        {
+          kicker: 'คลังคอมโพเนนต์', note: 'ป้ายกำกับทั้งหมดที่ใช้สื่อสารความน่าเชื่อถือ — สีเขียวใช้เฉพาะเมื่อยืนยันได้เท่านั้น',
+          frames: [
+            frame(700, {
+              title: 'Badges & store identity', desc: 'ป้ายภูมิภาค การเปิดใช้งาน ประเภทร้าน ส่วนลด และตราร้านค้า', isSwatches: true,
+              rows3: [
+                { head: 'การเปิดใช้งานในไทย', items: [{ label: 'ใช้งานในไทยได้', style: tag('var(--ok)', 'var(--ok-dim)', 'var(--ok-line)') }, { label: 'ตรวจสอบภูมิภาค', style: tag('var(--warn)', 'var(--warn-dim)', 'var(--warn-line)') }, { label: 'ไม่รองรับไทย', style: tag('var(--bad)', 'var(--bad-dim)', 'var(--bad-line)') }] },
+                { head: 'ภูมิภาคของคีย์', items: ['Global', 'SEA', 'ไทย', 'ROW (ยกเว้นบางประเทศ)'].map(l => ({ label: l, style: tag('#cfd3e5', '#2b2e3f', '#3d4054') })).concat([{ label: 'ยุโรป (EU)', style: tag('var(--warn)', 'var(--warn-dim)', 'var(--warn-line)') }, { label: 'อเมริกาเหนือ', style: tag('var(--bad)', 'var(--bad-dim)', 'var(--bad-line)') }]) },
+                { head: 'ประเภทร้านค้า', items: ['steam', 'official', 'reseller', 'market'].map(t => ({ label: TYPE[t].label, style: typeStyle(t) })) },
+                { head: 'แพลตฟอร์ม / DRM / Edition', items: ['Steam', 'Steam Key', 'Standard Edition', 'Deluxe Edition', 'DLC', 'Bundle'].map(l => ({ label: l, style: tag('#cfd3e5', '#2b2e3f', '#3a3d52') })) },
+                { head: 'ราคาและสถานะ', items: [{ label: 'ถูกที่สุด', style: tag('var(--ok)', 'var(--ok-dim)', 'var(--ok-line)') }, { label: '\u221249%', style: Object.assign({}, tagBase, { fontSize: 12, padding: '3px 9px', color: 'var(--ok)', background: 'var(--ok-dim)', border: '1px solid var(--ok-line)' }) }, { label: '\u221218%', style: Object.assign({}, tagBase, { fontSize: 12, padding: '3px 9px', color: '#cfd3e5', background: '#2b2e3f' }) }, { label: 'ต่ำสุดเป็นประวัติการณ์', style: tag('var(--color-accent-200)', 'var(--color-accent-900)', 'color-mix(in srgb,#9184d9 34%,transparent)') }, { label: 'สินค้าหมด', style: tag('var(--bad)', 'var(--bad-dim)', 'var(--bad-line)') }] },
+                { head: 'ตราร้านค้า', items: [['ST', 'steam'], ['FA', 'official'], ['GM', 'official'], ['HB', 'official'], ['GP', 'official'], ['GG', 'official'], ['CD', 'reseller'], ['IG', 'reseller'], ['EN', 'market'], ['KG', 'market']].map(([l, t]) => ({ label: l, style: logo(t, 36) })) },
+                { head: 'ปุ่ม', items: [{ label: 'ไปยังร้านค้า', style: { display: 'inline-flex', alignItems: 'center', height: 44, padding: '0 18px', borderRadius: 11, border: '1px solid var(--ok-line)', background: 'var(--ok-dim)', color: 'var(--ok)', fontSize: 14, fontWeight: 600 } }, { label: 'เปรียบเทียบราคา', style: { display: 'inline-flex', alignItems: 'center', height: 44, padding: '0 18px', borderRadius: 11, border: '1px solid var(--color-accent)', background: 'color-mix(in srgb,#9184d9 13%,transparent)', color: 'var(--color-accent-200)', fontSize: 14, fontWeight: 600 } }, { label: 'ตัวกรอง', style: { display: 'inline-flex', alignItems: 'center', height: 44, padding: '0 18px', borderRadius: 11, border: '1px solid var(--line)', color: 'var(--ink)', fontSize: 14 } }, { label: 'สินค้าหมด', style: { display: 'inline-flex', alignItems: 'center', height: 44, padding: '0 18px', borderRadius: 11, border: '1px solid var(--bad-line)', background: 'var(--bad-dim)', color: 'var(--bad)', fontSize: 14, fontWeight: 600 } }] }
+              ]
+            })
+          ]
+        }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

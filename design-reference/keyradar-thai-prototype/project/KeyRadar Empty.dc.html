@@ -28,8 +28,8 @@
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:620,&quot;height&quot;:320},&quot;kind&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;no-results&quot;,&quot;no-th&quot;,&quot;no-price&quot;,&quot;no-deals&quot;,&quot;store-down&quot;],&quot;default&quot;:&quot;no-results&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;q&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;The Forest&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;onAction&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;() =&gt; void&quot;}}">
-const ICON = (paths, color) => React.createElement('svg', { width: 24, height: 24, viewBox: '0 0 24 24', fill: 'none', stroke: color, strokeWidth: 1.8, strokeLinecap: 'round', strokeLinejoin: 'round' }, paths.map((d, i) => React.createElement('path', { key: i, d })));
-const CIRC = (color, extra) => React.createElement('svg', { width: 24, height: 24, viewBox: '0 0 24 24', fill: 'none', stroke: color, strokeWidth: 1.8, strokeLinecap: 'round', strokeLinejoin: 'round' }, React.createElement('circle', { cx: 11, cy: 11, r: 7 }), React.createElement('path', { d: extra }));
+const PH = { search: 'M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z', warning: 'M236.8,188.09,149.35,36.22h0a24.76,24.76,0,0,0-42.7,0L19.2,188.09a23.51,23.51,0,0,0,0,23.72A24.35,24.35,0,0,0,40.55,224h174.9a24.35,24.35,0,0,0,21.33-12.19A23.51,23.51,0,0,0,236.8,188.09Zm-13.87,15.71a8.5,8.5,0,0,1-7.48,4.2H40.55a8.5,8.5,0,0,1-7.48-4.2,7.59,7.59,0,0,1,0-7.72L120.52,44.21a8.75,8.75,0,0,1,15,0l87.45,151.87A7.59,7.59,0,0,1,222.93,203.8ZM120,144V104a8,8,0,0,1,16,0v40a8,8,0,0,1-16,0Zm20,36a12,12,0,1,1-12-12A12,12,0,0,1,140,180Z', refresh: 'M240,56v48a8,8,0,0,1-8,8H184a8,8,0,0,1,0-16h28.69L184.32,71.63l-.4-.42a80,80,0,1,0-1.67,114.78,8,8,0,0,1,11,11.63A95.44,95.44,0,0,1,128,224h-1.32A96,96,0,1,1,195.75,60L224,86.05V56a8,8,0,1,1,16,0Z', chart: 'M224,200h-8V40a8,8,0,0,0-8-8H152a8,8,0,0,0-8,8V80H96a8,8,0,0,0-8,8v40H48a8,8,0,0,0-8,8v64H32a8,8,0,0,0,0,16H224a8,8,0,0,0,0-16ZM160,48h40V200H160ZM104,96h40V200H104ZM56,144H88v56H56Z' };
+const ICON = (name, color) => React.createElement('svg', { width: 25, height: 25, viewBox: '0 0 256 256', fill: color }, React.createElement('path', { d: PH[name] }));
 
 class Component extends DCLogic {
   renderVals() {
@@ -37,31 +37,31 @@ class Component extends DCLogic {
     const q = this.props.q || '';
     const map = {
       'no-results': {
-        tone: 'neutral', icon: CIRC('#9397ab', 'M20 20l-3.6-3.6'),
+        tone: 'neutral', icon: ICON('search', '#9397ab'),
         title: q ? `ไม่พบเกมที่ตรงกับ “${q}”` : 'ไม่พบเกมที่ตรงกับคำค้นหา',
         body: 'ลองพิมพ์ชื่อเกมเป็นภาษาอังกฤษ ตัดคำต่อท้ายอย่าง Edition หรือ Bundle ออก หรือเลือกจากเกมยอดนิยมด้านล่าง',
         tips: ['Elden Ring', 'Valheim', 'Palworld'], cta: 'กลับไปหน้าแรก'
       },
       'no-th': {
-        tone: 'bad', icon: ICON(['M12 9v4', 'M12 17h.01', 'M10.3 3.9L1.8 18a2 2 0 001.7 3h17a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z'], 'oklch(0.72 0.155 24)'),
+        tone: 'bad', icon: ICON('warning', 'oklch(0.72 0.155 24)'),
         title: 'ยังไม่พบข้อเสนอที่ยืนยันว่าเปิดใช้งานในประเทศไทยได้',
         body: `ข้อเสนอทั้งหมดของ ${q} ที่เรารวบรวมได้ตอนนี้เป็นคีย์ล็อกภูมิภาคอื่น หรือผู้ขายยังไม่ได้ระบุภูมิภาคอย่างชัดเจน เราไม่แนะนำให้ซื้อจนกว่าจะตรวจสอบกับร้านค้าโดยตรง`,
         tips: null, cta: 'ดูข้อเสนอทั้งหมดพร้อมคำเตือน'
       },
       'no-price': {
-        tone: 'warn', icon: ICON(['M21 12a9 9 0 11-2.64-6.36', 'M21 4v5h-5'], 'oklch(0.845 0.135 82)'),
+        tone: 'warn', icon: ICON('refresh', 'oklch(0.845 0.135 82)'),
         title: 'ยังไม่มีข้อมูลราคาสำหรับเกมนี้',
         body: 'เรายังดึงราคาจากร้านค้าไม่สำเร็จ อาจเป็นเพราะร้านค้าปลายทางไม่ตอบสนองชั่วคราว ลองรีเฟรชอีกครั้งในอีกสักครู่',
         tips: null, cta: 'ลองดึงราคาอีกครั้ง'
       },
       'no-deals': {
-        tone: 'neutral', icon: ICON(['M4 19V9', 'M10 19V5', 'M16 19v-6', 'M22 19H2'], '#9397ab'),
+        tone: 'neutral', icon: ICON('chart', '#9397ab'),
         title: 'ไม่มีดีลในหมวดนี้ตอนนี้',
         body: 'เงื่อนไขที่เลือกยังไม่ตรงกับดีลที่กำลังใช้งานอยู่ ลองเลือกหมวดอื่นหรือกลับไปดูดีลแนะนำ',
         tips: null, cta: 'ดูดีลแนะนำ'
       },
       'store-down': {
-        tone: 'warn', icon: ICON(['M12 9v4', 'M12 17h.01', 'M10.3 3.9L1.8 18a2 2 0 001.7 3h17a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z'], 'oklch(0.845 0.135 82)'),
+        tone: 'warn', icon: ICON('warning', 'oklch(0.845 0.135 82)'),
         title: 'ร้านค้านี้ไม่ตอบสนองชั่วคราว',
         body: 'เราไม่สามารถยืนยันราคาและสต็อกล่าสุดจากร้านนี้ได้ ราคาที่แสดงเป็นข้อมูลจากการดึงครั้งก่อน',
         tips: null, cta: 'ลองอีกครั้ง'

@@ -85,15 +85,15 @@ input::placeholder{color:color-mix(in srgb,#e9e9ed 34%,transparent)}
 </nav>
 <div style="flex:1;max-width:420px;margin-left:auto;position:relative">
 <div style="{{ navSearchBox }}">
-<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--mute2);flex:none"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.6-3.6" stroke-linecap="round"></path></svg>
-<input value="{{ query }}" onInput="{{ onType }}" onFocus="{{ onFocus }}" onBlur="{{ onBlur }}" onKeyDown="{{ onKey }}" placeholder="ค้นหาเกม…" style="flex:1;background:transparent;border:0;outline:none;color:var(--ink);font-size:13.5px;min-width:0"></input>
+<svg width="16" height="16" viewBox="0 0 256 256" fill="currentColor" style="color:var(--mute2);flex:none"><path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"></path></svg>
+<input value="{{ query }}" onInput="{{ onTypeNav }}" onFocus="{{ onFocusNav }}" onBlur="{{ onBlur }}" onKeyDown="{{ onKey }}" placeholder="ค้นหาเกม…" style="flex:1;height:100%;background:transparent;border:0;outline:none;color:var(--ink);font-size:13.5px;min-width:0"></input>
 <sc-if value="{{ query }}">
 <button onClick="{{ clearQuery }}" aria-label="ล้าง" style="border:0;background:transparent;color:var(--mute2);cursor:pointer;padding:2px;display:grid;place-items:center">
-<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+<svg width="14" height="14" viewBox="0 0 256 256" fill="currentColor"><path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"></path></svg>
 </button>
 </sc-if>
 </div>
-<sc-if value="{{ acOpen }}">
+<sc-if value="{{ acOpenNav }}">
 <div style="position:absolute;top:calc(100% + 8px);left:0;right:0;background:var(--raise);border:1px solid var(--line);border-radius:12px;box-shadow:0 18px 44px rgba(0,0,0,.6);overflow:hidden;z-index:60;animation:krRise .14s ease-out">
 <dc-import name="KeyRadar Autocomplete" rows="{{ acRows }}" loading="{{ acLoading }}" empty="{{ acEmpty }}" q="{{ query }}" hint-size="100%,240px"></dc-import>
 </div>
@@ -116,17 +116,17 @@ input::placeholder{color:color-mix(in srgb,#e9e9ed 34%,transparent)}
 </svg>
 <span style="font-size:14px;font-weight:700;letter-spacing:0.07em">KEYRADAR<span style="color:var(--color-accent);font-size:9px;letter-spacing:0.2em;margin-left:4px">TH</span></span>
 </a>
-<button onClick="{{ toggleNav }}" aria-label="เมนู" style="width:38px;height:38px;display:grid;place-items:center;border:1px solid var(--line);background:transparent;border-radius:10px;color:var(--ink);cursor:pointer">
-<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>
+<button onClick="{{ toggleNav }}" aria-label="เมนู" style="width:44px;height:44px;flex:none;display:grid;place-items:center;border:1px solid var(--line);background:transparent;border-radius:11px;color:var(--ink);cursor:pointer">
+<svg width="17" height="17" viewBox="0 0 256 256" fill="currentColor"><path d="M224,128a8,8,0,0,1-8,8H40a8,8,0,0,1,0-16H216A8,8,0,0,1,224,128ZM40,72H216a8,8,0,0,0,0-16H40a8,8,0,0,0,0,16ZM216,184H40a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Z"></path></svg>
 </button>
 </div>
 <sc-if value="{{ mShowSearch }}">
 <div style="padding:0 14px 11px;position:relative">
 <div style="{{ navSearchBox }}">
-<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--mute2);flex:none"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.6-3.6" stroke-linecap="round"></path></svg>
-<input value="{{ query }}" onInput="{{ onType }}" onFocus="{{ onFocus }}" onBlur="{{ onBlur }}" onKeyDown="{{ onKey }}" placeholder="ค้นหาเกม…" style="flex:1;background:transparent;border:0;outline:none;color:var(--ink);font-size:15px;min-width:0"></input>
+<svg width="16" height="16" viewBox="0 0 256 256" fill="currentColor" style="color:var(--mute2);flex:none"><path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"></path></svg>
+<input value="{{ query }}" onInput="{{ onTypeNav }}" onFocus="{{ onFocusNav }}" onBlur="{{ onBlur }}" onKeyDown="{{ onKey }}" placeholder="ค้นหาเกม…" style="flex:1;height:100%;background:transparent;border:0;outline:none;color:var(--ink);font-size:15px;min-width:0"></input>
 </div>
-<sc-if value="{{ acOpen }}">
+<sc-if value="{{ acOpenNav }}">
 <div style="position:absolute;top:calc(100% + 6px);left:14px;right:14px;background:var(--raise);border:1px solid var(--line);border-radius:12px;box-shadow:0 18px 44px rgba(0,0,0,.6);overflow:hidden;z-index:60;animation:krRise .14s ease-out">
 <dc-import name="KeyRadar Autocomplete" rows="{{ acRows }}" loading="{{ acLoading }}" empty="{{ acEmpty }}" q="{{ query }}" hint-size="100%,220px"></dc-import>
 </div>
@@ -145,9 +145,10 @@ input::placeholder{color:color-mix(in srgb,#e9e9ed 34%,transparent)}
 
 <sc-if value="{{ r.home }}" hint-placeholder-val="{{ true }}">
 <main data-screen-label="หน้าแรก">
-<section style="position:relative;overflow:hidden">
-<div style="position:absolute;inset:0;background:radial-gradient(120% 78% at 18% -18%, rgba(145,132,217,.20), transparent 62%), radial-gradient(80% 60% at 92% 8%, rgba(90,180,150,.10), transparent 60%);pointer-events:none"></div>
-<div style="position:absolute;top:-140px;right:-90px;width:460px;height:460px;opacity:.16;pointer-events:none">
+<section style="position:relative">
+<div style="position:absolute;inset:0;overflow:hidden;pointer-events:none">
+<div style="position:absolute;inset:0;background:radial-gradient(120% 78% at 18% -18%, rgba(145,132,217,.20), transparent 62%), radial-gradient(80% 60% at 92% 8%, rgba(90,180,150,.10), transparent 60%)"></div>
+<div style="position:absolute;top:-140px;right:-90px;width:460px;height:460px;opacity:.16">
 <svg viewBox="0 0 200 200" fill="none" style="width:100%;height:100%">
 <circle cx="100" cy="100" r="94" stroke="#9184d9" stroke-width="0.5"></circle>
 <circle cx="100" cy="100" r="68" stroke="#9184d9" stroke-width="0.5"></circle>
@@ -159,6 +160,7 @@ input::placeholder{color:color-mix(in srgb,#e9e9ed 34%,transparent)}
 </g>
 <defs><linearGradient id="krg" x1="100" y1="100" x2="160" y2="40"><stop stop-color="#9184d9" stop-opacity="0.55"></stop><stop offset="1" stop-color="#9184d9" stop-opacity="0"></stop></linearGradient></defs>
 </svg>
+</div>
 </div>
 <div style="{{ pad }}">
 <div style="{{ heroInner }}">
@@ -172,11 +174,11 @@ input::placeholder{color:color-mix(in srgb,#e9e9ed 34%,transparent)}
 
 <div style="{{ heroSearchWrap }}">
 <div style="{{ heroSearchBox }}">
-<svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--color-accent);flex:none"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.6-3.6" stroke-linecap="round"></path></svg>
-<input value="{{ query }}" onInput="{{ onType }}" onFocus="{{ onFocus }}" onBlur="{{ onBlur }}" onKeyDown="{{ onKey }}" placeholder="ค้นหาเกม เช่น Valheim, Elden Ring, Palworld" aria-label="ค้นหาเกม" style="{{ heroInput }}"></input>
-<button onClick="{{ submitSearch }}" style="{{ heroBtn }}">ค้นหาเกม</button>
+<svg width="21" height="21" viewBox="0 0 256 256" fill="currentColor" style="color:var(--color-accent);flex:none"><path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"></path></svg>
+<input value="{{ query }}" onInput="{{ onTypeHero }}" onFocus="{{ onFocusHero }}" onBlur="{{ onBlur }}" onKeyDown="{{ onKey }}" placeholder="{{ heroPlaceholder }}" aria-label="ค้นหาเกม" style="{{ heroInput }}"></input>
+<button onClick="{{ submitSearch }}" style="{{ heroBtn }}" aria-label="ค้นหาเกม">{{ heroBtnLabel }}</button>
 </div>
-<sc-if value="{{ acOpen }}">
+<sc-if value="{{ acOpenHero }}">
 <div style="position:absolute;top:calc(100% + 10px);left:0;right:0;background:var(--raise);border:1px solid var(--line);border-radius:14px;box-shadow:0 22px 56px rgba(0,0,0,.62);overflow:hidden;z-index:60;animation:krRise .15s ease-out">
 <dc-import name="KeyRadar Autocomplete" rows="{{ acRows }}" loading="{{ acLoading }}" empty="{{ acEmpty }}" q="{{ query }}" hint-size="100%,280px"></dc-import>
 </div>
@@ -191,9 +193,9 @@ input::placeholder{color:color-mix(in srgb,#e9e9ed 34%,transparent)}
 </div>
 
 <div style="display:flex;gap:22px;flex-wrap:wrap;margin-top:26px;font-size:12px;color:var(--mute)">
-<span style="display:inline-flex;align-items:center;gap:7px"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--ok)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"></path></svg>ไม่มีค่าธรรมเนียมเพิ่มเติมจากเรา</span>
-<span style="display:inline-flex;align-items:center;gap:7px"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--ok)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"></path></svg>ไม่ต้องสมัครสมาชิก</span>
-<span style="display:inline-flex;align-items:center;gap:7px"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--ok)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"></path></svg>แสดงราคาสุทธิโดยประมาณเสมอ</span>
+<span style="display:inline-flex;align-items:center;gap:7px"><svg width="15" height="15" viewBox="0 0 256 256" fill="var(--ok)"><path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"></path></svg>ไม่มีค่าธรรมเนียมเพิ่มเติมจากเรา</span>
+<span style="display:inline-flex;align-items:center;gap:7px"><svg width="15" height="15" viewBox="0 0 256 256" fill="var(--ok)"><path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"></path></svg>ไม่ต้องสมัครสมาชิก</span>
+<span style="display:inline-flex;align-items:center;gap:7px"><svg width="15" height="15" viewBox="0 0 256 256" fill="var(--ok)"><path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"></path></svg>แสดงราคาสุทธิโดยประมาณเสมอ</span>
 </div>
 </div>
 </div>
@@ -205,7 +207,7 @@ input::placeholder{color:color-mix(in srgb,#e9e9ed 34%,transparent)}
 <h2 style="{{ h2 }}">เกมลดราคาน่าสนใจ</h2>
 <p style="margin:5px 0 0;font-size:13px;color:var(--mute)">คัดเฉพาะดีลที่มีอย่างน้อยหนึ่งข้อเสนอที่ยืนยันว่าเปิดใช้งานในไทยได้</p>
 </div>
-<a href="#" onClick="{{ goDeals }}" class="btn btn-secondary" style="flex:none">ดูทั้งหมด</a>
+<a href="#" onClick="{{ goDeals }}" style="{{ sectionCta }}">ดูทั้งหมด</a>
 </div>
 <div style="{{ cardGrid }}">
 <sc-for list="{{ trending }}" as="g" hint-placeholder-count="8">
@@ -241,14 +243,14 @@ input::placeholder{color:color-mix(in srgb,#e9e9ed 34%,transparent)}
 <h2 style="{{ h2 }}">ร้านค้าที่รองรับ</h2>
 <p style="margin:5px 0 0;font-size:13px;color:var(--mute)">เราแยกประเภทร้านค้าอย่างชัดเจน — ร้านค้าที่ได้รับอนุญาตอย่างเป็นทางการไม่เหมือนกับ Marketplace ที่มีผู้ขายรายย่อย</p>
 </div>
-<a href="#" onClick="{{ goStores }}" class="btn btn-secondary" style="flex:none">รายละเอียดร้านค้า</a>
+<a href="#" onClick="{{ goStores }}" style="{{ sectionCta }}">รายละเอียดร้านค้า</a>
 </div>
 <div style="{{ storeGrid }}">
 <sc-for list="{{ storeChips }}" as="s" hint-placeholder-count="10">
 <button onClick="{{ s.go }}" style="display:flex;align-items:center;gap:11px;padding:12px;border:1px solid var(--line);border-radius:12px;background:color-mix(in srgb,#e9e9ed 2.5%,transparent);cursor:pointer;text-align:left;color:var(--ink)" style-hover="border-color:color-mix(in srgb,#9184d9 45%,transparent);background:color-mix(in srgb,#9184d9 8%,transparent)">
 <span style="{{ s.logo }}">{{ s.letters }}</span>
 <span style="display:flex;flex-direction:column;gap:3px;min-width:0">
-<span style="font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ s.name }}</span>
+<span style="font-size:13px;font-weight:600;line-height:1.3">{{ s.name }}</span>
 <span style="{{ s.typeStyle }}">{{ s.typeLabel }}</span>
 </span>
 </button>
@@ -277,10 +279,10 @@ input::placeholder{color:color-mix(in srgb,#e9e9ed 34%,transparent)}
 <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap">
 <sc-if value="{{ mobile }}">
 <button onClick="{{ openFilterSheet }}" style="{{ mControlBtn }}">
-<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M7 12h10M10 18h4"></path></svg>ตัวกรอง<sc-if value="{{ hasFilters }}"><span style="min-width:17px;height:17px;padding:0 4px;display:grid;place-items:center;border-radius:99px;background:var(--color-accent);color:#161826;font-size:10px;font-weight:700">{{ activeFilterCount }}</span></sc-if>
+<svg width="15" height="15" viewBox="0 0 256 256" fill="currentColor"><path d="M40,88H73a32,32,0,0,0,62,0h81a8,8,0,0,0,0-16H135a32,32,0,0,0-62,0H40a8,8,0,0,0,0,16Zm64-24A16,16,0,1,1,88,80,16,16,0,0,1,104,64ZM216,168H199a32,32,0,0,0-62,0H40a8,8,0,0,0,0,16h97a32,32,0,0,0,62,0h17a8,8,0,0,0,0-16Zm-48,24a16,16,0,1,1,16-16A16,16,0,0,1,168,192Z"></path></svg>ตัวกรอง<sc-if value="{{ hasFilters }}"><span style="min-width:17px;height:17px;padding:0 4px;display:grid;place-items:center;border-radius:99px;background:var(--color-accent);color:#161826;font-size:10px;font-weight:700">{{ activeFilterCount }}</span></sc-if>
 </button>
 <button onClick="{{ openSortSheet }}" style="{{ mControlBtn }}">
-<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4v16m0 0l-3-3m3 3l3-3M17 20V4m0 0l-3 3m3-3l3 3"></path></svg>{{ sortLabel }}
+<svg width="15" height="15" viewBox="0 0 256 256" fill="currentColor"><path d="M181.66,175.66l-40,40a8,8,0,0,1-11.32,0l-40-40A8,8,0,0,1,96,162h32V40a8,8,0,0,1,16,0V162h32a8,8,0,0,1,5.66,13.66ZM72,94h32v122a8,8,0,0,0,16,0V94h32a8,8,0,0,0,5.66-13.66l-40-40a8,8,0,0,0-11.32,0l-40,40A8,8,0,0,0,72,94Z"></path></svg>{{ sortLabel }}
 </button>
 </sc-if>
 <sc-if value="{{ wide }}">
@@ -300,7 +302,7 @@ input::placeholder{color:color-mix(in srgb,#e9e9ed 34%,transparent)}
 <sc-if value="{{ hasFilters }}">
 <div style="display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px">
 <sc-for list="{{ filterPills }}" as="p" hint-placeholder-count="2">
-<button onClick="{{ p.clear }}" style="display:inline-flex;align-items:center;gap:6px;padding:4px 9px;border-radius:999px;border:1px solid color-mix(in srgb,#9184d9 40%,transparent);background:color-mix(in srgb,#9184d9 12%,transparent);color:var(--color-accent-300);font-size:11.5px;cursor:pointer">{{ p.label }}<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+<button onClick="{{ p.clear }}" style="display:inline-flex;align-items:center;gap:6px;padding:4px 9px;border-radius:999px;border:1px solid color-mix(in srgb,#9184d9 40%,transparent);background:color-mix(in srgb,#9184d9 12%,transparent);color:var(--color-accent-300);font-size:11.5px;cursor:pointer">{{ p.label }}<svg width="11" height="11" viewBox="0 0 256 256" fill="currentColor"><path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"></path></svg></button>
 </sc-for>
 <button onClick="{{ resetFilters }}" style="padding:4px 9px;border-radius:999px;border:1px solid transparent;background:transparent;color:var(--mute);font-size:11.5px;cursor:pointer;text-decoration:underline;text-underline-offset:3px">ล้างทั้งหมด</button>
 </div>
@@ -406,7 +408,7 @@ input::placeholder{color:color-mix(in srgb,#e9e9ed 34%,transparent)}
 <div style="position:relative;display:flex;flex-direction:column;gap:14px">
 <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
 <span style="display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:7px;background:var(--ok-dim);color:var(--ok);font-size:11px;font-weight:700;letter-spacing:.03em">
-<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"></path></svg>ถูกที่สุดที่ใช้งานในไทยได้</span>
+<svg width="12" height="12" viewBox="0 0 256 256" fill="currentColor"><path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"></path></svg>ถูกที่สุดที่ใช้งานในไทยได้</span>
 <sc-if value="{{ best.isHistLow }}"><span style="{{ badges.histLow }}">ต่ำสุดเป็นประวัติการณ์</span></sc-if>
 </div>
 <div style="{{ summaryTop }}">
@@ -444,9 +446,9 @@ input::placeholder{color:color-mix(in srgb,#e9e9ed 34%,transparent)}
 </div>
 <div style="{{ summaryFoot }}">
 <span style="display:inline-flex;align-items:center;gap:6px;font-size:11.5px;color:var(--mute2)">
-<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>อัปเดตล่าสุด {{ best.updated }} · {{ updatedAt }}</span>
+<svg width="13" height="13" viewBox="0 0 256 256" fill="currentColor"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm64-88a8,8,0,0,1-8,8H128a8,8,0,0,1-8-8V72a8,8,0,0,1,16,0v48h48A8,8,0,0,1,192,128Z"></path></svg>อัปเดตล่าสุด {{ best.updated }} · {{ updatedAt }}</span>
 <button onClick="{{ best.buy }}" style="{{ ctaBtn }}">ไปยังร้านค้า {{ best.store }}
-<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 01-1 1H5a1 1 0 01-1-1V7a1 1 0 011-1h5"></path></svg></button>
+<svg width="15" height="15" viewBox="0 0 256 256" fill="currentColor"><path d="M216,104a8,8,0,0,1-16,0V59.32l-66.33,66.34a8,8,0,0,1-11.32-11.32L188.68,48H144a8,8,0,0,1,0-16h64a8,8,0,0,1,8,8Zm-24,24a8,8,0,0,0-8,8v72H48V72h72a8,8,0,0,0,0-16H48A16,16,0,0,0,32,72V208a16,16,0,0,0,16,16H184a16,16,0,0,0,16-16V136A8,8,0,0,0,192,128Z"></path></svg></button>
 </div>
 </div>
 </div>
@@ -473,7 +475,7 @@ input::placeholder{color:color-mix(in srgb,#e9e9ed 34%,transparent)}
 </label>
 <sc-if value="{{ wide }}">
 <button onClick="{{ refreshPrices }}" class="btn btn-secondary" style="height:34px">
-<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="{{ refreshSpin }}"><path d="M21 12a9 9 0 11-2.64-6.36M21 4v5h-5"></path></svg>รีเฟรช
+<svg width="14" height="14" viewBox="0 0 256 256" fill="currentColor" style="{{ refreshSpin }}"><path d="M240,56v48a8,8,0,0,1-8,8H184a8,8,0,0,1,0-16h28.69L184.32,71.63l-.4-.42a80,80,0,1,0-1.67,114.78,8,8,0,0,1,11,11.63A95.44,95.44,0,0,1,128,224h-1.32A96,96,0,1,1,195.75,60L224,86.05V56a8,8,0,1,1,16,0Z"></path></svg>รีเฟรช
 </button>
 </sc-if>
 </div>
@@ -481,7 +483,7 @@ input::placeholder{color:color-mix(in srgb,#e9e9ed 34%,transparent)}
 
 <sc-if value="{{ st.refreshing }}">
 <div style="display:flex;align-items:center;gap:10px;padding:11px 14px;border:1px solid color-mix(in srgb,#9184d9 34%,transparent);background:color-mix(in srgb,#9184d9 9%,transparent);border-radius:11px;margin-bottom:12px;font-size:12.5px;color:var(--color-accent-300)">
-<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="animation:krSpin 1s linear infinite"><path d="M21 12a9 9 0 11-2.64-6.36"></path></svg>
+<svg width="15" height="15" viewBox="0 0 256 256" fill="currentColor" style="animation:krSpin 1s linear infinite"><path d="M240,56v48a8,8,0,0,1-8,8H184a8,8,0,0,1,0-16h28.69L184.32,71.63l-.4-.42a80,80,0,1,0-1.67,114.78,8,8,0,0,1,11,11.63A95.44,95.44,0,0,1,128,224h-1.32A96,96,0,1,1,195.75,60L224,86.05V56a8,8,0,1,1,16,0Z"></path></svg>
 กำลังดึงราคาล่าสุดจากร้านค้า… ข้อมูลที่แสดงอาจยังไม่ใช่ราคาปัจจุบัน
 </div>
 </sc-if>
@@ -520,7 +522,7 @@ input::placeholder{color:color-mix(in srgb,#e9e9ed 34%,transparent)}
 <div style="display:flex;align-items:center;justify-content:flex-end;gap:6px">
 <sc-if value="{{ o.inStock }}"><button onClick="{{ o.buy }}" style="{{ o.buyStyle }}">ไปยังร้าน</button></sc-if>
 <sc-if value="{{ o.oos }}"><span style="{{ badges.oos }}">สินค้าหมด</span></sc-if>
-<span style="{{ o.chev }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg></span>
+<span style="{{ o.chev }}"><svg width="14" height="14" viewBox="0 0 256 256" fill="currentColor"><path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"></path></svg></span>
 </div>
 </div>
 <sc-if value="{{ o.open }}">
@@ -560,7 +562,7 @@ input::placeholder{color:color-mix(in srgb,#e9e9ed 34%,transparent)}
 </sc-if>
 
 <div style="{{ noticeBox }}">
-<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--warn)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:1px"><path d="M12 9v4M12 17h.01"></path><path d="M10.3 3.9L1.8 18a2 2 0 001.7 3h17a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"></path></svg>
+<svg width="17" height="17" viewBox="0 0 256 256" fill="var(--warn)" style="flex:none;margin-top:1px"><path d="M236.8,188.09,149.35,36.22h0a24.76,24.76,0,0,0-42.7,0L19.2,188.09a23.51,23.51,0,0,0,0,23.72A24.35,24.35,0,0,0,40.55,224h174.9a24.35,24.35,0,0,0,21.33-12.19A23.51,23.51,0,0,0,236.8,188.09Zm-13.87,15.71a8.5,8.5,0,0,1-7.48,4.2H40.55a8.5,8.5,0,0,1-7.48-4.2,7.59,7.59,0,0,1,0-7.72L120.52,44.21a8.75,8.75,0,0,1,15,0l87.45,151.87A7.59,7.59,0,0,1,222.93,203.8ZM120,144V104a8,8,0,0,1,16,0v40a8,8,0,0,1-16,0Zm20,36a12,12,0,1,1-12-12A12,12,0,0,1,140,180Z"></path></svg>
 <span>ราคาและเงื่อนไขภูมิภาคอาจเปลี่ยนแปลงได้ กรุณาตรวจสอบรายละเอียดบนหน้าร้านค้าก่อนชำระเงิน</span>
 </div>
 
@@ -666,7 +668,7 @@ input::placeholder{color:color-mix(in srgb,#e9e9ed 34%,transparent)}
 <span style="display:flex;align-items:baseline;gap:7px"><span style="font-size:21px;font-weight:700;color:var(--ok);letter-spacing:-0.02em">{{ best.finalText }}</span><s style="font-size:11.5px;color:var(--mute2)">{{ best.steamText }}</s></span>
 </div>
 <button onClick="{{ best.buy }}" style="flex:none;height:46px;padding:0 18px;border-radius:12px;border:1px solid var(--ok-line);background:var(--ok-dim);color:var(--ok);font-size:14px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:7px" style-hover="background:oklch(0.40 0.065 158)">ไปยังร้านค้า
-<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M20 4l-9 9"></path></svg></button>
+<svg width="14" height="14" viewBox="0 0 256 256" fill="currentColor"><path d="M216,104a8,8,0,0,1-16,0V59.32l-66.33,66.34a8,8,0,0,1-11.32-11.32L188.68,48H144a8,8,0,0,1,0-16h64a8,8,0,0,1,8,8Zm-24,24a8,8,0,0,0-8,8v72H48V72h72a8,8,0,0,0,0-16H48A16,16,0,0,0,32,72V208a16,16,0,0,0,16,16H184a16,16,0,0,0,16-16V136A8,8,0,0,0,192,128Z"></path></svg></button>
 </div>
 </sc-if>
 
@@ -692,7 +694,7 @@ input::placeholder{color:color-mix(in srgb,#e9e9ed 34%,transparent)}
 <div onClick="{{ stop }}" style="width:100%;background:var(--raise);border-radius:20px 20px 0 0;border-top:1px solid var(--line);animation:krSheet .24s cubic-bezier(.22,.9,.3,1);padding-bottom:calc(10px + env(safe-area-inset-bottom))">
 <div style="padding:10px 16px 6px"><div style="width:38px;height:4px;border-radius:99px;background:#3d4054;margin:0 auto 12px"></div><h3 style="font-size:16px;font-weight:600;margin-bottom:6px">เรียงตาม</h3></div>
 <sc-for list="{{ sortOptions }}" as="s" hint-placeholder-count="5">
-<button onClick="{{ s.go }}" style="{{ s.style }}">{{ s.label }}<sc-if value="{{ s.active }}"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"></path></svg></sc-if></button>
+<button onClick="{{ s.go }}" style="{{ s.style }}">{{ s.label }}<sc-if value="{{ s.active }}"><svg width="17" height="17" viewBox="0 0 256 256" fill="var(--color-accent)"><path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"></path></svg></sc-if></button>
 </sc-for>
 </div>
 </div>
@@ -703,7 +705,7 @@ input::placeholder{color:color-mix(in srgb,#e9e9ed 34%,transparent)}
 <div onClick="{{ stop }}" style="{{ dialogBox }}">
 <div style="display:flex;align-items:flex-start;gap:12px">
 <span style="width:38px;height:38px;flex:none;display:grid;place-items:center;border-radius:11px;background:var(--color-accent-900);color:var(--color-accent-300);border:1px solid color-mix(in srgb,#9184d9 30%,transparent)">
-<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 01-1 1H5a1 1 0 01-1-1V7a1 1 0 011-1h5"></path></svg>
+<svg width="18" height="18" viewBox="0 0 256 256" fill="currentColor"><path d="M216,104a8,8,0,0,1-16,0V59.32l-66.33,66.34a8,8,0,0,1-11.32-11.32L188.68,48H144a8,8,0,0,1,0-16h64a8,8,0,0,1,8,8Zm-24,24a8,8,0,0,0-8,8v72H48V72h72a8,8,0,0,0,0-16H48A16,16,0,0,0,32,72V208a16,16,0,0,0,16,16H184a16,16,0,0,0,16-16V136A8,8,0,0,0,192,128Z"></path></svg>
 </span>
 <div style="min-width:0">
 <h3 style="font-size:17px;font-weight:600;margin-bottom:5px">คุณกำลังออกจาก KeyRadar TH</h3>
@@ -716,13 +718,13 @@ input::placeholder{color:color-mix(in srgb,#e9e9ed 34%,transparent)}
 </sc-for>
 </div>
 <div style="{{ exitOffer.warnStyle }}">
-<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:1px"><path d="M12 9v4M12 17h.01"></path><path d="M10.3 3.9L1.8 18a2 2 0 001.7 3h17a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"></path></svg>
+<svg width="15" height="15" viewBox="0 0 256 256" fill="currentColor" style="flex:none;margin-top:1px"><path d="M236.8,188.09,149.35,36.22h0a24.76,24.76,0,0,0-42.7,0L19.2,188.09a23.51,23.51,0,0,0,0,23.72A24.35,24.35,0,0,0,40.55,224h174.9a24.35,24.35,0,0,0,21.33-12.19A23.51,23.51,0,0,0,236.8,188.09Zm-13.87,15.71a8.5,8.5,0,0,1-7.48,4.2H40.55a8.5,8.5,0,0,1-7.48-4.2,7.59,7.59,0,0,1,0-7.72L120.52,44.21a8.75,8.75,0,0,1,15,0l87.45,151.87A7.59,7.59,0,0,1,222.93,203.8ZM120,144V104a8,8,0,0,1,16,0v40a8,8,0,0,1-16,0Zm20,36a12,12,0,1,1-12-12A12,12,0,0,1,140,180Z"></path></svg>
 <span>{{ exitOffer.warn }}</span>
 </div>
 <div style="display:flex;gap:9px;margin-top:2px">
 <button onClick="{{ closeDialog }}" class="btn btn-secondary" style="flex:1;height:44px">ยกเลิก</button>
 <button onClick="{{ closeDialog }}" style="flex:1.4;height:44px;border-radius:10px;border:1px solid var(--ok-line);background:var(--ok-dim);color:var(--ok);font-size:14px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:7px">ไปยัง {{ exitOffer.store }}
-<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M20 4l-9 9"></path></svg></button>
+<svg width="14" height="14" viewBox="0 0 256 256" fill="currentColor"><path d="M216,104a8,8,0,0,1-16,0V59.32l-66.33,66.34a8,8,0,0,1-11.32-11.32L188.68,48H144a8,8,0,0,1,0-16h64a8,8,0,0,1,8,8Zm-24,24a8,8,0,0,0-8,8v72H48V72h72a8,8,0,0,0,0-16H48A16,16,0,0,0,32,72V208a16,16,0,0,0,16,16H184a16,16,0,0,0,16-16V136A8,8,0,0,0,192,128Z"></path></svg></button>
 </div>
 </div>
 </div>
@@ -783,6 +785,8 @@ const STORES = {
   steam:       { name: 'Steam',            letters: 'ST', type: 'steam',    pay: ['บัตรเครดิต/เดบิต', 'TrueMoney Wallet', 'พร้อมเพย์', 'Steam Wallet'], fee: 0, feeLabel: '', note: 'ซื้อโดยตรงจากร้านค้า Steam ประเทศไทย เปิดใช้งานได้แน่นอนและไม่มีค่าธรรมเนียมแฝง' }
 };
 const ORDER = ['eneba', 'kinguin', 'cdkeys', 'instant', 'fanatical', 'gmg', 'humble', 'gamesplanet', 'gamersgate', 'steam'];
+const TRUST_RANK = { steam: 0, official: 1, reseller: 2, market: 3 };
+const ORDER_BY_TRUST = ORDER.slice().sort((a, b) => TRUST_RANK[STORES[a].type] - TRUST_RANK[STORES[b].type] || STORES[a].name.localeCompare(STORES[b].name));
 const TYPE = {
   steam:    { label: 'Steam โดยตรง',           color: 'var(--color-accent-300)', bg: 'var(--color-accent-900)', bd: 'color-mix(in srgb,#9184d9 30%,transparent)' },
   official: { label: 'ร้านค้าอย่างเป็นทางการ', color: 'var(--ok)',               bg: 'var(--ok-dim)',           bd: 'var(--ok-line)' },
@@ -883,7 +887,7 @@ const ago = m => m < 60 ? `${m} นาทีที่แล้ว` : `${Math.flo
 
 class Component extends DCLogic {
   state = {
-    route: 'home', gameId: 'elden-ring', query: '', focus: false, ac: 'idle',
+    route: 'home', gameId: 'elden-ring', query: '', focus: false, focusField: null, ac: 'idle',
     edition: 'standard', sort: 'final', range: '3m', hover: null, expanded: {},
     sheet: null, dialog: null, vw: 'auto', winW: 1440, demo: 'normal', demoOpen: false,
     navOpen: false, dealTab: 'featured', resultsQuery: 'The Forest', thOnlyOverride: null,
@@ -895,7 +899,7 @@ class Component extends DCLogic {
     window.addEventListener('resize', this._r);
     this._r();
   }
-  componentWillUnmount() { window.removeEventListener('resize', this._r); clearTimeout(this._t); }
+  componentWillUnmount() { window.removeEventListener('resize', this._r); clearTimeout(this._t); clearTimeout(this._t2); clearTimeout(this._bt); }
 
   mode() {
     const v = this.state.vw;
@@ -904,10 +908,10 @@ class Component extends DCLogic {
     return w < 780 ? 'mobile' : w < 1180 ? 'tablet' : 'desktop';
   }
 
-  nav(route, extra) { this.setState(Object.assign({ route, navOpen: false, sheet: null, dialog: null, focus: false, hover: null }, extra || {})); window.scrollTo({ top: 0 }); }
+  nav(route, extra) { this.setState(Object.assign({ route, navOpen: false, sheet: null, dialog: null, focus: false, focusField: null, hover: null }, extra || {})); window.scrollTo({ top: 0 }); }
 
   search(q) {
-    this.setState({ ac: 'loading', focus: false });
+    this.setState({ ac: 'loading', focus: false, focusField: null });
     clearTimeout(this._t);
     this._t = setTimeout(() => this.setState({ ac: 'idle' }), 520);
     this.nav('results', { resultsQuery: q, query: q, demo: this.state.demo === 'empty' ? 'empty' : 'normal' });
@@ -928,13 +932,17 @@ class Component extends DCLogic {
     const best = offers.filter(o => o.th === 'ok' && o.stock)[0] || offers[0] || rawOffers[0];
     const hist = buildHistory(g.id, S.range);
 
+    const PINNED = { desktop: 1440, tablet: 834, mobile: 392 };
+    const pin = PINNED[S.vw] || null;
+    const zoom = pin ? Math.min(1, Math.max(0.3, (S.winW - (pin > 900 ? 40 : 48)) / pin)) : 1;
     const px = mobile ? 14 : tablet ? 22 : 28;
     const pad = { maxWidth: 1320, margin: '0 auto', padding: `${mobile ? 26 : 40}px ${px}px` };
     const padTight = { maxWidth: 1320, margin: '0 auto', padding: `${mobile ? 24 : 34}px ${px}px ${mobile ? 26 : 30}px` };
 
     const chip = (on, extra) => Object.assign({
-      display: 'inline-flex', alignItems: 'center', gap: 6, padding: mobile ? '8px 13px' : '6px 12px',
-      borderRadius: 999, fontSize: 12.5, cursor: 'pointer', whiteSpace: 'nowrap',
+      display: 'inline-flex', alignItems: 'center', gap: 6, padding: mobile ? '0 16px' : '6px 12px',
+      minHeight: mobile ? 44 : 0,
+      borderRadius: 999, fontSize: mobile ? 13.5 : 12.5, cursor: 'pointer', whiteSpace: 'nowrap',
       border: '1px solid ' + (on ? 'var(--color-accent)' : 'var(--line)'),
       background: on ? 'color-mix(in srgb,#9184d9 14%,transparent)' : 'color-mix(in srgb,#e9e9ed 3%,transparent)',
       color: on ? 'var(--color-accent-200)' : 'var(--ink)', fontWeight: on ? 600 : 400
@@ -1011,12 +1019,14 @@ class Component extends DCLogic {
 
     const editions = g.eds.map(e => {
       const of2 = buildOffers(g.id, e[0]);
-      const b = of2.filter(o => o.th === 'ok' && o.stock)[0] || of2[0];
+      const valid = of2.filter(o => o.th === 'ok' && o.stock)[0];
+      const noTh = demo === 'nothai' || !valid;
+      const b = valid || of2[0];
       const on = e[0] === edKey;
       return {
-        key: e[0], name: e[1], from: 'จาก ' + B(b.final), go: ev => { if (ev) ev.preventDefault(); this.setState({ edition: e[0], expanded: {} }); },
-        style: { display: 'inline-flex', flexDirection: 'column', alignItems: 'flex-start', gap: 3, padding: '8px 14px', borderRadius: 10, cursor: 'pointer', whiteSpace: 'nowrap', fontSize: 13, fontWeight: on ? 600 : 400, border: '1px solid ' + (on ? 'var(--color-accent)' : 'var(--line)'), background: on ? 'color-mix(in srgb,#9184d9 13%,transparent)' : 'transparent', color: on ? 'var(--color-accent-200)' : 'var(--ink)' },
-        priceStyle: { fontSize: 11, fontWeight: 400, color: on ? 'var(--color-accent-300)' : 'var(--mute2)' }
+        key: e[0], name: e[1], noTh, from: noTh ? 'ยังไม่มีข้อเสนอที่ใช้ในไทยได้' : 'จาก ' + B(b.final), go: ev => { if (ev) ev.preventDefault(); this.setState({ edition: e[0], expanded: {} }); },
+        style: { display: 'inline-flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'flex-start', gap: 3, padding: '8px 14px', minHeight: 46, borderRadius: 10, cursor: 'pointer', whiteSpace: 'nowrap', fontSize: 13, fontWeight: on ? 600 : 400, border: '1px solid ' + (on ? 'var(--color-accent)' : 'var(--line)'), background: on ? 'color-mix(in srgb,#9184d9 13%,transparent)' : 'transparent', color: on ? 'var(--color-accent-200)' : 'var(--ink)' },
+        priceStyle: { fontSize: 11, fontWeight: 400, color: noTh ? 'var(--warn)' : on ? 'var(--color-accent-300)' : 'var(--mute2)' }
       };
     });
 
@@ -1107,10 +1117,14 @@ class Component extends DCLogic {
 
     return {
       wide, mobile, tablet, pad, padTight,
-      pageWrap: mobile && S.vw === 'mobile' ? { minHeight: '100vh', display: 'flex', justifyContent: 'center', padding: '26px 16px', background: 'radial-gradient(90% 60% at 50% 0%, #1b1e2e, #101220)' } : {},
-      shell: mobile && S.vw === 'mobile'
-        ? { position: 'relative', width: 392, maxWidth: '100%', height: 846, overflowY: 'auto', overflowX: 'hidden', scrollbarWidth: 'none', msOverflowStyle: 'none', background: 'var(--color-bg)', borderRadius: 22, border: '1px solid #2c2f42', boxShadow: '0 30px 90px rgba(0,0,0,.6)' }
-        : { position: 'relative', minHeight: '100vh', width: '100%' },
+      pageWrap: pin
+        ? { minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'flex-start', padding: pin > 900 ? '20px' : '26px 16px', background: 'radial-gradient(90% 60% at 50% 0%, #1b1e2e, #101220)' }
+        : {},
+      shell: S.vw === 'mobile'
+        ? { position: 'relative', zoom, width: 392, height: 846, overflowY: 'auto', overflowX: 'hidden', scrollbarWidth: 'none', msOverflowStyle: 'none', background: 'var(--color-bg)', borderRadius: 22, border: '1px solid #2c2f42', boxShadow: '0 30px 90px rgba(0,0,0,.6)' }
+        : pin
+          ? { position: 'relative', zoom, width: pin, minHeight: 'calc(100vh - 40px)', overflow: 'hidden', background: 'var(--color-bg)', borderRadius: 14, border: '1px solid #2c2f42', boxShadow: '0 30px 90px rgba(0,0,0,.55)' }
+          : { position: 'relative', minHeight: '100vh', width: '100%' },
       r: { home: S.route === 'home', results: S.route === 'results', game: S.route === 'game', deals: S.route === 'deals', stores: S.route === 'stores' },
       st: { normal: demo === 'normal' || demo === 'oos' || demo === 'refreshing', loading: demo === 'loading', empty: demo === 'empty', nothai: demo === 'nothai', noprice: demo === 'noprice', refreshing: demo === 'refreshing' },
       showPrices: demo !== 'noprice' && demo !== 'nothai',
@@ -1124,12 +1138,18 @@ class Component extends DCLogic {
       })),
       navOpen: S.navOpen, toggleNav: e => { if (e) e.preventDefault(); this.setState(s => ({ navOpen: !s.navOpen })); },
       mShowSearch: S.route !== 'home',
-      navSearchBox: { display: 'flex', alignItems: 'center', gap: 9, height: mobile ? 42 : 38, padding: '0 12px', borderRadius: 11, background: 'var(--sunk)', border: '1px solid ' + (S.focus ? 'var(--color-accent)' : 'var(--line)') },
+      navSearchBox: { display: 'flex', alignItems: 'center', gap: 9, height: mobile ? 42 : 38, padding: '0 12px', borderRadius: 11, background: 'var(--sunk)', border: '1px solid ' + (S.focus && S.focusField === 'nav' ? 'var(--color-accent)' : 'var(--line)') },
 
-      query: S.query, acOpen: S.focus, acLoading: S.ac === 'loading', acEmpty: q.length > 0 && acMatches.length === 0, acRows,
+      query: S.query, acOpen: S.focus, acOpenNav: S.focus && S.focusField === 'nav', acOpenHero: S.focus && S.focusField === 'hero',
+      acLoading: S.ac === 'loading', acEmpty: q.length > 0 && acMatches.length === 0, acRows,
       onType: e => this.setState({ query: e.target.value, focus: true }),
-      onFocus: () => this.setState({ focus: true }),
-      onBlur: () => setTimeout(() => this.setState({ focus: false }), 160),
+      onTypeNav: e => { clearTimeout(this._bt); this.setState({ query: e.target.value, focus: true, focusField: 'nav' }); },
+      onTypeHero: e => { clearTimeout(this._bt); this.setState({ query: e.target.value, focus: true, focusField: 'hero' }); },
+      onFocus: () => { clearTimeout(this._bt); this.setState({ focus: true }); },
+      onFocusNav: () => { clearTimeout(this._bt); this.setState({ focus: true, focusField: 'nav' }); },
+      onFocusHero: () => { clearTimeout(this._bt); this.setState({ focus: true, focusField: 'hero' }); },
+      navFocused: S.focus && S.focusField === 'nav', heroFocused: S.focus && S.focusField === 'hero',
+      onBlur: () => { clearTimeout(this._bt); this._bt = setTimeout(() => this.setState({ focus: false, focusField: null }), 160); },
       onKey: e => { if (e.key === 'Enter') this.search(e.target.value || 'The Forest'); if (e.key === 'Escape') this.setState({ focus: false }); },
       clearQuery: e => { if (e) e.preventDefault(); this.setState({ query: '' }); },
       submitSearch: e => { if (e) e.preventDefault(); this.search(S.query.trim() || 'The Forest'); },
@@ -1144,24 +1164,27 @@ class Component extends DCLogic {
       h3: { fontSize: mobile ? 17 : 20, lineHeight: 1.35, letterSpacing: '-0.02em', fontWeight: 600, margin: 0 },
       heroInner: { maxWidth: 760, padding: mobile ? '26px 0 6px' : '54px 0 10px', position: 'relative' },
       heroSub: { margin: '16px 0 0', fontSize: mobile ? 13.5 : 15.5, lineHeight: 1.7, color: 'var(--mute)', maxWidth: 620, textWrap: 'pretty' },
-      heroSearchWrap: { position: 'relative', marginTop: mobile ? 22 : 30, maxWidth: 660 },
-      heroSearchBox: { display: 'flex', alignItems: 'center', gap: 12, padding: mobile ? '0 8px 0 14px' : '0 8px 0 18px', height: mobile ? 54 : 62, borderRadius: 15, background: 'linear-gradient(180deg,#1d2030,#191c2a)', border: '1px solid ' + (S.focus ? 'var(--color-accent)' : '#33364a'), boxShadow: S.focus ? '0 0 0 4px color-mix(in srgb,#9184d9 16%,transparent), 0 16px 40px rgba(0,0,0,.45)' : '0 14px 34px rgba(0,0,0,.35)' },
-      heroInput: { flex: 1, minWidth: 0, background: 'transparent', border: 0, outline: 'none', color: 'var(--ink)', fontSize: mobile ? 14.5 : 16 },
-      heroBtn: { flex: 'none', height: mobile ? 40 : 46, padding: mobile ? '0 14px' : '0 20px', borderRadius: 11, border: '1px solid var(--color-accent)', background: 'color-mix(in srgb,#9184d9 16%,transparent)', color: 'var(--color-accent-200)', fontSize: mobile ? 13 : 14.5, fontWeight: 600, cursor: 'pointer', whiteSpace: 'nowrap' },
+      heroSearchWrap: { position: 'relative', zIndex: 70, isolation: 'isolate', marginTop: mobile ? 22 : 30, maxWidth: 660 },
+      heroSearchBox: { display: 'flex', alignItems: 'center', gap: 12, padding: mobile ? '0 8px 0 14px' : '0 8px 0 18px', height: mobile ? 54 : 62, borderRadius: 15, background: 'linear-gradient(180deg,#1d2030,#191c2a)', border: '1px solid ' + (S.focus && S.focusField === 'hero' ? 'var(--color-accent)' : '#33364a'), boxShadow: S.focus && S.focusField === 'hero' ? '0 0 0 4px color-mix(in srgb,#9184d9 16%,transparent), 0 16px 40px rgba(0,0,0,.45)' : '0 14px 34px rgba(0,0,0,.35)' },
+      heroInput: { flex: 1, minWidth: 0, alignSelf: 'stretch', background: 'transparent', border: 0, outline: 'none', color: 'var(--ink)', fontSize: mobile ? 14.5 : 16 },
+      heroPlaceholder: mobile ? 'ค้นหาเกม เช่น Elden Ring' : 'ค้นหาเกม เช่น Valheim, Elden Ring, Palworld',
+      heroBtnLabel: mobile ? 'ค้นหา' : 'ค้นหาเกม',
+      heroBtn: { flex: 'none', height: mobile ? 44 : 46, padding: mobile ? '0 13px' : '0 20px', borderRadius: 11, border: '1px solid var(--color-accent)', background: 'color-mix(in srgb,#9184d9 16%,transparent)', color: 'var(--color-accent-200)', fontSize: mobile ? 13 : 14.5, fontWeight: 600, cursor: 'pointer', whiteSpace: 'nowrap' },
       popular: ['Valheim', 'Elden Ring', 'The Forest', 'Sons Of The Forest', 'Palworld', 'Cyberpunk 2077'].map(t => ({ title: t, style: chip(false, { fontSize: 12 }), go: e => { if (e) e.preventDefault(); this.setState({ query: t }); this.search(t); } })),
 
       sectionHead: { display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 16, marginBottom: 18, flexWrap: 'wrap' },
+      sectionCta: { display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 6, flex: 'none', minHeight: mobile ? 44 : 34, padding: mobile ? '0 18px' : '0 13px', borderRadius: 10, border: '1px solid var(--line)', background: 'transparent', color: 'var(--ink)', fontSize: mobile ? 13.5 : 13, fontWeight: 500, textDecoration: 'none', cursor: 'pointer' },
       cardGrid: { display: 'grid', gridTemplateColumns: mobile ? 'repeat(2, minmax(0,1fr))' : tablet ? 'repeat(3, minmax(0,1fr))' : 'repeat(4, minmax(0,1fr))', gap: mobile ? 10 : 16 },
       trending: GAMES.slice().sort((a, b) => cardOf(b).disc0 - cardOf(a).disc0).slice(0, mobile ? 6 : 8).map(cardOf),
       howWrap: { display: 'flex', gap: mobile ? 20 : 34, flexDirection: mobile || tablet ? 'column' : 'row', alignItems: 'flex-start' },
       howGrid: { display: 'grid', gridTemplateColumns: mobile ? '1fr' : 'repeat(3, minmax(0,1fr))', gap: 12, flex: 1, width: '100%' },
       steps: [
-        { n: '1', title: 'ค้นหาเกม', body: 'พิมพ์ชื่อเกมที่ต้องการ ระบบจะจับคู่กับรายการบน Steam และแสดงราคาต่ำสุดทันทีในผลการค้นหา', icon: React.createElement('svg', { width: 17, height: 17, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 2, strokeLinecap: 'round' }, React.createElement('circle', { cx: 11, cy: 11, r: 7 }), React.createElement('path', { d: 'M20 20l-3.6-3.6' })) },
-        { n: '2', title: 'เปรียบเทียบราคาจากหลายร้าน', body: 'เราคำนวณราคาสุทธิโดยประมาณหลังรวมค่าธรรมเนียมที่ทราบ ไม่ใช่แค่ราคาที่โฆษณาไว้หน้าร้าน', icon: React.createElement('svg', { width: 17, height: 17, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 2, strokeLinecap: 'round', strokeLinejoin: 'round' }, React.createElement('path', { d: 'M4 19V9M10 19V5M16 19v-6M22 19H2' })) },
-        { n: '3', title: 'เลือกร้านที่รองรับการเปิดใช้งานในไทย', body: 'ดูภูมิภาคของคีย์และประเภทร้านค้าก่อนตัดสินใจ แล้วกดไปยังร้านค้าเพื่อชำระเงินโดยตรง', icon: React.createElement('svg', { width: 17, height: 17, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 2, strokeLinecap: 'round', strokeLinejoin: 'round' }, React.createElement('path', { d: 'M12 3l7.5 3v5.5c0 4.4-3.1 8.2-7.5 9.5-4.4-1.3-7.5-5.1-7.5-9.5V6z' }), React.createElement('path', { d: 'M9 12l2 2 4-4' })) }
+        { n: '1', title: 'ค้นหาเกม', body: 'พิมพ์ชื่อเกมที่ต้องการ ระบบจะจับคู่กับรายการบน Steam และแสดงราคาต่ำสุดทันทีในผลการค้นหา', icon: React.createElement('svg', { width: 17, height: 17, viewBox: '0 0 256 256', fill: 'currentColor' }, React.createElement('path', { d: 'M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z' })) },
+        { n: '2', title: 'เปรียบเทียบราคาจากหลายร้าน', body: 'เราคำนวณราคาสุทธิโดยประมาณหลังรวมค่าธรรมเนียมที่ทราบ ไม่ใช่แค่ราคาที่โฆษณาไว้หน้าร้าน', icon: React.createElement('svg', { width: 17, height: 17, viewBox: '0 0 256 256', fill: 'currentColor' }, React.createElement('path', { d: 'M224,200h-8V40a8,8,0,0,0-8-8H152a8,8,0,0,0-8,8V80H96a8,8,0,0,0-8,8v40H48a8,8,0,0,0-8,8v64H32a8,8,0,0,0,0,16H224a8,8,0,0,0,0-16ZM160,48h40V200H160ZM104,96h40V200H104ZM56,144H88v56H56Z' })) },
+        { n: '3', title: 'เลือกร้านที่รองรับการเปิดใช้งานในไทย', body: 'ดูภูมิภาคของคีย์และประเภทร้านค้าก่อนตัดสินใจ แล้วกดไปยังร้านค้าเพื่อชำระเงินโดยตรง', icon: React.createElement('svg', { width: 17, height: 17, viewBox: '0 0 256 256', fill: 'currentColor' }, React.createElement('path', { d: 'M208,40H48A16,16,0,0,0,32,56v58.78c0,89.61,75.82,119.34,91,124.39a15.53,15.53,0,0,0,10,0c15.2-5.05,91-34.78,91-124.39V56A16,16,0,0,0,208,40Zm0,74.79c0,78.42-66.35,104.62-80,109.18-13.53-4.51-80-30.69-80-109.18V56H208ZM82.34,141.66a8,8,0,0,1,11.32-11.32L112,148.68l50.34-50.34a8,8,0,0,1,11.32,11.32l-56,56a8,8,0,0,1-11.32,0Z' })) }
       ],
       storeGrid: { display: 'grid', gridTemplateColumns: mobile ? 'repeat(2,minmax(0,1fr))' : tablet ? 'repeat(3,minmax(0,1fr))' : 'repeat(5,minmax(0,1fr))', gap: 10 },
-      storeChips: ORDER.map(k => ({ name: STORES[k].name, letters: STORES[k].letters, logo: logo(STORES[k].type, 34), typeLabel: TYPE[STORES[k].type].label, typeStyle: Object.assign({}, typeStyle(STORES[k].type), { alignSelf: 'flex-start' }), go: e => { if (e) e.preventDefault(); this.nav('stores', { demo: 'normal' }); } })),
+      storeChips: ORDER_BY_TRUST.map(k => ({ name: STORES[k].name, letters: STORES[k].letters, logo: logo(STORES[k].type, 34), typeLabel: TYPE[STORES[k].type].label, typeStyle: Object.assign({}, typeStyle(STORES[k].type), { alignSelf: 'flex-start' }), go: e => { if (e) e.preventDefault(); this.nav('stores', { demo: 'normal' }); } })),
 
       resultsHeading: S.resultsQuery === '*' ? 'เกมยอดนิยม' : `ผลการค้นหา “${S.resultsQuery}”`,
       resultsCount: demo === 'empty' ? 'ไม่พบเกมที่ตรงกัน' : `พบ ${results.length} เกม`,
@@ -1210,7 +1233,7 @@ class Component extends DCLogic {
           : demo === 'uncertain' ? { background: 'var(--warn-dim)', color: 'var(--warn)', border: '1px solid var(--warn-line)' }
             : { background: 'var(--ok-dim)', color: 'var(--ok)', border: '1px solid var(--ok-line)' })),
       thIconWrap: { display: 'grid', placeItems: 'center', width: 30, height: 30, borderRadius: 9, background: 'rgba(0,0,0,.22)', flex: 'none' },
-      thIcon: React.createElement('svg', { width: 16, height: 16, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 2.2, strokeLinecap: 'round', strokeLinejoin: 'round' }, demo === 'nothai' ? React.createElement('path', { d: 'M18 6L6 18M6 6l12 12' }) : demo === 'uncertain' ? React.createElement('path', { d: 'M12 8v5M12 17h.01' }) : React.createElement('path', { d: 'M20 6L9 17l-5-5' })),
+      thIcon: React.createElement('svg', { width: 17, height: 17, viewBox: '0 0 256 256', fill: 'currentColor' }, React.createElement('path', { d: demo === 'nothai' ? 'M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z' : demo === 'uncertain' ? 'M236.8,188.09,149.35,36.22h0a24.76,24.76,0,0,0-42.7,0L19.2,188.09a23.51,23.51,0,0,0,0,23.72A24.35,24.35,0,0,0,40.55,224h174.9a24.35,24.35,0,0,0,21.33-12.19A23.51,23.51,0,0,0,236.8,188.09Zm-13.87,15.71a8.5,8.5,0,0,1-7.48,4.2H40.55a8.5,8.5,0,0,1-7.48-4.2,7.59,7.59,0,0,1,0-7.72L120.52,44.21a8.75,8.75,0,0,1,15,0l87.45,151.87A7.59,7.59,0,0,1,222.93,203.8ZM120,144V104a8,8,0,0,1,16,0v40a8,8,0,0,1-16,0Zm20,36a12,12,0,1,1-12-12A12,12,0,0,1,140,180Z' : 'M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z' })),
       thStatusTitle: demo === 'nothai' ? 'ยังไม่พบข้อเสนอที่ใช้งานในไทยได้' : demo === 'uncertain' ? 'ควรตรวจสอบรายละเอียดภูมิภาคก่อนซื้อ' : 'สามารถเปิดใช้งานในประเทศไทยได้',
       thStatusSub: demo === 'nothai' ? 'ทุกข้อเสนอที่พบล็อกภูมิภาคอื่น' : demo === 'uncertain' ? 'ผู้ขายไม่ได้ระบุภูมิภาคอย่างชัดเจน' : `ยืนยันแล้ว ${rawOffers.filter(o => o.th === 'ok' && o.stock).length} ข้อเสนอ`,
       editionBar: { display: 'flex', alignItems: 'center', gap: 12, padding: '12px 0 18px', borderTop: '1px solid var(--line2)', overflow: 'hidden' },
@@ -1236,7 +1259,7 @@ class Component extends DCLogic {
       chartHead: { display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 14, flexWrap: 'wrap', marginBottom: 14 },
       ranges: [['30d', '30 วัน'], ['3m', '3 เดือน'], ['6m', '6 เดือน'], ['1y', '1 ปี'], ['all', 'ทั้งหมด']].map(([k, label]) => ({
         label, go: e => { if (e) e.preventDefault(); this.setState({ range: k, hover: null }); },
-        style: { padding: '6px 11px', borderRadius: 8, border: 0, cursor: 'pointer', fontSize: 12, whiteSpace: 'nowrap', background: S.range === k ? 'color-mix(in srgb,#9184d9 18%,transparent)' : 'transparent', color: S.range === k ? 'var(--color-accent-200)' : 'var(--mute)', fontWeight: S.range === k ? 600 : 400 }
+        style: { padding: mobile ? '0 14px' : '6px 11px', minHeight: mobile ? 44 : 0, display: 'inline-flex', alignItems: 'center', borderRadius: 8, border: 0, cursor: 'pointer', fontSize: mobile ? 13 : 12, whiteSpace: 'nowrap', background: S.range === k ? 'color-mix(in srgb,#9184d9 18%,transparent)' : 'transparent', color: S.range === k ? 'var(--color-accent-200)' : 'var(--mute)', fontWeight: S.range === k ? 600 : 400 }
       })),
       chart, hover: S.hover, setHover: i => this.setState({ hover: i }),
       chartStats: { display: 'grid', gridTemplateColumns: mobile ? 'repeat(2,minmax(0,1fr))' : 'repeat(4,minmax(0,1fr))', gap: 10, marginTop: 12 },
@@ -1257,7 +1280,7 @@ class Component extends DCLogic {
         { title: 'Marketplace', body: 'ผู้ขายรายย่อยเป็นผู้ตั้งราคาและกำหนดภูมิภาคเอง มีค่าธรรมเนียมเพิ่ม', dot: { width: 11, height: 11, borderRadius: 3, background: '#8b90ab', flex: 'none', marginTop: 4 } }
       ],
       storeCardGrid: { display: 'grid', gridTemplateColumns: mobile ? '1fr' : tablet ? 'repeat(2,minmax(0,1fr))' : 'repeat(3,minmax(0,1fr))', gap: 12 },
-      storeCards: ORDER.map(k => {
+      storeCards: ORDER_BY_TRUST.map(k => {
         const s = STORES[k];
         return {
           name: s.name, letters: s.letters, logo: logo(s.type, 42), typeLabel: TYPE[s.type].label, typeStyle: typeStyle(s.type),
