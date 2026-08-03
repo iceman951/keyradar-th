@@ -6,6 +6,7 @@
   --color-surface: #232532;
   --color-text: #e9e9ed;
   --color-accent: #9184d9;
+  --color-accent-2: #a7a1db;
   --color-accent-100: #f5f4ff;
   --color-accent-200: #e7e5fe;
   --color-accent-300: #d2cefd;
@@ -41,8 +42,11 @@
   --line2: color-mix(in srgb, var(--ink) 7%, transparent);
   --sunk: #12141f;
   --raise: #1d2030;
-  --font-heading: 'Inter', 'Anuphan', system-ui, sans-serif;
-  --font-body: 'Inter', 'Anuphan', system-ui, sans-serif;
+  --font-heading: 'Inter', 'Anuphan', 'Noto Sans Thai', system-ui, sans-serif;
+  --font-heading-weight: 600;
+  --font-body: 'Inter', 'Anuphan', 'Noto Sans Thai', system-ui, sans-serif;
+  --content-max: 1320px;
+  --header-height: 62px;
   --space-1: 2.8px;
   --space-2: 5.6px;
   --space-3: 8.4px;

@@ -2,28 +2,77 @@
 
 ## Primary task
 
-Build the complete KeyRadar TH frontend from scratch as a Svelte 5
-static SPA.
+Maintain and complete the existing KeyRadar TH frontend as a production-quality
+Svelte 5 static SPA. Align the application in place with the Claude Design
+handoff at:
 
-Read and follow:
+`design-reference/keyradar-thai-prototype/`
 
-- `IMPLEMENTATION_SPEC.md`
-- Every file under `design-reference/claude-design/`
+The repository already contains the application, routes, tests, and deployment
+configuration. Audit and improve them; do not scaffold a second application,
+reinitialize the repository, or move the app into a nested directory.
 
-before creating implementation code.
+Read this file and `IMPLEMENTATION_SPEC.md` before changing application code.
+
+## Protected design bundle
+
+Treat the entire directory below as read-only reference material:
+
+`design-reference/keyradar-thai-prototype/`
+
+Do not delete, rename, move, edit, format, optimize, or generate files inside
+that directory. Do not alter its staged or tracked state. The `.dc.html` files,
+runtime scripts, uploaded images, and Nocturne files are inputs to the port, not
+production application assets.
 
 ## Source of truth
 
-Priority order:
+Use this priority when requirements conflict:
 
 1. `AGENTS.md`
 2. `IMPLEMENTATION_SPEC.md`
-3. Claude Design files under `design-reference/claude-design/`
+3. App-specific prototype sources under
+   `design-reference/keyradar-thai-prototype/project/`
+4. The generic Nocturne design-system guidance and tokens
 
-The Claude Design files define the intended visual appearance, layout,
-Thai copy, responsive behavior, component states, and interactions.
+Within the prototype sources:
 
-## Required stack
+- `KeyRadar TH.dc.html` controls screen composition, navigation, Thai copy,
+  responsive layout, and primary interactions.
+- Components imported by that file control their component-level appearance
+  and behavior.
+- `KeyRadar States.dc.html` controls explicit loading, empty, error, stale,
+  region, out-of-stock, sheet, dialog, and mobile-sticky variants. For an
+  explicit state, the gallery variant is the acceptance reference.
+- Nocturne `styles.css`, `readme.md`, and `_ds_manifest.json` provide the base
+  token system. App-specific prototype choices override generic Nocturne
+  advice, including the Inter/Anuphan/Thai fallback stack and 600-weight app
+  headings.
+
+Ignore design-system files or directories mentioned by the Nocturne README but
+absent from this export. Do not invent or fetch missing templates, theme files,
+foundation pages, or assets.
+
+## Required inspection order
+
+Before implementing a design change:
+
+1. Read `design-reference/keyradar-thai-prototype/README.md`.
+2. Read `project/KeyRadar TH.dc.html` in full.
+3. Follow its `<dc-import>` references and read all imported KeyRadar component
+   files in full.
+4. Read `project/KeyRadar States.dc.html` in full.
+5. Read the exported Nocturne `styles.css`, `readme.md`, and
+   `_ds_manifest.json`.
+6. Inspect uploaded PNGs only when a prototype source actually references them.
+7. Compare the reference behavior with the existing routes, shared components,
+   domain models, mock repository, and tests before editing.
+
+`support.js`, `_ds_bundle.js`, and `_adherence.oxlintrc.json` are export/runtime
+tooling, not design authorities. They do not need to be ported or interpreted
+as application requirements.
+
+## Required stack and rendering model
 
 - SvelteKit
 - Svelte 5 runes
@@ -31,101 +80,109 @@ Thai copy, responsive behavior, component states, and interactions.
 - Vite
 - `@sveltejs/adapter-static`
 - UnoCSS with `preset-wind3`
-- CSS custom properties
-- Svelte scoped CSS
-- Vitest
+- CSS custom properties and Svelte scoped CSS
+- Vitest and Testing Library
 - Playwright
 - pnpm
+- Cloudflare static-assets deployment
 
-The application must be a static client-side SPA.
+The application must remain a client-side static SPA. Keep `ssr = false`,
+prerendering, the adapter-static fallback, and Cloudflare SPA fallback behavior.
+Do not add a server runtime, endpoints, authentication, scraping, payments, a
+database, or a production API.
 
-Do not implement SSR.
+Preserve these public routes:
 
-## Project initialization
-
-The repository does not contain an application yet.
-
-Create the complete SvelteKit project in the repository root.
-
-Do not delete or modify files under:
-
-`design-reference/claude-design/`
-
-Create all required project files, including:
-
-- `package.json`
-- `pnpm-lock.yaml`
-- `svelte.config.js`
-- `vite.config.ts`
-- `uno.config.ts`
-- `tsconfig.json`
-- SvelteKit routes
-- components
-- styles
-- mock data
-- unit tests
-- Playwright tests
-- Cloudflare static deployment configuration
-
-Do not place the application inside an additional nested `web/` directory.
+- `/`
+- `/search?q=...`
+- `/popular`
+- `/deals`
+- `/stores`
+- `/games/[slug]`
 
 ## Design export restrictions
 
-Do not ship or import:
+Do not ship, import, or execute any of the following in the application:
 
-- React
-- ReactDOM
+- React or ReactDOM
 - `support.js`
 - `_ds_bundle.js`
 - `<x-dc>`
 - `<sc-if>`
 - `<sc-for>`
 - `<dc-import>`
+- the state-gallery page, preview controls, `.thumbnail`, or reference PNGs
+- runtime-generated inline style objects copied from the export
 
-Port the design into native Svelte 5 components.
+Do not iframe or directly render the `.dc.html` files. Port the visual result
+and behavior into native Svelte 5 components. Port the supplied filled SVG
+paths into a small typed Svelte icon component; do not use Unicode characters
+as interface icons and do not add a large icon library.
 
-Do not embed the Claude HTML files using an iframe.
+## Coding and data rules
 
-Do not copy runtime-generated inline style objects directly into Svelte.
-
-## Coding rules
-
-- Use Svelte 5 runes.
 - Use `$props()`, `$state()`, `$derived()`, and `$effect()` appropriately.
-- Do not use legacy `export let`.
-- Do not use legacy `$:` reactive statements.
-- Do not use legacy `on:click` syntax.
-- Do not use `any`.
-- Do not suppress TypeScript errors.
-- Do not add a global state library unless clearly necessary.
-- Keep mock data behind a typed repository interface.
-- Store monetary values as integer satang.
-- Preserve Thai UI copy.
-- Reuse design tokens from the supplied design system.
+- Do not use legacy `export let`, `$:` statements, or `on:event` syntax.
+- Do not use `any`, suppress TypeScript errors, or weaken strict mode.
+- Do not add global state management unless a demonstrated cross-route need
+  cannot be handled by SvelteKit and component state.
+- Keep deterministic mock data behind the typed repository interface so a real
+  API can replace it later.
+- Store and calculate all money as integer satang. Round only at explicit data
+  boundaries; format baht only for display.
+- Preserve the prototype's Thai UI copy and trust language.
+- Centralize store-type and region presentation. Region handling must be
+  exhaustive and must never describe uncertain or blocked offers as confirmed.
+- Keep the invariant that final price equals advertised price plus every known
+  itemized fee.
+- Prefer semantic elements, accessible names, visible `:focus-visible` styles,
+  and keyboard-operable controls.
+- Preserve unrelated user changes in a dirty worktree.
 
-## Workflow
+## Responsive and state requirements
+
+Use the prototype breakpoints exactly:
+
+- desktop: `>= 1180px` (reference viewport `1440px`)
+- tablet: `780px–1179px` (reference viewport `834px`)
+- mobile: `< 780px` (reference viewport `392px`)
+
+At mobile widths, interactive targets must be at least 44px high. Follow the
+prototype's grid changes, mobile navigation, offer cards, filter/sort sheets,
+and safe-area-aware fixed purchase bar. Sheets and dialogs must suppress that
+bar while open.
+
+Implement real UI behavior for search opened/loading/empty states, result
+skeletons and empty results, no Thai-compatible offer, no price, refreshing,
+stale/store-down data, confirmed/uncertain/blocked regions, expanded offer
+details, out of stock, mobile sheets, the outbound confirmation dialog, and
+the mobile best-price bar. The state gallery is reference-only; do not expose a
+production demo-state switcher.
+
+## In-place workflow
 
 Work in this order:
 
-1. Inspect all design-reference files.
-2. Summarize the identified screens, components, and interactions.
-3. Scaffold the SvelteKit project.
-4. Port design tokens.
-5. Define typed domain models.
-6. Create consistent mock data.
-7. Build shared components.
-8. Build all routes.
-9. Implement responsive behavior.
-10. Add interactions and UI states.
-11. Add tests.
-12. Run validation and production build.
-13. Fix all errors and visual discrepancies.
+1. Inspect the reference bundle in the required order and inventory the current
+   implementation.
+2. Map each reference screen, component, interaction, and state to the existing
+   route/component that owns it.
+3. Audit and align design tokens, typography, icons, and global layout.
+4. Update typed domain models, repository contracts, and deterministic fixtures
+   before UI code that depends on them.
+5. Align shared components, then route composition and data flow.
+6. Implement responsive behavior, keyboard behavior, focus management, and all
+   state-gallery variants.
+7. Add or update unit, component, end-to-end, and focused screenshot tests.
+8. Run the complete validation suite and fix errors and material visual or
+   behavioral discrepancies.
 
-Do not stop after scaffolding or creating placeholder pages.
+Do not stop at scaffolding, placeholders, static mockups, or happy-path-only
+behavior.
 
 ## Required validation
 
-Before considering the implementation complete, run:
+Before considering implementation complete, run all commands successfully:
 
 ```bash
 pnpm install
@@ -133,3 +190,8 @@ pnpm check
 pnpm test
 pnpm test:e2e
 pnpm build
+```
+
+Do not run rewrite-mode formatters against the protected design bundle. If a
+validation command changes tracked files unexpectedly, inspect and preserve
+user-owned changes before proceeding.

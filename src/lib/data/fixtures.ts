@@ -1,6 +1,26 @@
-import type { Game, Store } from '$lib/domain/models';
+import type { EditionCategory, Game, Store } from '$lib/domain/models';
 
-const edition = (key: string, name: string, baht: number) => ({ key, name, steamPriceSatang: baht * 100 });
+const categoryForEdition = (key: string): EditionCategory => {
+  switch (key) {
+    case 'deluxe':
+      return 'deluxe';
+    case 'complete':
+      return 'complete';
+    case 'dlc':
+      return 'dlc';
+    case 'bundle':
+      return 'bundle';
+    default:
+      return 'standard';
+  }
+};
+
+const edition = (key: string, name: string, baht: number) => ({
+  key,
+  name,
+  category: categoryForEdition(key),
+  steamPriceSatang: baht * 100
+});
 
 export const games: Game[] = [
   { slug: 'elden-ring', title: 'ELDEN RING', year: 2022, developer: 'FromSoftware', publisher: 'BANDAI NAMCO Entertainment', releaseDate: '25 ก.พ. 2565', genres: ['แอ็กชัน', 'สวมบทบาท', 'โลกเปิด'], reviewPercent: 94, reviewCount: 782940, popularity: 99, hue: 36, editions: [edition('standard', 'Standard Edition', 1590), edition('deluxe', 'Deluxe Edition', 1990), edition('dlc', 'Shadow of the Erdtree (DLC)', 1290)] },
@@ -18,14 +38,14 @@ export const games: Game[] = [
 ];
 
 export const stores: Store[] = [
-  { id: 'eneba', name: 'Eneba', initials: 'EN', type: 'marketplace', payments: ['บัตรเครดิต/เดบิต', 'PayPal', 'Skrill', 'Google Pay'], feeRate: 0.052, feeLabel: 'ค่าบริการแพลตฟอร์ม', note: 'Marketplace ที่มีผู้ขายรายย่อยจำนวนมาก ภูมิภาคของคีย์ขึ้นกับผู้ขายแต่ละราย' },
-  { id: 'kinguin', name: 'Kinguin', initials: 'KG', type: 'marketplace', payments: ['บัตรเครดิต/เดบิต', 'PayPal', 'Alipay'], feeRate: 0.049, feeLabel: 'Buyer Protection', note: 'ค่า Buyer Protection เป็นตัวเลือกเสริมแต่ถูกเลือกไว้ล่วงหน้าที่หน้าชำระเงิน' },
-  { id: 'cdkeys', name: 'CDKeys', initials: 'CD', type: 'reseller', payments: ['บัตรเครดิต/เดบิต', 'PayPal'], feeRate: 0, feeLabel: '', note: 'ผู้จำหน่ายคีย์รายใหญ่ ไม่ใช่ตัวแทนจำหน่ายอย่างเป็นทางการของผู้พัฒนาทุกราย' },
-  { id: 'instant', name: 'Instant Gaming', initials: 'IG', type: 'reseller', payments: ['บัตรเครดิต/เดบิต', 'PayPal', 'Crypto'], feeRate: 0, feeLabel: '', note: 'จัดส่งคีย์อัตโนมัติ ตรวจสอบภูมิภาคที่ระบุบนหน้าสินค้าก่อนชำระเงิน' },
-  { id: 'fanatical', name: 'Fanatical', initials: 'FA', type: 'official', payments: ['บัตรเครดิต/เดบิต', 'PayPal'], feeRate: 0, feeLabel: '', note: 'ตัวแทนจำหน่ายที่ได้รับอนุญาต คีย์มาจากผู้จัดจำหน่ายโดยตรง' },
-  { id: 'gmg', name: 'Green Man Gaming', initials: 'GM', type: 'official', payments: ['บัตรเครดิต/เดบิต', 'PayPal'], feeRate: 0, feeLabel: '', note: 'ตัวแทนจำหน่ายที่ได้รับอนุญาต มีระบบคืนเงินตามเงื่อนไขของร้าน' },
-  { id: 'humble', name: 'Humble Store', initials: 'HB', type: 'official', payments: ['บัตรเครดิต/เดบิต', 'PayPal', 'Amazon Pay'], feeRate: 0, feeLabel: '', note: 'ตัวแทนจำหน่ายที่ได้รับอนุญาต ราคาอาจแสดงเป็น USD และถูกแปลงโดยผู้ออกบัตร' },
-  { id: 'gamesplanet', name: 'Gamesplanet', initials: 'GP', type: 'official', payments: ['บัตรเครดิต/เดบิต', 'PayPal'], feeRate: 0, feeLabel: '', note: 'ตัวแทนจำหน่ายในยุโรป คีย์บางรายการจำกัดเฉพาะภูมิภาค EU' },
-  { id: 'gamersgate', name: 'GamersGate', initials: 'GG', type: 'official', payments: ['บัตรเครดิต/เดบิต', 'PayPal'], feeRate: 0, feeLabel: '', note: 'ตัวแทนจำหน่ายที่ได้รับอนุญาต สต็อกคีย์บางรายการมีจำกัด' },
-  { id: 'steam', name: 'Steam', initials: 'ST', type: 'steam', payments: ['บัตรเครดิต/เดบิต', 'TrueMoney Wallet', 'พร้อมเพย์', 'Steam Wallet'], feeRate: 0, feeLabel: '', note: 'ซื้อโดยตรงจาก Steam ประเทศไทย เปิดใช้งานได้แน่นอนและไม่มีค่าธรรมเนียมแฝง' }
+  { id: 'steam', name: 'Steam', initials: 'ST', type: 'steam', payments: ['บัตรเครดิต/เดบิต', 'TrueMoney Wallet', 'พร้อมเพย์', 'Steam Wallet'], feeRate: 0, feeLabel: '', note: 'ซื้อโดยตรงจาก Steam ประเทศไทย เปิดใช้งานได้แน่นอนและไม่มีค่าธรรมเนียมแฝง', websiteUrl: 'https://store.steampowered.com/' },
+  { id: 'fanatical', name: 'Fanatical', initials: 'FA', type: 'official', payments: ['บัตรเครดิต/เดบิต', 'PayPal'], feeRate: 0, feeLabel: '', note: 'ตัวแทนจำหน่ายที่ได้รับอนุญาต คีย์มาจากผู้จัดจำหน่ายโดยตรง', websiteUrl: 'https://www.fanatical.com/' },
+  { id: 'gamersgate', name: 'GamersGate', initials: 'GG', type: 'official', payments: ['บัตรเครดิต/เดบิต', 'PayPal'], feeRate: 0, feeLabel: '', note: 'ตัวแทนจำหน่ายที่ได้รับอนุญาต สต็อกคีย์บางรายการมีจำกัด', websiteUrl: 'https://www.gamersgate.com/' },
+  { id: 'gamesplanet', name: 'Gamesplanet', initials: 'GP', type: 'official', payments: ['บัตรเครดิต/เดบิต', 'PayPal'], feeRate: 0, feeLabel: '', note: 'ตัวแทนจำหน่ายในยุโรป คีย์บางรายการจำกัดเฉพาะภูมิภาค EU', websiteUrl: 'https://us.gamesplanet.com/' },
+  { id: 'gmg', name: 'Green Man Gaming', initials: 'GM', type: 'official', payments: ['บัตรเครดิต/เดบิต', 'PayPal'], feeRate: 0, feeLabel: '', note: 'ตัวแทนจำหน่ายที่ได้รับอนุญาต มีระบบคืนเงินตามเงื่อนไขของร้าน', websiteUrl: 'https://www.greenmangaming.com/' },
+  { id: 'humble', name: 'Humble Store', initials: 'HB', type: 'official', payments: ['บัตรเครดิต/เดบิต', 'PayPal', 'Amazon Pay'], feeRate: 0, feeLabel: '', note: 'ตัวแทนจำหน่ายที่ได้รับอนุญาต ราคาอาจแสดงเป็น USD และถูกแปลงโดยผู้ออกบัตร', websiteUrl: 'https://www.humblebundle.com/store' },
+  { id: 'cdkeys', name: 'CDKeys', initials: 'CD', type: 'reseller', payments: ['บัตรเครดิต/เดบิต', 'PayPal'], feeRate: 0, feeLabel: '', note: 'ผู้จำหน่ายคีย์รายใหญ่ ไม่ใช่ตัวแทนจำหน่ายอย่างเป็นทางการของผู้พัฒนาทุกราย', websiteUrl: 'https://www.cdkeys.com/' },
+  { id: 'instant', name: 'Instant Gaming', initials: 'IG', type: 'reseller', payments: ['บัตรเครดิต/เดบิต', 'PayPal', 'Crypto'], feeRate: 0, feeLabel: '', note: 'จัดส่งคีย์อัตโนมัติ ตรวจสอบภูมิภาคที่ระบุบนหน้าสินค้าก่อนชำระเงิน', websiteUrl: 'https://www.instant-gaming.com/' },
+  { id: 'eneba', name: 'Eneba', initials: 'EN', type: 'marketplace', payments: ['บัตรเครดิต/เดบิต', 'PayPal', 'Skrill', 'Google Pay'], feeRate: 0.052, feeLabel: 'ค่าบริการแพลตฟอร์ม', note: 'Marketplace ที่มีผู้ขายรายย่อยจำนวนมาก ภูมิภาคของคีย์ขึ้นกับผู้ขายแต่ละราย', websiteUrl: 'https://www.eneba.com/' },
+  { id: 'kinguin', name: 'Kinguin', initials: 'KG', type: 'marketplace', payments: ['บัตรเครดิต/เดบิต', 'PayPal', 'Alipay'], feeRate: 0.049, feeLabel: 'Buyer Protection', note: 'ค่า Buyer Protection เป็นตัวเลือกเสริมแต่ถูกเลือกไว้ล่วงหน้าที่หน้าชำระเงิน', websiteUrl: 'https://www.kinguin.net/' }
 ];

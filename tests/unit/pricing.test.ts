@@ -1,18 +1,42 @@
 import { describe, expect, it } from 'vitest';
-import { bestThaiOffer, discountPercent } from '$lib/domain/pricing';
-import type { Offer } from '$lib/domain/models';
-
-const offer = (id: string, finalSatang: number, regionStatus: Offer['regionStatus'], inStock = true): Offer => ({
-  id, gameSlug: 'game', storeId: id, editionKey: 'standard', advertisedSatang: finalSatang,
-  feeSatang: 0, finalSatang, steamPriceSatang: 100000, region: 'Global', regionStatus,
-  drm: 'Steam Key', inStock, updatedMinutesAgo: 5
-});
+import {
+  bestThaiOffer,
+  discountPercent,
+  hasAdditionalFees,
+  hasConsistentFinalPrice,
+  offerFeeTotal
+} from '$lib/domain/pricing';
+import { makeOffer } from './helpers';
 
 describe('pricing', () => {
-  it('selects the cheapest in-stock Thailand-compatible offer', () => {
-    expect(bestThaiOffer([offer('blocked', 10000, 'blocked'), offer('cheap', 40000, 'confirmed'), offer('stock', 30000, 'confirmed', false)])?.id).toBe('cheap');
+  it('selects the cheapest confirmed in-stock offer without mutating the input', () => {
+    const offers = [
+      makeOffer({ id: 'blocked', finalSatang: 10_000, region: 'north-america', regionStatus: 'blocked' }),
+      makeOffer({ id: 'cheap', finalSatang: 40_000 }),
+      makeOffer({ id: 'stock', finalSatang: 30_000, inStock: false })
+    ];
+    const originalOrder = offers.map((offer) => offer.id);
+    expect(bestThaiOffer(offers)?.id).toBe('cheap');
+    expect(offers.map((offer) => offer.id)).toEqual(originalOrder);
   });
-  it('calculates discount from integer satang values', () => {
-    expect(discountPercent(offer('deal', 55000, 'confirmed'))).toBe(45);
+
+  it('calculates discounts from integer satang values', () => {
+    expect(discountPercent(makeOffer({ finalSatang: 55_000 }))).toBe(45);
+    expect(discountPercent(makeOffer({ steamPriceSatang: 0 }))).toBe(0);
+  });
+
+  it('totals itemized fees and enforces the final price invariant', () => {
+    const offer = makeOffer({
+      advertisedSatang: 45_000,
+      fees: [
+        { kind: 'platform', label: 'ค่าบริการแพลตฟอร์ม', amountSatang: 2_500 },
+        { kind: 'payment', label: 'ค่าธรรมเนียมการชำระเงิน', amountSatang: 1_500 }
+      ],
+      finalSatang: 49_000
+    });
+    expect(offerFeeTotal(offer)).toBe(4_000);
+    expect(hasAdditionalFees(offer)).toBe(true);
+    expect(hasConsistentFinalPrice(offer)).toBe(true);
+    expect(hasConsistentFinalPrice({ ...offer, finalSatang: 48_999 })).toBe(false);
   });
 });
