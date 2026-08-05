@@ -1,16 +1,10 @@
-import type { Store, StoreType } from './models';
-
-export const STORE_TRUST_RANK: Readonly<Record<StoreType, number>> = {
-  steam: 0,
-  official: 1,
-  reseller: 2,
-  marketplace: 3
-};
-
-export const compareStoresByTrust = (a: Store, b: Store): number =>
-  STORE_TRUST_RANK[a.type] - STORE_TRUST_RANK[b.type] ||
-  a.name.localeCompare(b.name, 'en', { sensitivity: 'base' }) ||
-  a.id.localeCompare(b.id, 'en');
-
-export const sortStoresByTrust = (stores: readonly Store[]): Store[] =>
-  [...stores].sort(compareStoresByTrust);
+/**
+ * Framework-neutral; lives in `shared/` so the Worker's SQL store ordering
+ * can be generated from the same `STORE_TRUST_RANK` map. Re-exported here so
+ * existing `$lib/domain/stores` imports keep working.
+ */
+export {
+  compareStoresByTrust,
+  sortStoresByTrust,
+  STORE_TRUST_RANK
+} from '../../../shared/domain/stores.ts';

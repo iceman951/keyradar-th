@@ -3,7 +3,7 @@
   import GameCard from '$lib/components/games/GameCard.svelte';
   import StoreLogo from '$lib/components/ui/StoreLogo.svelte';
   import Icon from '$lib/components/ui/Icon.svelte';
-  import { gameRepository } from '$lib/data/mock-repository';
+  import { gameRepository } from '$lib/data/repository';
   import { bestThaiOffer, discountPercent } from '$lib/domain/pricing';
   import { storeTypeLabel } from '$lib/domain/presentation';
   import { sortStoresByTrust } from '$lib/domain/stores';

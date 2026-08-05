@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Game } from '$lib/domain/models';
-  import { gameRepository } from '$lib/data/mock-repository';
+  import { gameRepository } from '$lib/data/repository';
   import { bestThaiOffer } from '$lib/domain/pricing';
   import { formatBaht } from '$lib/utils/currency';
   import Icon from '$lib/components/ui/Icon.svelte';

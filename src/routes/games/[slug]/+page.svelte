@@ -11,7 +11,7 @@
     RegionStatus,
     Store
   } from '$lib/domain/models';
-  import { gameRepository } from '$lib/data/mock-repository';
+  import { gameRepository } from '$lib/data/repository';
   import { bestThaiOffer, offerFeeTotal } from '$lib/domain/pricing';
   import { storeTypeLabel } from '$lib/domain/presentation';
   import { formatBaht } from '$lib/utils/currency';

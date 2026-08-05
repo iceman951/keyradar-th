@@ -9,6 +9,24 @@
     "skipLibCheck": true,
     "sourceMap": true,
     "strict": true,
-    "moduleResolution": "bundler"
-  }
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true
+  },
+  // `.svelte-kit/tsconfig.json` includes all of `tests/**`, but `tests/api/**`
+  // imports `worker/` code that depends on Cloudflare Workers globals
+  // (`D1Database`) which this browser/DOM-typed config does not — and should
+  // not — have. Those files are type-checked by `pnpm check:worker` instead,
+  // where `worker-configuration.d.ts` is in scope. Paths are relative to this
+  // file; the excludes below the first one restate the base config's own
+  // service-worker exclusions, which redefining `exclude` would otherwise drop.
+  "exclude": [
+    "tests/api/**",
+    "node_modules/**",
+    "src/service-worker.js",
+    "src/service-worker/**/*.js",
+    "src/service-worker.ts",
+    "src/service-worker/**/*.ts",
+    "src/service-worker.d.ts",
+    "src/service-worker/**/*.d.ts"
+  ]
 }

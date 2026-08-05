@@ -1,6 +1,6 @@
 <script lang="ts">
   import StoreCard from '$lib/components/stores/StoreCard.svelte';
-  import { gameRepository } from '$lib/data/mock-repository';
+  import { gameRepository } from '$lib/data/repository';
   import { sortStoresByTrust } from '$lib/domain/stores';
   import type { Store } from '$lib/domain/models';
   let stores=$state<Store[]>([]);$effect(()=>{gameRepository.listStores().then(value=>stores=sortStoresByTrust(value))});

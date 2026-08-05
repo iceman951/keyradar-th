@@ -10,11 +10,15 @@ games and understand whether an offer can be activated in Thailand. It must be
 a responsive, accessible, Thai-language Svelte 5 static SPA that closely
 reproduces the supplied Claude Design prototype.
 
-The application is frontend-only. Use realistic, deterministic local data
-behind a typed repository. Do not implement live scraping, authentication,
-payments, checkout, a database, a server API, or user accounts. KeyRadar TH
-does not sell games; purchase actions lead to the external store only after a
-confirmation dialog.
+Phase 1 uses the existing deterministic mock dataset as seed data in Cloudflare
+D1. Production UI reads through a same-origin REST API served by a Cloudflare
+Worker at `/api/v1/*`. `MockGameRepository` remains available for deterministic
+tests and explicit UI-state tests, and remains the source of the seed catalog.
+
+All data access stays behind the typed `GameRepository` interface. Do not
+implement live scraping, authentication, payments, checkout, or user accounts.
+KeyRadar TH does not sell games; purchase actions lead to the external store
+only after a confirmation dialog.
 
 The production application must not contain the prototype state gallery,
 viewport/demo toolbar, React/DC runtime, reference preview frames, or uploaded
@@ -55,8 +59,20 @@ Keep SvelteKit in client-only static mode:
 - `src/routes/+layout.ts` exports `ssr = false` and `prerender = true`.
 - `@sveltejs/adapter-static` produces the SPA fallback (`200.html`).
 - Cloudflare serves `build/` with single-page-application fallback behavior.
-- Dynamic game slugs are enumerated from deterministic fixture data for the
-  static build.
+- Dynamic game slugs are enumerated from the deterministic seed catalog at
+  build time for the static build.
+
+One Cloudflare Worker deployment serves both layers from a single origin:
+
+```text
+/*         → Cloudflare Static Assets → SvelteKit SPA
+/api/v1/*  → Cloudflare Worker → Elysia 2 beta → Drizzle → Cloudflare D1
+```
+
+`/api/*` is the only Worker-first route group; every other path is served
+static-assets-first. API routes return JSON and must never return the SPA
+shell. Because the API is same-origin, no CORS configuration exists. The
+Worker introduces no SvelteKit SSR.
 
 Preserve the existing public routes and responsibilities:
 

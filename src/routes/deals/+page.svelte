@@ -1,7 +1,7 @@
 <script lang="ts">
   import GameCard from '$lib/components/games/GameCard.svelte';
   import EmptyState from '$lib/components/ui/EmptyState.svelte';
-  import { gameRepository } from '$lib/data/mock-repository';
+  import { gameRepository } from '$lib/data/repository';
   import { bestThaiOffer, discountPercent } from '$lib/domain/pricing';
   import type { Game, Offer, Store } from '$lib/domain/models';
   type Entry={game:Game;offer:Offer;store:Store};

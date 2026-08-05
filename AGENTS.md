@@ -30,10 +30,11 @@ production application assets.
 Use this priority when requirements conflict:
 
 1. `AGENTS.md`
-2. `IMPLEMENTATION_SPEC.md`
-3. App-specific prototype sources under
+2. `KEYRADAR_PHASE1_ELYSIA2_CLOUDFLARE_IMPLEMENTATION.md`
+3. `IMPLEMENTATION_SPEC.md`
+4. App-specific prototype sources under
    `design-reference/keyradar-thai-prototype/project/`
-4. The generic Nocturne design-system guidance and tokens
+5. The generic Nocturne design-system guidance and tokens
 
 Within the prototype sources:
 
@@ -85,11 +86,21 @@ as application requirements.
 - Playwright
 - pnpm
 - Cloudflare static-assets deployment
+- Elysia 2 (beta) on Cloudflare Workers for the `/api/v1/*` REST layer
+- Drizzle ORM and Cloudflare D1
 
-The application must remain a client-side static SPA. Keep `ssr = false`,
-prerendering, the adapter-static fallback, and Cloudflare SPA fallback behavior.
-Do not add a server runtime, endpoints, authentication, scraping, payments, a
-database, or a production API.
+The SvelteKit application must remain a client-side static SPA. Preserve
+`ssr = false`, prerendering, the adapter-static fallback, and Cloudflare SPA
+fallback behavior.
+
+A same-repository Cloudflare Worker may provide REST endpoints under
+`/api/v1/*` using Elysia 2 beta and Cloudflare D1. The Worker is a separate
+runtime layer in the same deployment; it must remain separate from SvelteKit
+rendering and must not introduce SvelteKit SSR. Static assets are served by
+Cloudflare Static Assets, never by Elysia.
+
+Do not add authentication, payments, live scraping, user accounts, GraphQL,
+or additional infrastructure unless a later owner-approved phase requires it.
 
 Preserve these public routes:
 
@@ -126,8 +137,15 @@ as interface icons and do not add a large icon library.
 - Do not use `any`, suppress TypeScript errors, or weaken strict mode.
 - Do not add global state management unless a demonstrated cross-route need
   cannot be handled by SvelteKit and component state.
-- Keep deterministic mock data behind the typed repository interface so a real
-  API can replace it later.
+- Keep all data access behind the typed `GameRepository` interface. Production
+  code imports the repository selector at `src/lib/data/repository.ts`, never a
+  concrete implementation. `MockGameRepository` remains available for
+  deterministic tests and explicit UI-state tests.
+- Keep Elysia-specific code confined to `worker/app.ts`, `worker/index.ts`,
+  `worker/adapter/`, `worker/routes/`, `worker/schemas/`, and
+  `worker/middleware/`. SQL, mappers, and domain rules stay
+  framework-independent so the API framework can be replaced without rewriting
+  the data or domain layers.
 - Store and calculate all money as integer satang. Round only at explicit data
   boundaries; format baht only for display.
 - Preserve the prototype's Thai UI copy and trust language.
@@ -187,8 +205,14 @@ Before considering implementation complete, run all commands successfully:
 ```bash
 pnpm install
 pnpm check
+pnpm check:worker
 pnpm test
+pnpm test:api
+pnpm db:migrate:local
+pnpm db:seed:local
+pnpm test:d1
 pnpm test:e2e
+pnpm test:e2e:api
 pnpm build
 ```
 
