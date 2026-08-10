@@ -7,7 +7,6 @@ import type {
   OfferFee,
   OfferSnapshot,
   PricePoint,
-  RegionCode,
   Store
 } from '$lib/domain/models';
 import { regionPresentation } from '$lib/domain/presentation';
@@ -17,6 +16,7 @@ import {
   offerFeeTotal
 } from '$lib/domain/pricing';
 import { sortStoresByTrust } from '$lib/domain/stores';
+import { regionForStore } from '$lib/itad/store-regions';
 
 export type MockOfferMode = 'ready' | 'stale' | 'store-down' | 'error';
 
@@ -44,16 +44,19 @@ const randomFor = (seed: string): (() => number) => {
   };
 };
 
+const DEFAULT_PRICE_BAND: readonly [number, number] = [0.65, 0.15];
+
 const PRICE_BANDS: Readonly<Record<string, readonly [number, number]>> = {
-  eneba: [0.44, 0.16],
-  kinguin: [0.47, 0.15],
-  cdkeys: [0.52, 0.14],
-  instant: [0.55, 0.14],
+  gamebillet: [0.52, 0.15],
+  dreamgame: [0.55, 0.15],
+  allyouplay: [0.58, 0.15],
   fanatical: [0.61, 0.15],
   gmg: [0.65, 0.15],
+  gamersgate: [0.68, 0.16],
   humble: [0.7, 0.15],
   gamesplanet: [0.72, 0.15],
-  gamersgate: [0.68, 0.16],
+  gog: [0.75, 0.15],
+  epic: [0.78, 0.15],
   steam: [1, 0]
 };
 
@@ -72,44 +75,30 @@ const purchaseUrlFor = (store: Store, title: string): string => {
       return `https://www.greenmangaming.com/search/?query=${query}`;
     case 'humble':
       return `https://www.humblebundle.com/store/search?search=${query}`;
-    case 'cdkeys':
-      return `https://www.cdkeys.com/catalogsearch/result/?q=${query}`;
-    case 'instant':
-      return `https://www.instant-gaming.com/en/search/?query=${query}`;
-    case 'eneba':
-      return `https://www.eneba.com/store?text=${query}`;
-    case 'kinguin':
-      return `https://www.kinguin.net/listing?active=1&phrase=${query}`;
+    case 'dreamgame':
+      return `https://www.dreamgame.com/search?keyword=${query}`;
+    case 'gamebillet':
+      return `https://www.gamebillet.com/search?q=${query}`;
+    case 'allyouplay':
+      return `https://www.allyouplay.com/en/search?q=${query}`;
+    case 'gog':
+      return `https://www.gog.com/en/games?query=${query}`;
+    case 'epic':
+      return `https://store.epicgames.com/en-US/browse?q=${query}`;
     default:
       return store.websiteUrl;
   }
 };
 
-const regionFor = (storeId: string, gameSlug: string, random: () => number): RegionCode => {
-  switch (storeId) {
-    case 'steam':
-      return 'thailand';
-    case 'cdkeys':
-      return 'sea';
-    case 'gamesplanet':
-      return 'eu';
-    case 'kinguin':
-      return 'row';
-    case 'humble':
-      return gameSlug === 'helldivers-2' ? 'north-america' : 'global';
-    case 'eneba':
-      return random() < 0.34 ? 'eu' : 'global';
-    default:
-      return 'global';
-  }
-};
-
+// Mirrors the live region table rather than inventing its own, so the offline
+// fallback cannot disagree with production about which keys work in Thailand.
 const drmFor = (gameSlug: string, storeId: string): string => {
   if (storeId === 'steam') return 'Steam';
+  if (storeId === 'gog') return 'GOG.com';
+  if (storeId === 'epic') return 'Epic Games';
   if (gameSlug === 'it-takes-two' && (storeId === 'gmg' || storeId === 'humble')) {
     return 'EA app';
   }
-  if (gameSlug === 'cyberpunk-2077' && storeId === 'gmg') return 'GOG.com';
   return 'Steam Key';
 };
 
@@ -194,7 +183,7 @@ export class MockGameRepository implements GameRepository {
     const selected = game.editions.find((item) => item.key === editionKey) ?? game.editions[0];
     const random = randomFor(`${game.slug}|${selected.key}`);
     const offers = stores.map((store): Offer => {
-      const [low, spread] = PRICE_BANDS[store.id];
+      const [low, spread] = PRICE_BANDS[store.id] ?? DEFAULT_PRICE_BAND;
       const advertisedSatang = store.id === 'steam'
         ? selected.steamPriceSatang
         : Math.max(
@@ -202,7 +191,7 @@ export class MockGameRepository implements GameRepository {
             Math.round((selected.steamPriceSatang * (low + random() * spread)) / 500) * 500 - 100
           );
       const fees = feesFor(store, advertisedSatang, random);
-      const region = regionFor(store.id, game.slug, random);
+      const region = regionForStore(store.id);
       const presentation = regionPresentation(region);
       const marketplace = store.type === 'marketplace';
       return {
@@ -273,5 +262,3 @@ export class MockGameRepository implements GameRepository {
     }));
   }
 }
-
-export const gameRepository: GameRepository = new MockGameRepository();

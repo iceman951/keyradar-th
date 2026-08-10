@@ -28,10 +28,20 @@ export interface Edition {
   name: string;
   category: EditionCategory;
   steamPriceSatang: number;
+  /**
+   * In ITAD an edition is a separate game entry, so each edition resolves to its
+   * own id. `itadTitle` overrides the derived lookup title; `itadId` pins the
+   * result outright when a title lookup keeps missing.
+   */
+  itadTitle?: string;
+  itadId?: string;
+  steamAppId?: number;
 }
 
 export interface Game {
   slug: string;
+  /** Base game's Steam app id — the standard edition's, used for real THB pricing. */
+  steamAppId?: number;
   title: string;
   year: number;
   developer: string;
@@ -55,6 +65,8 @@ export interface Store {
   feeLabel: string;
   note: string;
   websiteUrl: string;
+  /** ITAD shop id. Doubles as the allowlist: no id means we never show the store. */
+  itadShopId?: number;
 }
 
 export interface OfferFee {
@@ -83,6 +95,12 @@ export interface Offer {
   sellerReviewCount?: number;
   isHistoricalLow: boolean;
   purchaseUrl: string;
+  /** Currency the store actually quoted, when it was not THB. */
+  sourceCurrency?: string;
+  /** True when the price shown was converted into THB rather than quoted in it. */
+  approximate?: boolean;
+  /** Coupon code required to reach the advertised price. */
+  voucherCode?: string;
 }
 
 export interface PricePoint {

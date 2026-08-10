@@ -80,17 +80,21 @@ test('game editions, retained refresh data, and stale warnings are represented',
   await expect(page.getByText('ร้านค้าบางแห่งไม่ตอบสนองชั่วคราว')).toBeVisible();
 });
 
-test('blocked, no-Thai, no-price, and out-of-stock states have recovery UI', async ({ page }) => {
+// No store in the catalogue blanket-blocks Thailand — region locks are per-title,
+// so a store-level "blocked" mapping would be invented data. The reachable
+// warning state is "uncertain", which is what this now asserts.
+test('uncertain-region, no-Thai, no-price, and out-of-stock states have recovery UI', async ({ page }) => {
   await page.goto('/games/helldivers-2');
   await waitForPrices(page);
   await page.getByRole('checkbox', { name: /เฉพาะที่ใช้งานในไทยได้/ }).uncheck();
-  await expect(page.getByText('อเมริกาเหนือ', { exact: true }).filter({ visible: true }).first()).toBeVisible();
-  await expect(page.getByText('ไม่รองรับไทย', { exact: true }).filter({ visible: true }).first()).toBeVisible();
+  // Asserts the status, not a specific region label: which regions exist is
+  // editorial data that moves, but "uncertain needs a warning" is the invariant.
+  await expect(page.getByText('ตรวจสอบภูมิภาค', { exact: true }).filter({ visible: true }).first()).toBeVisible();
 
   await page.goto('/games/helldivers-2?state=no-th');
   await expect(page.getByRole('heading', { name: /ยังไม่พบข้อเสนอที่ยืนยัน/ })).toBeVisible();
   await page.getByRole('button', { name: 'ดูข้อเสนอทั้งหมดพร้อมคำเตือน' }).click();
-  await expect(page.getByText('ไม่รองรับไทย', { exact: true }).filter({ visible: true }).first()).toBeVisible();
+  await expect(page.getByText('ตรวจสอบภูมิภาค', { exact: true }).filter({ visible: true }).first()).toBeVisible();
 
   await page.goto('/games/elden-ring?state=no-price');
   await expect(page.getByRole('heading', { name: 'ยังไม่มีข้อมูลราคาสำหรับเกมนี้' })).toBeVisible();

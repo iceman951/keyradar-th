@@ -11,11 +11,16 @@
     RegionStatus,
     Store
   } from '$lib/domain/models';
-  import { gameRepository } from '$lib/data/mock-repository';
+  import { gameRepository, invalidateCatalog } from '$lib/data/repository';
+  import {
+    beginOfferRefresh,
+    failOfferLoad,
+    resolveOfferSnapshot
+  } from '$lib/domain/offer-load-state';
   import { bestThaiOffer, offerFeeTotal } from '$lib/domain/pricing';
   import { storeTypeLabel } from '$lib/domain/presentation';
   import { formatBaht } from '$lib/utils/currency';
-  import { formatRelativeMinutes } from '$lib/utils/date';
+  import { formatRelativeMinutes, formatThaiDate } from '$lib/utils/date';
   import GameCover from '$lib/components/ui/GameCover.svelte';
   import StoreLogo from '$lib/components/ui/StoreLogo.svelte';
   import Icon from '$lib/components/ui/Icon.svelte';
@@ -103,10 +108,6 @@
   const stateMessage = (error: unknown): string =>
     error instanceof Error ? error.message : 'ไม่สามารถดึงข้อมูลราคาจากร้านค้าได้';
 
-  const asReadyState = (next: OfferSnapshot): OfferLoadState =>
-    next.stale || next.failedStores.length
-      ? { status: 'stale', snapshot: next, message: 'ร้านค้าบางแห่งไม่ตอบสนอง ราคาบางรายการเป็นข้อมูลจากครั้งก่อน' }
-      : { status: 'ready', snapshot: next };
 
   const loadGame = async (gameSlug: string) => {
     const request = ++requestSequence;
@@ -130,7 +131,7 @@
       if (request !== requestSequence) return;
       editionSnapshots = { [firstEdition]: initialSnapshot };
       editionAvailability = availability;
-      loadState = asReadyState(initialSnapshot);
+      loadState = resolveOfferSnapshot(initialSnapshot);
     } catch (error) {
       if (request !== requestSequence) return;
       loadState = { status: 'error', message: stateMessage(error) };
@@ -143,14 +144,14 @@
     expanded = {};
     const cached = editionSnapshots[key];
     if (cached) {
-      loadState = asReadyState(cached);
+      loadState = resolveOfferSnapshot(cached);
       return;
     }
     loadState = { status: 'loading' };
     try {
       const next = await gameRepository.getOffers(game.slug, key);
       editionSnapshots = { ...editionSnapshots, [key]: next };
-      loadState = asReadyState(next);
+      loadState = resolveOfferSnapshot(next);
     } catch (error) {
       loadState = { status: 'error', message: stateMessage(error) };
     }
@@ -158,22 +159,18 @@
 
   const refresh = async () => {
     if (!game) return;
-    const previous = snapshot;
-    if (previous) loadState = { status: 'refreshing', snapshot: previous };
-    else loadState = { status: 'loading' };
+    const previous = loadState;
+    loadState = beginOfferRefresh(previous);
     try {
+      // The catalog is memoised for the whole session, so without this the
+      // refresh button would hand back the very snapshot it is replacing.
+      invalidateCatalog();
       const next = await gameRepository.getOffers(game.slug, edition);
-      editionSnapshots = { ...editionSnapshots, [edition]: next };
-      loadState = asReadyState(next);
+      editionSnapshots = { [edition]: next };
+      loadState = resolveOfferSnapshot(next);
       editionAvailability = await gameRepository.getEditionAvailability(game.slug);
     } catch (error) {
-      loadState = previous
-        ? {
-            status: 'stale',
-            snapshot: { ...previous, stale: true },
-            message: stateMessage(error)
-          }
-        : { status: 'error', message: stateMessage(error) };
+      loadState = failOfferLoad(previous, stateMessage(error));
     }
   };
 
@@ -267,7 +264,7 @@
                 <div class="store"><StoreLogo initials={bestStore.initials} type={bestStore.type} size={42} /><span><strong>{bestStore.name}</strong><small>{storeTypeLabel(bestStore.type)}</small></span></div>
                 <div class="sum-price"><small>ราคาสุทธิโดยประมาณ</small><div><strong>{formatBaht(best.finalSatang)}</strong><span><s>{formatBaht(steamPrice)}</s><b>ประหยัด {formatBaht(Math.max(0, steamPrice - best.finalSatang))}</b></span></div><p>{best.fees.length ? `ราคาโฆษณา ${formatBaht(best.advertisedSatang)} + ค่าธรรมเนียม ${formatBaht(offerFeeTotal(best))}` : 'ไม่มีค่าธรรมเนียมเพิ่มเติมที่ทราบ'}</p></div>
               </div>
-              <div class="best-foot"><span><Icon name="clock" size={13} /> อัปเดตล่าสุด {formatRelativeMinutes(best.updatedMinutesAgo)} · 2 ส.ค. 2569</span><button class="btn buy" onclick={() => dialogOffer = best}>ไปยังร้านค้า {bestStore.name}<Icon name="external" size={14} /></button></div>
+              <div class="best-foot"><span><Icon name="clock" size={13} /> อัปเดตล่าสุด {formatRelativeMinutes(best.updatedMinutesAgo)}{#if snapshot} · {formatThaiDate(snapshot.fetchedAt)}{/if}</span><button class="btn buy" onclick={() => dialogOffer = best}>ไปยังร้านค้า {bestStore.name}<Icon name="external" size={14} /></button></div>
             </article>
             <article class="steam-ref surface"><small>ราคาบน Steam</small><strong>{formatBaht(steamPrice)}</strong><p>ซื้อโดยตรงจาก Steam ประเทศไทย — เปิดใช้งานได้แน่นอน ไม่มีค่าธรรมเนียมแฝง แต่ไม่ใช่ราคาที่ถูกที่สุด</p><div></div><p><span>ส่วนต่างจากราคาต่ำสุด</span><b>−{formatBaht(Math.max(0, steamPrice - best.finalSatang))}</b></p><p><span>จำนวนร้านที่เทียบ</span><b>{offers.length} ร้าน</b></p><p><span>ใช้งานในไทยได้</span><b>{confirmedCount} ร้าน</b></p></article>
           </section>

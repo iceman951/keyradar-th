@@ -71,10 +71,18 @@
       <p><span>เกม</span><b>{game.title} · {offer.editionName}</b></p>
       <p><span>ราคาที่โฆษณา</span><b>{formatBaht(offer.advertisedSatang)}</b></p>
       <p><span>ค่าธรรมเนียมที่ทราบ</span><b>{feeTotal ? `+ ${formatBaht(feeTotal)}` : 'ไม่มี'}</b></p>
-      <p class="total" class:confirmed={offer.regionStatus === 'confirmed'}><span>ราคาสุทธิโดยประมาณ</span><b>{formatBaht(offer.finalSatang)}</b></p>
+      <p class="total" class:confirmed={offer.regionStatus === 'confirmed'}><span>ราคาสุทธิโดยประมาณ</span><b>{offer.approximate ? '~' : ''}{formatBaht(offer.finalSatang)}</b></p>
       <p><span>ภูมิภาค / DRM</span><b>{region.label} · {offer.drm}</b></p>
       <p><span>ประเภทร้าน</span><b>{storeTypeLabel(store.type)}</b></p>
     </div>
+
+    {#if offer.voucherCode}
+      <div class="warning uncertain"><Icon name="warning" size={15} /><span>ราคานี้ต้องใช้โค้ดส่วนลด <strong>{offer.voucherCode}</strong> ที่หน้าชำระเงิน หากไม่ใส่โค้ด คุณจะถูกคิดราคาเต็ม</span></div>
+    {/if}
+
+    {#if offer.approximate}
+      <div class="warning"><Icon name="warning" size={15} /><span>ร้านนี้คิดราคาเป็นสกุล <strong>{offer.sourceCurrency}</strong> ยอดข้างต้นเป็นการแปลงเป็นเงินบาทโดยประมาณ รวมค่าธรรมเนียมแปลงสกุลเงินที่ประเมินไว้ ยอดจริงที่ถูกเรียกเก็บขึ้นกับอัตราแลกเปลี่ยนของผู้ออกบัตรคุณ</span></div>
+    {/if}
 
     <div class="warning" class:uncertain={offer.regionStatus === 'uncertain'} class:blocked={offer.regionStatus === 'blocked'}><Icon name={offer.regionStatus === 'blocked' ? 'x' : 'warning'} size={15} /><span>{warning}</span></div>
 
@@ -82,6 +90,10 @@
       <button class="btn" type="button" onclick={onclose}>ยกเลิก</button>
       <a class="btn continue" class:confirmed={offer.regionStatus === 'confirmed'} class:blocked={offer.regionStatus === 'blocked'} href={offer.purchaseUrl} target="_blank" rel="noopener noreferrer" onclick={onclose}>ไปยัง {store.name} <Icon name="external" size={14} /></a>
     </footer>
+
+    <!-- After the footer: the dialog focuses its first link/button on open, and
+         that must stay the cancel action rather than an outbound link. -->
+    <p class="attribution">ข้อมูลราคารวบรวมผ่าน <a href="https://isthereanydeal.com/" target="_blank" rel="noopener noreferrer">IsThereAnyDeal</a></p>
   </div>
 </div>
 
@@ -92,6 +104,7 @@
   h2{font-size:17px}header p{margin-top:5px;color:var(--mute);font-size:12.5px;line-height:1.6}header strong{color:var(--ink);font-weight:600}
   .rows{overflow:hidden;border:1px solid var(--line);border-radius:12px;background:var(--sunk)}.rows p{display:flex;justify-content:space-between;gap:12px;padding:9px 13px;font-size:12.5px}.rows p+ p{border-top:1px solid var(--line2)}.rows span{color:var(--mute)}.rows b{font-weight:500;text-align:right}.rows .total{background:color-mix(in srgb,var(--color-accent) 8%,transparent);color:var(--color-accent-200)}.rows .total.confirmed{background:color-mix(in srgb,var(--ok) 8%,transparent);color:var(--ok)}.rows .total b{font-size:15px;font-weight:700}
   .warning{display:flex;align-items:flex-start;gap:9px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:#2b2e3f;color:var(--mute);font-size:11.5px;line-height:1.6}.warning>:global(svg){margin-top:1px}.warning.uncertain{border-color:var(--warn-line);background:var(--warn-dim);color:var(--warn)}.warning.blocked{border-color:var(--bad-line);background:var(--bad-dim);color:var(--bad)}
+  .attribution{margin-top:-4px;color:var(--mute2);font-size:11px;text-align:center}.attribution a{color:var(--mute);text-decoration:underline}
   .dialog footer{display:flex;gap:9px;margin-top:2px}.dialog footer>*{min-height:44px;flex:1}.dialog footer .continue{flex:1.4;gap:7px;border-color:var(--color-accent);background:color-mix(in srgb,var(--color-accent) 13%,transparent);color:var(--color-accent-200);font-size:14px;font-weight:600}.dialog footer .continue.confirmed{border-color:var(--ok-line);background:var(--ok-dim);color:var(--ok)}.dialog footer .continue.blocked{border-color:var(--bad-line);background:var(--bad-dim);color:var(--bad)}
   @media(max-width:520px){.backdrop{align-items:end;padding:0}.dialog{width:100%;max-height:92dvh;padding:16px 14px calc(14px + env(safe-area-inset-bottom));border-radius:20px 20px 0 0}.dialog footer{position:sticky;bottom:0;padding-top:8px;background:var(--raise)}}
 </style>

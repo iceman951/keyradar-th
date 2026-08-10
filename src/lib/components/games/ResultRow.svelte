@@ -14,7 +14,7 @@
 <a class="row surface" href={`/games/${game.slug}`}>
   <div class="cover"><GameCover title={game.title} hue={game.hue} height={105} /></div>
   <div class="info"><div class="tags"><span class="tag"><Icon name="steam" size={10} /> STEAM</span><span class="tag">{region.label}</span><span class="tag" class:tag-ok={confirmed} class:tag-warn={offer.regionStatus === 'uncertain'} class:tag-bad={offer.regionStatus === 'blocked'}>{#if confirmed}<Icon name="check" size={10} />{:else if offer.regionStatus === 'blocked'}<Icon name="x" size={10} />{:else}<Icon name="warning" size={10} />{/if}{regionStatusLabel(offer.regionStatus)}</span></div><h2>{game.title}</h2><span class="muted">วางจำหน่าย {game.releaseDate} · {game.genres.join(' · ')}</span><div class="store"><StoreLogo initials={store.initials} type={store.type} size={26} /><span>ถูกที่สุดที่ {store.name}</span><small>{storeTypeLabel(store.type)}</small></div></div>
-  <div class="price"><small>ราคาสุทธิโดยประมาณ</small><div><strong class:confirmed>{formatBaht(offer.finalSatang)}</strong>{#if discountPercent(offer)}<span class:confirmed>−{discountPercent(offer)}%</span>{/if}</div><p>ราคา Steam <s>{formatBaht(offer.steamPriceSatang)}</s> · เทียบ 10 ร้าน</p><span class="btn btn-accent">เปรียบเทียบราคา <Icon name="arrowRight" size={13} /></span></div>
+  <div class="price"><small>ราคาสุทธิโดยประมาณ</small><div><strong class:confirmed>{formatBaht(offer.finalSatang)}</strong>{#if discountPercent(offer)}<span class:confirmed>−{discountPercent(offer)}%</span>{/if}</div><p>ราคา Steam <s>{formatBaht(offer.steamPriceSatang)}</s>{#if offer.approximate} · ราคาแปลงโดยประมาณ{/if}</p><span class="btn btn-accent">เปรียบเทียบราคา <Icon name="arrowRight" size={13} /></span></div>
 </a>
 
 <style>

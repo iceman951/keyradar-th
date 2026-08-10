@@ -163,12 +163,21 @@ as application requirements.
 - Vitest and Testing Library
 - Playwright
 - pnpm
-- Cloudflare static-assets deployment
+- Cloudflare Workers static assets, with a Worker entry for `/api/*` and cron
+- Cloudflare Workers KV for the cached price catalog
 
-The application must remain a client-side static SPA. Keep `ssr = false`,
+The application UI must remain a client-side static SPA. Keep `ssr = false`,
 prerendering, the adapter-static fallback, and Cloudflare SPA fallback behavior.
-Do not add a server runtime, endpoints, authentication, scraping, payments, a
-database, or a production API.
+
+Live pricing is served by a thin Cloudflare Worker in `worker/` that fronts the
+static assets. It exposes read-only `/api/catalog` and `/api/health`, and a Cron
+Trigger refreshes prices into Workers KV every 8 hours. `run_worker_first` must
+list `/api/*`, or the SPA fallback swallows those routes and returns HTML.
+
+Price data comes only from documented public APIs — IsThereAnyDeal for reseller
+offers, the Steam storefront API for real Thai Steam prices, Frankfurter for FX.
+Never scrape store pages. Do not add authentication, payments, user accounts, or
+a relational database.
 
 Preserve these public routes:
 
@@ -205,8 +214,12 @@ as interface icons and do not add a large icon library.
 - Do not use `any`, suppress TypeScript errors, or weaken strict mode.
 - Do not add global state management unless a demonstrated cross-route need
   cannot be handled by SvelteKit and component state.
-- Keep deterministic mock data behind the typed repository interface so a real
-  API can replace it later.
+- `KvGameRepository` serves real prices; `MockGameRepository` stays behind the
+  same `GameRepository` interface as the offline and `vite dev` fallback. Keep
+  both behind that interface and keep the mock deterministic.
+- Never present converted prices as exact: a non-THB offer must carry
+  `approximate` and its source currency. Only stores whose region policy is
+  actually known may be marked confirmed.
 - Store and calculate all money as integer satang. Round only at explicit data
   boundaries; format baht only for display.
 - Preserve the prototype's Thai UI copy and trust language.

@@ -18,6 +18,7 @@
     <div class="rule"></div>
     <div class="legal">
       <p>ราคาที่แสดงรวบรวมโดยอัตโนมัติและอาจเปลี่ยนแปลงได้ KeyRadar TH อาจได้รับค่าคอมมิชชันจากร้านค้าพันธมิตร โดยคุณไม่ต้องจ่ายเพิ่ม</p>
+      <p>ข้อมูลราคารวบรวมผ่าน <a class="ext" href="https://isthereanydeal.com/" target="_blank" rel="noopener noreferrer">IsThereAnyDeal</a> · ราคาจากร้านที่ไม่ได้คิดเป็นเงินบาทเป็นการแปลงโดยประมาณ</p>
       <p>KeyRadar TH ไม่ใช่ผู้จำหน่ายเกมและไม่ได้เป็นตัวแทนของ Valve Corporation · © 2569 KeyRadar TH</p>
     </div>
   </div>
@@ -34,6 +35,7 @@
   .column a { color: var(--mute); font-size: 12.5px; }
   .rule { margin: 22px 0 16px; }
   .legal { display: grid; gap: 5px; }
+  .legal .ext { color: var(--ink); text-decoration: underline; }
   @media(max-width: 900px){ .grid{grid-template-columns:1.2fr 1fr 1fr}.column:last-child{display:none} }
   @media(max-width: 620px){ footer{margin-top:30px}.inner{padding:26px 14px}.grid{grid-template-columns:1fr}.column{display:none}.about{max-width:none} }
 </style>

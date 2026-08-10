@@ -3,7 +3,7 @@
   import { tick } from 'svelte';
   import { page } from '$app/state';
   import type { Game, GameFilters, Offer, Store } from '$lib/domain/models';
-  import { gameRepository } from '$lib/data/mock-repository';
+  import { gameRepository } from '$lib/data/repository';
   import { DEFAULT_GAME_FILTERS, selectDisplayedOffer } from '$lib/domain/filters';
   import { sortGameOfferResults, type ResultSortKey } from '$lib/domain/results';
   import FilterPanel from '$lib/components/filters/FilterPanel.svelte';

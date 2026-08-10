@@ -245,18 +245,26 @@ describe('ExitDialog', () => {
     const output = render(ExitDialog, { props: { offer, game, store, onclose: vi.fn() } });
     const cancel = document.querySelector<HTMLButtonElement>('.dialog footer button');
     const continueLink = document.querySelector<HTMLAnchorElement>('.dialog footer a');
+    // Derived, not hardcoded: the trap wraps at whatever the real last focusable
+    // is, so adding fine print to the dialog must not silently break the cycle.
+    const focusable = Array.from(
+      document.querySelectorAll<HTMLElement>('.dialog a[href], .dialog button:not([disabled])')
+    );
+    const last = focusable[focusable.length - 1];
 
     await settle();
+    expect(focusable[0]).toBe(cancel);
     expect(document.activeElement).toBe(cancel);
     expect(document.body.style.overflow).toBe('hidden');
+    expect(continueLink && focusable.includes(continueLink)).toBe(true);
 
-    continueLink?.focus();
+    last?.focus();
     window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true }));
     expect(document.activeElement).toBe(cancel);
 
     cancel?.focus();
     window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', shiftKey: true, bubbles: true }));
-    expect(document.activeElement).toBe(continueLink);
+    expect(document.activeElement).toBe(last);
 
     release(output.instance);
     await settle();

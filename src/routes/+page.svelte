@@ -3,7 +3,7 @@
   import GameCard from '$lib/components/games/GameCard.svelte';
   import StoreLogo from '$lib/components/ui/StoreLogo.svelte';
   import Icon from '$lib/components/ui/Icon.svelte';
-  import { gameRepository } from '$lib/data/mock-repository';
+  import { gameRepository } from '$lib/data/repository';
   import { bestThaiOffer, discountPercent } from '$lib/domain/pricing';
   import { storeTypeLabel } from '$lib/domain/presentation';
   import { sortStoresByTrust } from '$lib/domain/stores';
@@ -73,7 +73,7 @@
       <div class="radar"><i></i><i></i><i></i></div>
     </div>
     <div class="page hero-inner">
-      <div class="live"><b><i></i> LIVE</b> ตรวจสอบราคาจาก 10 ร้านค้า · อัปเดตทุก 15 นาที</div>
+      <div class="live"><b><i></i> LIVE</b> ตรวจสอบราคาจาก {stores.length || '—'} ร้านค้า · อัปเดตทุก 8 ชั่วโมง</div>
       <h1>ค้นหาราคาเกม Steam<br /><span>ที่ถูกที่สุด</span> สำหรับคนไทย</h1>
       <p>
         เราเทียบ<strong>ราคาสุทธิหลังรวมค่าธรรมเนียม</strong> ไม่ใช่แค่ราคาที่โฆษณา

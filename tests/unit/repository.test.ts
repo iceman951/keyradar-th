@@ -1,7 +1,9 @@
 import { describe, expect, it } from 'vitest';
 import { MockGameRepository } from '$lib/data/mock-repository';
+import { stores } from '$lib/data/fixtures';
 import { regionPresentation } from '$lib/domain/presentation';
 import { hasConsistentFinalPrice } from '$lib/domain/pricing';
+import { regionForStore } from '$lib/itad/store-regions';
 import type { RegionCode } from '$lib/domain/models';
 
 describe('mock repository', () => {
@@ -10,7 +12,7 @@ describe('mock repository', () => {
   it('returns deterministic snapshots with valid integer-satang prices', async () => {
     const first = await repository.getOffers('elden-ring');
     const second = await repository.getOffers('elden-ring');
-    expect(first.offers).toHaveLength(10);
+    expect(first.offers).toHaveLength(stores.length);
     expect(first).toEqual(second);
     expect(first.stale).toBe(false);
     expect(first.failedStores).toEqual([]);
@@ -31,11 +33,14 @@ describe('mock repository', () => {
     expect((await repository.searchGames(''))[0].slug).toBe('elden-ring');
   });
 
-  it('covers every region and keeps region status derived from its presentation', async () => {
+  it('mirrors the live store region table and derives status from its presentation', async () => {
     const snapshot = await repository.getOffers('helldivers-2');
-    const expected: RegionCode[] = ['global', 'sea', 'thailand', 'eu', 'row', 'north-america'];
+    // The mock no longer invents regions no real store sells: it reads the same
+    // curated table production does, so dev and prod cannot disagree.
+    const expected: RegionCode[] = ['global', 'sea', 'thailand', 'row'];
     expect(new Set(snapshot.offers.map((offer) => offer.region))).toEqual(new Set(expected));
     expect(snapshot.offers.every((offer) =>
+      offer.region === regionForStore(offer.storeId) &&
       offer.regionStatus === regionPresentation(offer.region).status
     )).toBe(true);
   });
@@ -43,7 +48,7 @@ describe('mock repository', () => {
   it('retains offer rows and identifies failed stores in stale snapshots', async () => {
     const stale = await new MockGameRepository({ offerMode: 'store-down' }).getOffers('elden-ring');
     expect(stale.stale).toBe(true);
-    expect(stale.offers).toHaveLength(10);
+    expect(stale.offers).toHaveLength(stores.length);
     expect(stale.failedStores).toEqual(['gamesplanet', 'gamersgate']);
   });
 
