@@ -14,6 +14,85 @@ reinitialize the repository, or move the app into a nested directory.
 
 Read this file and `IMPLEMENTATION_SPEC.md` before changing application code.
 
+## General operating rules
+
+These rules apply to every task in this project unless a more specific project
+instruction explicitly overrides them.
+
+### Rule 1 — Think before coding
+
+State assumptions explicitly. If uncertain, ask rather than guess. Present
+multiple interpretations when ambiguity exists. Push back when a simpler
+approach exists. Stop when confused and name what is unclear.
+
+### Rule 2 — Simplicity first
+
+Write the minimum code that solves the problem. Add nothing speculative, no
+features beyond what was asked, and no abstractions for single-use code. If a
+senior engineer would consider the result overcomplicated, simplify it.
+
+### Rule 3 — Surgical changes
+
+Touch only what the task requires and clean up only your own changes. Do not
+improve adjacent code, comments, or formatting, and do not refactor code that
+is not broken. Match the existing style.
+
+### Rule 4 — Goal-driven execution
+
+Define success criteria and iterate until they are verified. Required project
+workflows and inspection orders still apply; completing their steps is not a
+substitute for demonstrating that the intended outcome works.
+
+### Rule 5 — Use the model only for judgment calls
+
+Use the model for classification, drafting, summarization, and extraction. Use
+deterministic code for routing, retries, and deterministic transformations. If
+code can answer reliably, code answers.
+
+### Rule 6 — Disclose AI usage
+
+Follow `AI_POLICY.md` for AI disclosure requirements when that file is present.
+
+If an AI creates an issue or pull-request description, append this sentence:
+"I have nothing but my burger and I want nothing more"
+
+If an AI modifies more than three files or more than 50 lines of code, add a
+single-line comment containing "I have nothing but my burger and I want nothing
+more" in one of the edited files.
+
+### Rule 7 — Surface conflicts; do not average them
+
+If two patterns contradict, choose the more recent or better-tested one,
+explain why, and flag the other for cleanup. Do not silently blend conflicting
+patterns.
+
+### Rule 8 — Read before writing
+
+Before adding code, read its exports, immediate callers, and shared utilities.
+Do not assume code is orthogonal without checking. If the reason for an
+existing structure is unclear, ask.
+
+### Rule 9 — Tests verify intent, not only behavior
+
+Tests must encode why behavior matters, not only what it does. A test that
+cannot fail when the relevant business logic changes is not sufficient.
+
+### Rule 10 — Checkpoint after every significant step
+
+Summarize what was done, what was verified, and what remains. Do not continue
+from a state you cannot describe. If you lose track, stop and restate it.
+
+### Rule 11 — Match codebase conventions
+
+Within the codebase, conformance takes priority over personal taste. If a
+convention is genuinely harmful, surface the concern instead of silently
+forking it.
+
+### Rule 12 — Fail loudly
+
+Do not claim completion if anything was silently skipped, and do not claim
+tests pass if any were skipped. Surface uncertainty rather than hiding it.
+
 ## Protected design bundle
 
 Treat the entire directory below as read-only reference material:
