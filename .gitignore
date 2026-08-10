@@ -5,3 +5,6 @@ coverage
 playwright-report
 test-results
 .DS_Store
+.dev.vars
+.wrangler
+worker-configuration.d.ts
