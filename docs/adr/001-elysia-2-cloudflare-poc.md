@@ -21,25 +21,25 @@ integration docs. Neither is correct for the 2.x line; see below.
 
 ## Decision
 
-Use `elysia@2.0.0-beta.1`, pinned exactly, with a small locally-defined
+Use `elysia@2.0.0-beta.4`, pinned exactly, with a small locally-defined
 Cloudflare adapter, Drizzle ORM over D1, and one Worker deployment serving
 both static assets and `/api/v1/*`.
 
 ### Resolved Elysia version
 
-`2.0.0-beta.1`, pinned exactly (no `^`/`~`) in `package.json`.
+`2.0.0-beta.4`, pinned exactly (no `^`/`~`) in `package.json`.
 
 The spec's instruction to install `elysia@beta` does not work: **there is no
 `beta` dist-tag.** As of implementation, `elysia`'s tags are:
 
 ```
 latest       1.4.29
-next         2.0.0-beta.1
-experimental 2.0.0-exp.61
+next         2.0.0-beta.4
+experimental 2.0.0-exp.62
 rc           1.2.0-rc.3
 ```
 
-`2.0.0-beta.1` is the current official v2 prerelease, published under `next`.
+`2.0.0-beta.4` is the current official v2 prerelease, published under `next`.
 
 Peer dependencies also differ from the spec, which listed the v1 peers.
 Installed: `typebox@1.3.10` (**not** `@sinclair/typebox`, which is the v1
@@ -48,10 +48,10 @@ peer), `exact-mirror@1.2.2`, `openapi-types@12.1.3`.
 ### Cloudflare adapter status
 
 **`elysia/adapter/cloudflare-worker` does not exist in Elysia 2.** Verified
-against both the published exports map and the package tarball: `2.0.0-beta.1`
+against both the published exports map and the package tarball: `2.0.0-beta.4`
 ships only `./adapter/bun`, `./adapter/web-standard`, and `./adapter/utils` —
 there are zero files matching `cloudflare` in the package. The same is true of
-`2.0.0-exp.61`. The adapter exists only on the 1.4.x line, which is what
+`2.0.0-exp.62`. The adapter exists only on the 1.4.x line, which is what
 elysiajs.com currently documents.
 
 `worker/adapter/cloudflare.ts` supplies it locally, in ~15 lines, via
@@ -218,7 +218,7 @@ deployment, which was out of scope.
 
 Moderate, and concentrated rather than diffuse.
 
-`2.0.0-beta.1` is prerelease and the v1→v2 migration already broke two APIs
+`2.0.0-beta.4` is prerelease and the v1→v2 migration already broke two APIs
 silently (`.get()` argument order, `.onError()`). Further beta releases may do
 the same. Mitigations in place:
 

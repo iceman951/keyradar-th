@@ -1,7 +1,7 @@
 /**
  * Cloudflare Worker adapter for Elysia 2 beta.
  *
- * `elysia@2.0.0-beta.1` does not ship `elysia/adapter/cloudflare-worker`
+ * `elysia@2.0.0-beta.4` does not ship `elysia/adapter/cloudflare-worker`
  * (only `./adapter/bun`, `./adapter/web-standard`, and `./adapter/utils` are
  * published — verified against the beta.1 exports map and tarball listing).
  * Elysia 1.x's `CloudflareAdapter` was `WebStandardAdapter` plus a startup
