@@ -7,6 +7,8 @@
   "scripts": {
     "dev": "vite dev",
     "build": "vite build",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "preview": "vite preview",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "test": "vitest run",
@@ -17,21 +19,23 @@
     "deploy": "pnpm build && wrangler deploy"
   },
   "devDependencies": {
-    "@playwright/test": "^1.54.2",
-    "@sveltejs/adapter-static": "^3.0.8",
-    "@sveltejs/kit": "^2.37.0",
-    "@sveltejs/vite-plugin-svelte": "^6.1.0",
-    "@testing-library/svelte": "^5.2.8",
-    "@types/node": "^24.3.0",
-    "@unocss/preset-wind3": "^66.4.2",
-    "@unocss/svelte-scoped": "^66.4.2",
+    "@playwright/test": "^1.62.1",
+    "@sveltejs/adapter-static": "^3.0.10",
+    "@sveltejs/kit": "^2.70.2",
+    "@sveltejs/vite-plugin-svelte": "^6.2.4",
+    "@testing-library/svelte": "^5.4.2",
+    "@types/node": "^24.13.3",
+    "@unocss/preset-wind3": "^66.7.5",
+    "@unocss/svelte-scoped": "^66.7.5",
     "jsdom": "^26.1.0",
-    "svelte": "^5.38.0",
-    "svelte-check": "^4.3.1",
-    "typescript": "^5.9.2",
-    "unocss": "^66.4.2",
-    "vite": "^7.1.3",
-    "vitest": "^3.2.4",
-    "wrangler": "^4.118.0"
+    "prettier": "^3.9.6",
+    "prettier-plugin-svelte": "^4.1.1",
+    "svelte": "^5.56.8",
+    "svelte-check": "^4.7.5",
+    "typescript": "^5.9.3",
+    "unocss": "^66.7.5",
+    "vite": "^7.3.6",
+    "vitest": "^3.2.7",
+    "wrangler": "^4.121.0"
   }
 }
