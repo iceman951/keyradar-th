@@ -1,4 +1,4 @@
-import { defineConfig } from 'vitest/config';
+import { defineConfig } from 'vitest/config'
 
 /**
  * Separate from vitest.config.ts: API route tests run the compiled Elysia
@@ -11,4 +11,4 @@ export default defineConfig({
     environment: 'node',
     include: ['tests/api/**/*.test.ts']
   }
-});
+})

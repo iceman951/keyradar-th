@@ -17,8 +17,8 @@
  * import in `worker/app.ts` can point at the official one instead — no
  * other file in `worker/` needs to change.
  */
-import { createAdapter } from 'elysia/adapter';
-import { WebStandardAdapter } from 'elysia/adapter/web-standard';
+import { createAdapter } from 'elysia/adapter'
+import { WebStandardAdapter } from 'elysia/adapter/web-standard'
 
 export const CloudflareWorkerAdapter = createAdapter({
   ...WebStandardAdapter,
@@ -28,7 +28,7 @@ export const CloudflareWorkerAdapter = createAdapter({
     return () => {
       console.warn(
         'Cloudflare Worker does not support .listen(). Export the compiled Elysia instance as the Worker default export instead.'
-      );
-    };
+      )
+    }
   }
-});
+})

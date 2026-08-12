@@ -1,4 +1,4 @@
-import type { Offer, Store } from '$lib/domain/models';
+import type { Offer, Store } from '$lib/domain/models'
 
 export const makeOffer = (overrides: Partial<Offer> = {}): Offer => ({
   id: 'game-standard-store',
@@ -19,7 +19,7 @@ export const makeOffer = (overrides: Partial<Offer> = {}): Offer => ({
   isHistoricalLow: false,
   purchaseUrl: 'https://example.com/game',
   ...overrides
-});
+})
 
 export const makeStore = (overrides: Partial<Store> = {}): Store => ({
   id: 'store',
@@ -32,4 +32,4 @@ export const makeStore = (overrides: Partial<Store> = {}): Store => ({
   note: 'ร้านค้าสำหรับการทดสอบ',
   websiteUrl: 'https://example.com/',
   ...overrides
-});
+})

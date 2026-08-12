@@ -1,3 +1,3 @@
-import { games } from '$lib/data/fixtures';
+import { games } from '$lib/data/fixtures'
 
-export const entries = () => games.map((game) => ({ slug: game.slug }));
+export const entries = () => games.map((game) => ({ slug: game.slug }))

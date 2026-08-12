@@ -1,5 +1,5 @@
-import { t } from 'elysia';
-import { editionCategorySchema } from './game.schema';
+import { t } from 'elysia'
+import { editionCategorySchema } from './game.schema'
 
 const regionCodeSchema = t.Union([
   t.Literal('global'),
@@ -8,19 +8,23 @@ const regionCodeSchema = t.Union([
   t.Literal('eu'),
   t.Literal('row'),
   t.Literal('north-america')
-]);
+])
 
 const regionStatusSchema = t.Union([
   t.Literal('confirmed'),
   t.Literal('uncertain'),
   t.Literal('blocked')
-]);
+])
 
 const offerFeeSchema = t.Object({
-  kind: t.Union([t.Literal('platform'), t.Literal('buyer-protection'), t.Literal('payment')]),
+  kind: t.Union([
+    t.Literal('platform'),
+    t.Literal('buyer-protection'),
+    t.Literal('payment')
+  ]),
   label: t.String(),
   amountSatang: t.Number()
-});
+})
 
 export const offerDtoSchema = t.Object({
   id: t.String(),
@@ -42,7 +46,7 @@ export const offerDtoSchema = t.Object({
   sellerReviewCount: t.Optional(t.Number()),
   isHistoricalLow: t.Boolean(),
   purchaseUrl: t.String()
-});
+})
 
 export const offerSnapshotDtoSchema = t.Object({
   gameSlug: t.String(),
@@ -51,7 +55,7 @@ export const offerSnapshotDtoSchema = t.Object({
   fetchedAt: t.String(),
   failedStores: t.Array(t.String()),
   stale: t.Boolean()
-});
+})
 
 export const editionAvailabilityDtoSchema = t.Object({
   editionKey: t.String(),
@@ -62,4 +66,4 @@ export const editionAvailabilityDtoSchema = t.Object({
   confirmedOfferCount: t.Number(),
   availableInThailand: t.Boolean(),
   status: t.Union([t.Literal('available'), t.Literal('no-thai-offer')])
-});
+})

@@ -1,6 +1,6 @@
-import type { GameRepository } from './game-repository';
-import { ApiGameRepository } from './api-repository';
-import { MockGameRepository } from './mock-repository';
+import type { GameRepository } from './game-repository'
+import { ApiGameRepository } from './api-repository'
+import { MockGameRepository } from './mock-repository'
 
 /**
  * The production import point. Every route/component imports from here —
@@ -16,7 +16,9 @@ import { MockGameRepository } from './mock-repository';
  * (`api`) must work in both, with no `.env` file present at all. Anything
  * other than `mock` — including unset — resolves to `api`.
  */
-const dataSource: string | undefined = import.meta.env.PUBLIC_DATA_SOURCE;
+const dataSource: string | undefined = import.meta.env.PUBLIC_DATA_SOURCE
 
 export const gameRepository: GameRepository =
-  dataSource === 'mock' ? new MockGameRepository() : new ApiGameRepository('/api/v1');
+  dataSource === 'mock'
+    ? new MockGameRepository()
+    : new ApiGameRepository('/api/v1')

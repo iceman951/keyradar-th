@@ -7,4 +7,4 @@ export {
   compareStoresByTrust,
   sortStoresByTrust,
   STORE_TRUST_RANK
-} from '../../../shared/domain/stores.ts';
+} from '../../../shared/domain/stores.ts'

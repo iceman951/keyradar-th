@@ -12,14 +12,14 @@
  *  - JSON columns hold validated JSON strings; readers must re-validate them
  *    (see `worker/db/validation.ts`) because D1 content is not trusted.
  */
-import { sql } from 'drizzle-orm';
+import { sql } from 'drizzle-orm'
 import {
   index,
   integer,
   sqliteTable,
   text,
   uniqueIndex
-} from 'drizzle-orm/sqlite-core';
+} from 'drizzle-orm/sqlite-core'
 
 export const games = sqliteTable(
   'games',
@@ -44,7 +44,7 @@ export const games = sqliteTable(
     index('games_normalized_title_idx').on(table.normalizedTitle),
     index('games_popularity_idx').on(sql`${table.popularity} DESC`)
   ]
-);
+)
 
 export const editions = sqliteTable(
   'editions',
@@ -72,10 +72,13 @@ export const editions = sqliteTable(
     updatedAt: integer('updated_at').notNull()
   },
   (table) => [
-    uniqueIndex('editions_game_edition_key_idx').on(table.gameSlug, table.editionKey),
+    uniqueIndex('editions_game_edition_key_idx').on(
+      table.gameSlug,
+      table.editionKey
+    ),
     index('editions_game_slug_idx').on(table.gameSlug)
   ]
-);
+)
 
 export const stores = sqliteTable('stores', {
   id: text('id').primaryKey(),
@@ -92,7 +95,7 @@ export const stores = sqliteTable('stores', {
   websiteUrl: text('website_url').notNull(),
   createdAt: integer('created_at').notNull(),
   updatedAt: integer('updated_at').notNull()
-});
+})
 
 export const offersCurrent = sqliteTable(
   'offers_current',
@@ -139,7 +142,7 @@ export const offersCurrent = sqliteTable(
     ),
     index('offers_store_idx').on(table.storeId)
   ]
-);
+)
 
 export const priceHistory = sqliteTable(
   'price_history',
@@ -168,7 +171,7 @@ export const priceHistory = sqliteTable(
       table.observedAt
     )
   ]
-);
+)
 
 /**
  * Ingestion bookkeeping. Created now so Phase 2 has somewhere to record runs;
@@ -184,10 +187,10 @@ export const syncRuns = sqliteTable('sync_runs', {
   recordsReceived: integer('records_received').notNull().default(0),
   recordsChanged: integer('records_changed').notNull().default(0),
   errorMessage: text('error_message')
-});
+})
 
-export type GameRow = typeof games.$inferSelect;
-export type EditionRow = typeof editions.$inferSelect;
-export type StoreRow = typeof stores.$inferSelect;
-export type OfferRow = typeof offersCurrent.$inferSelect;
-export type PriceHistoryRow = typeof priceHistory.$inferSelect;
+export type GameRow = typeof games.$inferSelect
+export type EditionRow = typeof editions.$inferSelect
+export type StoreRow = typeof stores.$inferSelect
+export type OfferRow = typeof offersCurrent.$inferSelect
+export type PriceHistoryRow = typeof priceHistory.$inferSelect

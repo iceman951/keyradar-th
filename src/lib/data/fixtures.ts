@@ -4,4 +4,4 @@
  * definition instead of two hand-synchronized copies. This module re-exports
  * it so existing `$lib/data/fixtures` imports keep working.
  */
-export { games, stores } from '../../../shared/seed/catalog.ts';
+export { games, stores } from '../../../shared/seed/catalog.ts'

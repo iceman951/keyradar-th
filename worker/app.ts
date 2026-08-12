@@ -1,13 +1,13 @@
-import { Elysia } from 'elysia';
-import { CloudflareWorkerAdapter } from './adapter/cloudflare';
-import { errorHandler } from './middleware/error-handler';
-import { healthRoutes } from './routes/health';
-import { gameRoutes } from './routes/games';
-import { storeRoutes } from './routes/stores';
-import { offerRoutes } from './routes/offers';
-import { priceHistoryRoutes } from './routes/price-history';
-import type { CatalogService } from './modules/catalog/catalog.service';
-import type { PricingService } from './modules/pricing/pricing.service';
+import { Elysia } from 'elysia'
+import { CloudflareWorkerAdapter } from './adapter/cloudflare'
+import { errorHandler } from './middleware/error-handler'
+import { healthRoutes } from './routes/health'
+import { gameRoutes } from './routes/games'
+import { storeRoutes } from './routes/stores'
+import { offerRoutes } from './routes/offers'
+import { priceHistoryRoutes } from './routes/price-history'
+import type { CatalogService } from './modules/catalog/catalog.service'
+import type { PricingService } from './modules/pricing/pricing.service'
 
 /**
  * `CatalogService` minus `getGameRowOrThrow`: that method exists solely so
@@ -18,11 +18,11 @@ import type { PricingService } from './modules/pricing/pricing.service';
  * just the four methods routes use, instead of also faking Drizzle's
  * `GameRow`/`EditionRow` shapes.
  */
-export type RouteCatalogService = Omit<CatalogService, 'getGameRowOrThrow'>;
+export type RouteCatalogService = Omit<CatalogService, 'getGameRowOrThrow'>
 
 export interface AppDeps {
-  catalog: RouteCatalogService;
-  pricing: PricingService;
+  catalog: RouteCatalogService
+  pricing: PricingService
 }
 
 /**
@@ -33,7 +33,7 @@ export interface AppDeps {
  * one place real D1-backed services are built and wired in.
  */
 export const createApp = (deps: AppDeps) => {
-  const { catalog, pricing } = deps;
+  const { catalog, pricing } = deps
 
   return new Elysia({
     adapter: CloudflareWorkerAdapter,
@@ -44,7 +44,7 @@ export const createApp = (deps: AppDeps) => {
     .use(gameRoutes(catalog))
     .use(storeRoutes(catalog))
     .use(offerRoutes(pricing))
-    .use(priceHistoryRoutes(pricing));
-};
+    .use(priceHistoryRoutes(pricing))
+}
 
-export type KeyRadarApi = ReturnType<typeof createApp>;
+export type KeyRadarApi = ReturnType<typeof createApp>

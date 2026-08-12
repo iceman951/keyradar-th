@@ -1,4 +1,4 @@
-import { t } from 'elysia';
+import { t } from 'elysia'
 
 export const storeDtoSchema = t.Object({
   id: t.String(),
@@ -15,4 +15,4 @@ export const storeDtoSchema = t.Object({
   feeLabel: t.String(),
   note: t.String(),
   websiteUrl: t.String()
-});
+})

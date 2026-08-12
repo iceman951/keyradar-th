@@ -1,15 +1,151 @@
 <script lang="ts">
-  import GameCard from '$lib/components/games/GameCard.svelte';
-  import EmptyState from '$lib/components/ui/EmptyState.svelte';
-  import { gameRepository } from '$lib/data/repository';
-  import { bestThaiOffer, discountPercent } from '$lib/domain/pricing';
-  import { formatThaiDateTime } from '$lib/utils/date';
-  import type { Game, Offer, Store } from '$lib/domain/models';
-  type Entry={game:Game;offer:Offer;store:Store};
-  let entries=$state<Entry[]>([]),tab=$state('featured'),updatedAt=$state<Date|null>(null);
-  const tabs=[['featured','ดีลแนะนำ'],['histlow','ต่ำสุดเป็นประวัติการณ์'],['ending','ใกล้หมดเวลา'],['u200','ต่ำกว่า ฿200'],['u500','ต่ำกว่า ฿500'],['d70','ลดเกิน 70%'],['thonly','ใช้งานในไทยได้เท่านั้น']] as const;
-  $effect(()=>{Promise.all([gameRepository.listGames(),gameRepository.listStores()]).then(async([games,stores])=>{const data=await Promise.all(games.map(async game=>{const snapshot=await gameRepository.getOffers(game.slug);const offer=bestThaiOffer(snapshot.offers);return offer?{game,offer,store:stores.find(store=>store.id===offer.storeId)??stores[0]}:null}));entries=data.filter((entry):entry is Entry=>entry!==null);if(games[0])updatedAt=(await gameRepository.getOffers(games[0].slug)).fetchedAt})});
-  const shown=$derived(entries.filter(entry=>tab==='histlow'?entry.offer.isHistoricalLow:tab==='ending'?entry.game.popularity>=88:tab==='u200'?entry.offer.finalSatang<20000:tab==='u500'?entry.offer.finalSatang<50000:tab==='d70'?discountPercent(entry.offer)>=70:tab==='thonly'?entry.offer.regionStatus==='confirmed':true).sort((a,b)=>discountPercent(b.offer)-discountPercent(a.offer)));
+  import GameCard from '$lib/components/games/GameCard.svelte'
+  import EmptyState from '$lib/components/ui/EmptyState.svelte'
+  import { gameRepository } from '$lib/data/repository'
+  import { bestThaiOffer, discountPercent } from '$lib/domain/pricing'
+  import { formatThaiDateTime } from '$lib/utils/date'
+  import type { Game, Offer, Store } from '$lib/domain/models'
+  type Entry = { game: Game; offer: Offer; store: Store }
+  let entries = $state<Entry[]>([]),
+    tab = $state('featured'),
+    updatedAt = $state<Date | null>(null)
+  const tabs = [
+    ['featured', 'ดีลแนะนำ'],
+    ['histlow', 'ต่ำสุดเป็นประวัติการณ์'],
+    ['ending', 'ใกล้หมดเวลา'],
+    ['u200', 'ต่ำกว่า ฿200'],
+    ['u500', 'ต่ำกว่า ฿500'],
+    ['d70', 'ลดเกิน 70%'],
+    ['thonly', 'ใช้งานในไทยได้เท่านั้น']
+  ] as const
+  $effect(() => {
+    Promise.all([gameRepository.listGames(), gameRepository.listStores()]).then(
+      async ([games, stores]) => {
+        const data = await Promise.all(
+          games.map(async (game) => {
+            const snapshot = await gameRepository.getOffers(game.slug)
+            const offer = bestThaiOffer(snapshot.offers)
+            return offer
+              ? {
+                  game,
+                  offer,
+                  store:
+                    stores.find((store) => store.id === offer.storeId) ??
+                    stores[0]
+                }
+              : null
+          })
+        )
+        entries = data.filter((entry): entry is Entry => entry !== null)
+        if (games[0])
+          updatedAt = (await gameRepository.getOffers(games[0].slug)).fetchedAt
+      }
+    )
+  })
+  const shown = $derived(
+    entries
+      .filter((entry) =>
+        tab === 'histlow'
+          ? entry.offer.isHistoricalLow
+          : tab === 'ending'
+            ? entry.game.popularity >= 88
+            : tab === 'u200'
+              ? entry.offer.finalSatang < 20000
+              : tab === 'u500'
+                ? entry.offer.finalSatang < 50000
+                : tab === 'd70'
+                  ? discountPercent(entry.offer) >= 70
+                  : tab === 'thonly'
+                    ? entry.offer.regionStatus === 'confirmed'
+                    : true
+      )
+      .sort((a, b) => discountPercent(b.offer) - discountPercent(a.offer))
+  )
 </script>
-<svelte:head><title>เกมลดราคา — KeyRadar TH</title></svelte:head><main class="page"><h1>เกมลดราคา</h1><p class="lead">ดีล Steam ที่กำลังลดราคา พร้อมราคาสุทธิโดยประมาณและสถานะการเปิดใช้งานในไทย{#if updatedAt} · อัปเดตล่าสุด {formatThaiDateTime(updatedAt)}{/if}</p><div class="tabs">{#each tabs as item}<button class:active={tab===item[0]} onclick={()=>tab=item[0]}>{item[1]} <span>{tab===item[0]?shown.length:''}</span></button>{/each}</div>{#if shown.length}<div class="cards">{#each shown as entry}<GameCard {...entry}/>{/each}</div>{:else}<EmptyState kind="no-deals" action={()=>tab='featured'}/>{/if}</main>
-<style>h1{font-size:27px}.lead{margin:6px 0 20px;color:var(--mute);font-size:13px}.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}.tabs button{display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border:1px solid var(--line);border-radius:999px;background:rgb(233 233 237 / 3%);color:var(--ink);cursor:pointer}.tabs button.active{border-color:var(--color-accent);background:color-mix(in srgb,var(--color-accent) 14%,transparent);color:var(--color-accent-200);font-weight:600}.tabs span{min-width:10px}.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}@media(max-width:1179px){.cards{grid-template-columns:repeat(3,1fr)}}@media(max-width:779px){h1{font-size:21px}.tabs{flex-wrap:nowrap;overflow:auto;padding-bottom:4px}.tabs button{min-height:44px;white-space:nowrap}.cards{grid-template-columns:repeat(2,1fr);gap:10px}}</style>
+
+<svelte:head><title>เกมลดราคา — KeyRadar TH</title></svelte:head>
+<main class="page">
+  <h1>เกมลดราคา</h1>
+  <p class="lead">
+    ดีล Steam ที่กำลังลดราคา พร้อมราคาสุทธิโดยประมาณและสถานะการเปิดใช้งานในไทย{#if updatedAt}
+      · อัปเดตล่าสุด {formatThaiDateTime(updatedAt)}{/if}
+  </p>
+  <div class="tabs">
+    {#each tabs as item}<button
+        class:active={tab === item[0]}
+        onclick={() => (tab = item[0])}
+        >{item[1]} <span>{tab === item[0] ? shown.length : ''}</span></button
+      >{/each}
+  </div>
+  {#if shown.length}<div class="cards">
+      {#each shown as entry}<GameCard {...entry} />{/each}
+    </div>{:else}<EmptyState
+      kind="no-deals"
+      action={() => (tab = 'featured')}
+    />{/if}
+</main>
+
+<style>
+  h1 {
+    font-size: 27px;
+  }
+  .lead {
+    margin: 6px 0 20px;
+    color: var(--mute);
+    font-size: 13px;
+  }
+  .tabs {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 22px;
+  }
+  .tabs button {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 12px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: rgb(233 233 237 / 3%);
+    color: var(--ink);
+    cursor: pointer;
+  }
+  .tabs button.active {
+    border-color: var(--color-accent);
+    background: color-mix(in srgb, var(--color-accent) 14%, transparent);
+    color: var(--color-accent-200);
+    font-weight: 600;
+  }
+  .tabs span {
+    min-width: 10px;
+  }
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  @media (max-width: 1179px) {
+    .cards {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  @media (max-width: 779px) {
+    h1 {
+      font-size: 21px;
+    }
+    .tabs {
+      flex-wrap: nowrap;
+      overflow: auto;
+      padding-bottom: 4px;
+    }
+    .tabs button {
+      min-height: 44px;
+      white-space: nowrap;
+    }
+    .cards {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+  }
+</style>

@@ -1,7 +1,7 @@
-import { describe, expect, it } from 'vitest';
-import { games } from '$lib/data/fixtures';
-import { sortGameOfferResults, type ResultSortKey } from '$lib/domain/results';
-import { makeOffer } from './helpers';
+import { describe, expect, it } from 'vitest'
+import { games } from '$lib/data/fixtures'
+import { sortGameOfferResults, type ResultSortKey } from '$lib/domain/results'
+import { makeOffer } from './helpers'
 
 describe('result sorting', () => {
   const entries = [
@@ -23,7 +23,7 @@ describe('result sorting', () => {
         updatedMinutesAgo: 5
       })
     }
-  ];
+  ]
 
   it.each<[ResultSortKey, string]>([
     ['final', 'b'],
@@ -32,11 +32,11 @@ describe('result sorting', () => {
     ['release', 'b'],
     ['updated', 'b']
   ])('sorts by %s', (sort, firstId) => {
-    expect(sortGameOfferResults(entries, sort)[0].offer.id).toBe(firstId);
-  });
+    expect(sortGameOfferResults(entries, sort)[0].offer.id).toBe(firstId)
+  })
 
   it('does not mutate the candidate list', () => {
-    expect(sortGameOfferResults(entries, 'final')).not.toBe(entries);
-    expect(entries.map((entry) => entry.offer.id)).toEqual(['a', 'b']);
-  });
-});
+    expect(sortGameOfferResults(entries, 'final')).not.toBe(entries)
+    expect(entries.map((entry) => entry.offer.id)).toEqual(['a', 'b'])
+  })
+})

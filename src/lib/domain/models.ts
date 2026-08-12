@@ -23,4 +23,4 @@ export type {
   RegionTone,
   Store,
   StoreType
-} from '../../../shared/domain/models.ts';
+} from '../../../shared/domain/models.ts'

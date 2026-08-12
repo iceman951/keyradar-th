@@ -16,96 +16,96 @@ import type {
   RegionCode,
   RegionStatus,
   StoreType
-} from '../domain/models.ts';
+} from '../domain/models.ts'
 
 export interface EditionDto {
-  key: string;
-  name: string;
-  category: EditionCategory;
-  steamPriceSatang: number;
+  key: string
+  name: string
+  category: EditionCategory
+  steamPriceSatang: number
 }
 
 export interface GameDto {
-  slug: string;
-  title: string;
-  year: number;
-  developer: string;
-  publisher: string;
-  releaseDate: string;
-  genres: string[];
-  reviewPercent: number;
-  reviewCount: number;
-  popularity: number;
-  hue: number;
-  editions: EditionDto[];
+  slug: string
+  title: string
+  year: number
+  developer: string
+  publisher: string
+  releaseDate: string
+  genres: string[]
+  reviewPercent: number
+  reviewCount: number
+  popularity: number
+  hue: number
+  editions: EditionDto[]
 }
 
 export interface StoreDto {
-  id: string;
-  name: string;
-  initials: string;
-  type: StoreType;
-  payments: string[];
+  id: string
+  name: string
+  initials: string
+  type: StoreType
+  payments: string[]
   /** Integer basis points. 5.2% is 520. Divided by 10000 at the UI boundary. */
-  feeRateBps: number;
-  feeLabel: string;
-  note: string;
-  websiteUrl: string;
+  feeRateBps: number
+  feeLabel: string
+  note: string
+  websiteUrl: string
 }
 
 export interface OfferDto {
-  id: string;
-  gameSlug: string;
-  storeId: string;
-  editionKey: string;
-  editionName: string;
-  editionCategory: EditionCategory;
-  advertisedSatang: number;
-  fees: OfferFee[];
-  finalSatang: number;
-  steamPriceSatang: number;
-  region: RegionCode;
-  regionStatus: RegionStatus;
-  drm: string;
-  inStock: boolean;
+  id: string
+  gameSlug: string
+  storeId: string
+  editionKey: string
+  editionName: string
+  editionCategory: EditionCategory
+  advertisedSatang: number
+  fees: OfferFee[]
+  finalSatang: number
+  steamPriceSatang: number
+  region: RegionCode
+  regionStatus: RegionStatus
+  drm: string
+  inStock: boolean
   /** ISO 8601. The client derives `updatedMinutesAgo` from this. */
-  observedAt: string;
-  sellerRating?: number;
-  sellerReviewCount?: number;
-  isHistoricalLow: boolean;
-  purchaseUrl: string;
+  observedAt: string
+  sellerRating?: number
+  sellerReviewCount?: number
+  isHistoricalLow: boolean
+  purchaseUrl: string
 }
 
 export interface OfferSnapshotDto {
-  gameSlug: string;
-  editionKey: string;
-  offers: OfferDto[];
-  fetchedAt: string;
-  failedStores: string[];
-  stale: boolean;
+  gameSlug: string
+  editionKey: string
+  offers: OfferDto[]
+  fetchedAt: string
+  failedStores: string[]
+  stale: boolean
 }
 
 export interface EditionAvailabilityDto {
-  editionKey: string;
-  editionName: string;
-  category: EditionCategory;
-  steamPriceSatang: number;
-  minimumPriceSatang: number | null;
-  confirmedOfferCount: number;
-  availableInThailand: boolean;
-  status: 'available' | 'no-thai-offer';
+  editionKey: string
+  editionName: string
+  category: EditionCategory
+  steamPriceSatang: number
+  minimumPriceSatang: number | null
+  confirmedOfferCount: number
+  availableInThailand: boolean
+  status: 'available' | 'no-thai-offer'
 }
 
 export interface PricePointDto {
   /** ISO 8601. */
-  date: string;
-  priceSatang: number;
+  date: string
+  priceSatang: number
 }
 
 export interface HealthDto {
-  status: string;
-  service: string;
-  version: string;
+  status: string
+  service: string
+  version: string
 }
 
 export type ApiErrorCode =
@@ -118,14 +118,14 @@ export type ApiErrorCode =
    *  codes, but needed so an unknown `/api/*` path returns the same
    *  `ApiErrorDto` envelope as every other error instead of Elysia's default
    *  `application/problem+json` body. */
-  | 'NOT_FOUND';
+  | 'NOT_FOUND'
 
 export interface ApiErrorDto {
   error: {
-    code: ApiErrorCode;
-    message: string;
-    details?: Record<string, unknown>;
-  };
+    code: ApiErrorCode
+    message: string
+    details?: Record<string, unknown>
+  }
 }
 
-export type GameSortOrder = 'popular' | 'release' | 'title';
+export type GameSortOrder = 'popular' | 'release' | 'title'

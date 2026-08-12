@@ -1,9 +1,9 @@
-import { env } from 'cloudflare:workers';
-import { createApp } from './app';
-import { createDb } from './db/client';
-import { createCatalogService } from './modules/catalog/catalog.service';
-import { createPricingService } from './modules/pricing/pricing.service';
-import type { Bindings } from './bindings';
+import { env } from 'cloudflare:workers'
+import { createApp } from './app'
+import { createDb } from './db/client'
+import { createCatalogService } from './modules/catalog/catalog.service'
+import { createPricingService } from './modules/pricing/pricing.service'
+import type { Bindings } from './bindings'
 
 // Cloudflare Workers do not support `.listen()`; the compiled Elysia
 // instance is exported directly as the Worker's default export.
@@ -18,9 +18,9 @@ import type { Bindings } from './bindings';
 // `[[d1_databases]]` block in wrangler.toml; it stays `{}`. `Bindings` in
 // `worker/bindings.ts` is hand-written and authoritative instead, so this
 // cast bridges the (empty, but real at runtime) generated type to it.
-const db = createDb(env as unknown as Bindings);
-const catalog = createCatalogService(db);
-const pricing = createPricingService(db, catalog);
-const app = createApp({ catalog, pricing });
+const db = createDb(env as unknown as Bindings)
+const catalog = createCatalogService(db)
+const pricing = createPricingService(db, catalog)
+const app = createApp({ catalog, pricing })
 
-export default app.compile();
+export default app.compile()

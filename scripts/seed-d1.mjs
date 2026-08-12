@@ -10,27 +10,29 @@
  * `DO NOTHING` for price_history), so running this repeatedly against the
  * same database never duplicates rows.
  */
-import { spawnSync } from 'node:child_process';
+import { spawnSync } from 'node:child_process'
 
-const target = process.argv.includes('--remote') ? '--remote' : '--local';
+const target = process.argv.includes('--remote') ? '--remote' : '--local'
 
 const run = (command, args) => {
-  const result = spawnSync(command, args, { stdio: 'inherit' });
+  const result = spawnSync(command, args, { stdio: 'inherit' })
   if (result.status !== 0) {
-    process.exit(result.status ?? 1);
+    process.exit(result.status ?? 1)
   }
-};
+}
 
-console.log('Generating scripts/.generated/seed.sql from the current catalog...');
-run(process.execPath, ['scripts/generate-seed-sql.ts']);
+console.log(
+  'Generating scripts/.generated/seed.sql from the current catalog...'
+)
+run(process.execPath, ['scripts/generate-seed-sql.ts'])
 
-console.log(`Applying scripts/.generated/seed.sql to D1 (${target})...`);
+console.log(`Applying scripts/.generated/seed.sql to D1 (${target})...`)
 run('node_modules/.bin/wrangler', [
   'd1',
   'execute',
   'keyradar-th-prod',
   target,
   '--file=scripts/.generated/seed.sql'
-]);
+])
 
-console.log('Seed complete.');
+console.log('Seed complete.')

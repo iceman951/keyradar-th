@@ -74,17 +74,12 @@
       "indexes": {
         "editions_game_edition_key_idx": {
           "name": "editions_game_edition_key_idx",
-          "columns": [
-            "game_slug",
-            "edition_key"
-          ],
+          "columns": ["game_slug", "edition_key"],
           "isUnique": true
         },
         "editions_game_slug_idx": {
           "name": "editions_game_slug_idx",
-          "columns": [
-            "game_slug"
-          ],
+          "columns": ["game_slug"],
           "isUnique": false
         }
       },
@@ -93,12 +88,8 @@
           "name": "editions_game_slug_games_slug_fk",
           "tableFrom": "editions",
           "tableTo": "games",
-          "columnsFrom": [
-            "game_slug"
-          ],
-          "columnsTo": [
-            "slug"
-          ],
+          "columnsFrom": ["game_slug"],
+          "columnsTo": ["slug"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -212,16 +203,12 @@
       "indexes": {
         "games_normalized_title_idx": {
           "name": "games_normalized_title_idx",
-          "columns": [
-            "normalized_title"
-          ],
+          "columns": ["normalized_title"],
           "isUnique": false
         },
         "games_popularity_idx": {
           "name": "games_popularity_idx",
-          "columns": [
-            "\"popularity\" DESC"
-          ],
+          "columns": ["\"popularity\" DESC"],
           "isUnique": false
         }
       },
@@ -374,9 +361,7 @@
         },
         "offers_store_idx": {
           "name": "offers_store_idx",
-          "columns": [
-            "store_id"
-          ],
+          "columns": ["store_id"],
           "isUnique": false
         }
       },
@@ -385,12 +370,8 @@
           "name": "offers_current_game_slug_games_slug_fk",
           "tableFrom": "offers_current",
           "tableTo": "games",
-          "columnsFrom": [
-            "game_slug"
-          ],
-          "columnsTo": [
-            "slug"
-          ],
+          "columnsFrom": ["game_slug"],
+          "columnsTo": ["slug"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -398,12 +379,8 @@
           "name": "offers_current_edition_id_editions_id_fk",
           "tableFrom": "offers_current",
           "tableTo": "editions",
-          "columnsFrom": [
-            "edition_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["edition_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -411,12 +388,8 @@
           "name": "offers_current_store_id_stores_id_fk",
           "tableFrom": "offers_current",
           "tableTo": "stores",
-          "columnsFrom": [
-            "store_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["store_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -467,20 +440,12 @@
       "indexes": {
         "price_history_unique_idx": {
           "name": "price_history_unique_idx",
-          "columns": [
-            "game_slug",
-            "edition_id",
-            "observed_at"
-          ],
+          "columns": ["game_slug", "edition_id", "observed_at"],
           "isUnique": true
         },
         "price_history_game_edition_time_idx": {
           "name": "price_history_game_edition_time_idx",
-          "columns": [
-            "game_slug",
-            "edition_id",
-            "observed_at"
-          ],
+          "columns": ["game_slug", "edition_id", "observed_at"],
           "isUnique": false
         }
       },
@@ -489,12 +454,8 @@
           "name": "price_history_game_slug_games_slug_fk",
           "tableFrom": "price_history",
           "tableTo": "games",
-          "columnsFrom": [
-            "game_slug"
-          ],
-          "columnsTo": [
-            "slug"
-          ],
+          "columnsFrom": ["game_slug"],
+          "columnsTo": ["slug"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -502,12 +463,8 @@
           "name": "price_history_edition_id_editions_id_fk",
           "tableFrom": "price_history",
           "tableTo": "editions",
-          "columnsFrom": [
-            "edition_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["edition_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }

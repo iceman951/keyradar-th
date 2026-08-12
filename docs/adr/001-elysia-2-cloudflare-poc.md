@@ -2,8 +2,8 @@
 
 ## Status
 
-Accepted — **Go** for Phase 2, with the caveats in *Known limitations* and
-*Upgrade risk*.
+Accepted — **Go** for Phase 2, with the caveats in _Known limitations_ and
+_Upgrade risk_.
 
 Date: 2026-08-05
 
@@ -84,7 +84,7 @@ re-pointing the import in `worker/app.ts` is the entire migration.
 - Conversely, anything that constructs a `Response` at startup fails the
   opposite way, with
   `Disallowed operation called within global scope ... generating random
-  values are not allowed within global scope`. In practice this means **never
+values are not allowed within global scope`. In practice this means **never
   pass an inline literal as a handler** (`.get('/x', 'hello')`); always pass a
   function. This is the v1-documented "you can't define a Response before
   server start" limitation, still present in v2.
@@ -141,7 +141,7 @@ way Cloudflare actually serves it (`vite preview` had masked both):
 
 1. `static/_redirects` contained a Cloudflare Pages-era `/* /200.html 200`
    rule that fights the Worker's `not_found_handling =
-   "single-page-application"`, producing an infinite `307 → /200` redirect
+"single-page-application"`, producing an infinite `307 → /200` redirect
    loop. Removed; the Worker config is the single SPA-fallback mechanism now.
 2. SvelteKit's default relative asset paths break the shared `200.html`
    fallback for any unknown route nested deeper than one segment

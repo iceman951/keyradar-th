@@ -1,4 +1,4 @@
-import { t } from 'elysia';
+import { t } from 'elysia'
 
 export const editionCategorySchema = t.Union([
   t.Literal('standard'),
@@ -6,14 +6,14 @@ export const editionCategorySchema = t.Union([
   t.Literal('complete'),
   t.Literal('dlc'),
   t.Literal('bundle')
-]);
+])
 
 export const editionDtoSchema = t.Object({
   key: t.String(),
   name: t.String(),
   category: editionCategorySchema,
   steamPriceSatang: t.Number()
-});
+})
 
 export const gameDtoSchema = t.Object({
   slug: t.String(),
@@ -28,9 +28,11 @@ export const gameDtoSchema = t.Object({
   popularity: t.Number(),
   hue: t.Number(),
   editions: t.Array(editionDtoSchema)
-});
+})
 
 export const gameListQuery = t.Object({
   limit: t.Optional(t.Number({ minimum: 1, maximum: 100 })),
-  sort: t.Optional(t.Union([t.Literal('popular'), t.Literal('release'), t.Literal('title')]))
-});
+  sort: t.Optional(
+    t.Union([t.Literal('popular'), t.Literal('release'), t.Literal('title')])
+  )
+})

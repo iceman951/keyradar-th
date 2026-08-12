@@ -1,4 +1,4 @@
-import { defineConfig } from 'drizzle-kit';
+import { defineConfig } from 'drizzle-kit'
 
 // `driver: 'd1-http'` is deliberately omitted: that driver is only for
 // `drizzle-kit push`/`studio` talking to a live D1 database over Cloudflare's
@@ -9,4 +9,4 @@ export default defineConfig({
   dialect: 'sqlite',
   schema: './worker/db/schema.ts',
   out: './drizzle'
-});
+})

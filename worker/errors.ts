@@ -1,4 +1,4 @@
-import type { ApiErrorCode } from '../shared/contracts/api-dto.ts';
+import type { ApiErrorCode } from '../shared/contracts/api-dto.ts'
 
 /**
  * Thrown by services for every expected failure mode. `worker/middleware/
@@ -7,21 +7,26 @@ import type { ApiErrorCode } from '../shared/contracts/api-dto.ts';
  * code never builds a `Response` directly.
  */
 export class ApiError extends Error {
-  readonly code: ApiErrorCode;
-  readonly status: number;
-  readonly details?: Record<string, unknown>;
+  readonly code: ApiErrorCode
+  readonly status: number
+  readonly details?: Record<string, unknown>
 
-  constructor(code: ApiErrorCode, status: number, message: string, details?: Record<string, unknown>) {
-    super(message);
-    this.name = 'ApiError';
-    this.code = code;
-    this.status = status;
-    this.details = details;
+  constructor(
+    code: ApiErrorCode,
+    status: number,
+    message: string,
+    details?: Record<string, unknown>
+  ) {
+    super(message)
+    this.name = 'ApiError'
+    this.code = code
+    this.status = status
+    this.details = details
   }
 }
 
 export const gameNotFound = (slug: string): ApiError =>
-  new ApiError('GAME_NOT_FOUND', 404, `Game "${slug}" was not found.`, { slug });
+  new ApiError('GAME_NOT_FOUND', 404, `Game "${slug}" was not found.`, { slug })
 
 export const editionNotFound = (slug: string, editionKey: string): ApiError =>
   new ApiError(
@@ -29,7 +34,7 @@ export const editionNotFound = (slug: string, editionKey: string): ApiError =>
     404,
     `Edition "${editionKey}" was not found for game "${slug}".`,
     { slug, editionKey }
-  );
+  )
 
 /**
  * Wraps an unexpected D1/Drizzle failure. The original error is never
@@ -37,4 +42,8 @@ export const editionNotFound = (slug: string, editionKey: string): ApiError =>
  * logged server-side by the caller before this is thrown.
  */
 export const databaseError = (): ApiError =>
-  new ApiError('DATABASE_ERROR', 500, 'A database error occurred while handling the request.');
+  new ApiError(
+    'DATABASE_ERROR',
+    500,
+    'A database error occurred while handling the request.'
+  )

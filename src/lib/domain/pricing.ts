@@ -11,4 +11,4 @@ export {
   hasAdditionalFees,
   hasConsistentFinalPrice,
   offerFeeTotal
-} from '../../../shared/domain/pricing.ts';
+} from '../../../shared/domain/pricing.ts'

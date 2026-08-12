@@ -12,25 +12,27 @@ export type CacheProfile =
   | 'stores'
   | 'offers'
   | 'editions'
-  | 'price-history';
+  | 'price-history'
 
-const CACHE_HEADERS_ENABLED = true;
+const CACHE_HEADERS_ENABLED = true
 
 const PROFILE_VALUES: Readonly<Record<CacheProfile, string>> = {
   'no-store': 'no-store',
   games: 'public, max-age=60, s-maxage=3600, stale-while-revalidate=86400',
   search: 'public, max-age=30, s-maxage=600, stale-while-revalidate=3600',
-  'game-detail': 'public, max-age=60, s-maxage=3600, stale-while-revalidate=86400',
+  'game-detail':
+    'public, max-age=60, s-maxage=3600, stale-while-revalidate=86400',
   stores: 'public, max-age=300, s-maxage=86400, stale-while-revalidate=86400',
   offers: 'public, max-age=30, s-maxage=600, stale-while-revalidate=3600',
   editions: 'public, max-age=60, s-maxage=600, stale-while-revalidate=3600',
-  'price-history': 'public, max-age=300, s-maxage=3600, stale-while-revalidate=86400'
-};
+  'price-history':
+    'public, max-age=300, s-maxage=3600, stale-while-revalidate=86400'
+}
 
 export const applyCacheProfile = (
   set: { headers: Record<string, string | number | string[]> },
   profile: CacheProfile
 ): void => {
-  if (!CACHE_HEADERS_ENABLED) return;
-  set.headers['cache-control'] = PROFILE_VALUES[profile];
-};
+  if (!CACHE_HEADERS_ENABLED) return
+  set.headers['cache-control'] = PROFILE_VALUES[profile]
+}
