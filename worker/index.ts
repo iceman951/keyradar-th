@@ -1,90 +1,26 @@
-// I have nothing but my burger and I want nothing more
-import { CATALOG_KEY } from './keys';
-import { refreshCatalog } from './refresh';
+import { env } from 'cloudflare:workers';
+import { createApp } from './app';
+import { createDb } from './db/client';
+import { createCatalogService } from './modules/catalog/catalog.service';
+import { createPricingService } from './modules/pricing/pricing.service';
+import type { Bindings } from './bindings';
 
-interface Env {
-  KV: KVNamespace;
-  ASSETS: Fetcher;
-  ITAD_API_KEY?: string;
-}
+// Cloudflare Workers do not support `.listen()`; the compiled Elysia
+// instance is exported directly as the Worker's default export.
+//
+// `.compile()` must run here, at module-evaluation (startup) scope — workerd
+// only permits the codegen Elysia's route compiler uses (`new Function`)
+// during startup, not on the first request. See
+// docs/adr/001-elysia-2-cloudflare-poc.md for how this was verified.
 
-const json = (body: unknown, status = 200, headers: Record<string, string> = {}): Response =>
-  new Response(JSON.stringify(body), {
-    status,
-    headers: { 'content-type': 'application/json; charset=utf-8', ...headers }
-  });
+// `wrangler types` (the installed 4.118.0) does not populate `Cloudflare.Env`
+// — the type behind `cloudflare:workers`'s `env` export — from the
+// `[[d1_databases]]` block in wrangler.toml; it stays `{}`. `Bindings` in
+// `worker/bindings.ts` is hand-written and authoritative instead, so this
+// cast bridges the (empty, but real at runtime) generated type to it.
+const db = createDb(env as unknown as Bindings);
+const catalog = createCatalogService(db);
+const pricing = createPricingService(db, catalog);
+const app = createApp({ catalog, pricing });
 
-/**
- * Synthetic key on a hostname we never serve. `caches.default` is the shared
- * edge cache, so keying on the real request can read back a response the asset
- * pipeline stored — e.g. the SPA's 307 to /200 during deploy propagation, which
- * this Worker would then hand out as if it were the catalog.
- */
-const catalogCacheKey = new Request('https://catalog.internal/v1');
-
-const serveCatalog = async (request: Request, env: Env, ctx: ExecutionContext): Promise<Response> => {
-  const cache = caches.default;
-  const cached = await cache.match(catalogCacheKey);
-  if (cached?.ok && cached.headers.get('content-type')?.includes('application/json')) return cached;
-
-  // Pass the stored text straight through — parsing and re-stringifying here is the
-  // most expensive thing this handler could do, and it would buy nothing.
-  const text = await env.KV.get(CATALOG_KEY, 'text');
-  if (!text) return json({ error: 'catalog_unavailable' }, 503, { 'cache-control': 'no-store' });
-
-  const response = new Response(text, {
-    headers: {
-      'content-type': 'application/json; charset=utf-8',
-      'cache-control': 'public, max-age=300, s-maxage=1800'
-    }
-  });
-  ctx.waitUntil(cache.put(catalogCacheKey, response.clone()));
-  return response;
-};
-
-const serveHealth = async (env: Env): Promise<Response> => {
-  const text = await env.KV.get(CATALOG_KEY, 'text');
-  let fetchedAt: string | null = null;
-  let gameCount = 0;
-  if (text) {
-    try {
-      const catalog = JSON.parse(text) as { fetchedAt?: string; games?: Record<string, unknown> };
-      fetchedAt = catalog.fetchedAt ?? null;
-      gameCount = Object.keys(catalog.games ?? {}).length;
-    } catch {
-      fetchedAt = null;
-    }
-  }
-  return json(
-    {
-      hasKey: Boolean(env.ITAD_API_KEY),
-      hasCatalog: Boolean(text),
-      fetchedAt,
-      gameCount,
-      ageMinutes: fetchedAt ? Math.round((Date.now() - Date.parse(fetchedAt)) / 60_000) : null
-    },
-    200,
-    { 'cache-control': 'no-store' }
-  );
-};
-
-export default {
-  async fetch(request, env, ctx) {
-    const url = new URL(request.url);
-    if (url.pathname === '/api/catalog') return serveCatalog(request, env, ctx);
-    if (url.pathname === '/api/health') return serveHealth(env);
-    if (url.pathname.startsWith('/api/')) {
-      return json({ error: 'not_found' }, 404, { 'cache-control': 'no-store' });
-    }
-    return env.ASSETS.fetch(request);
-  },
-
-  async scheduled(event, env, ctx) {
-    ctx.waitUntil(
-      refreshCatalog(env, event.scheduledTime).then(async (result) => {
-        // Otherwise a fresh catalog stays hidden behind the edge copy.
-        if (result.ok) await caches.default.delete(catalogCacheKey);
-      })
-    );
-  }
-} satisfies ExportedHandler<Env>;
+export default app.compile();

@@ -5,19 +5,16 @@ compatibility_date = "2026-08-02"
 [assets]
 directory = "./build"
 not_found_handling = "single-page-application"
-binding = "ASSETS"
 run_worker_first = ["/api/*"]
 
-[[kv_namespaces]]
-binding = "KV"
-# keyradar_th
-id = "1194bfe67e6f46abbafb29ac4c2a640a"
-# keyradar_preview — only used by `wrangler dev --remote`; local dev uses Miniflare.
-preview_id = "cf4e53ab817448ca8f32a16f98636871"
-
-# 08:00 / 16:00 / 24:00 เวลาไทย (UTC+7)
-[triggers]
-crons = ["0 1,9,17 * * *"]
+[[d1_databases]]
+binding = "DB"
+database_name = "keyradar-th-prod"
+# Not created yet. Run `pnpm wrangler login` then
+# `pnpm wrangler d1 create keyradar-th-prod --location=apac`
+# and paste the returned database_id here before any remote migrate/seed/deploy.
+database_id = "REPLACE_WITH_REAL_DATABASE_ID"
+migrations_dir = "drizzle"
 
 [observability]
 enabled = true

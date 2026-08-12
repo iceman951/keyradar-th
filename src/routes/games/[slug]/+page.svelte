@@ -11,7 +11,7 @@
     RegionStatus,
     Store
   } from '$lib/domain/models';
-  import { gameRepository, invalidateCatalog } from '$lib/data/repository';
+  import { gameRepository } from '$lib/data/repository';
   import {
     beginOfferRefresh,
     failOfferLoad,
@@ -162,9 +162,6 @@
     const previous = loadState;
     loadState = beginOfferRefresh(previous);
     try {
-      // The catalog is memoised for the whole session, so without this the
-      // refresh button would hand back the very snapshot it is replacing.
-      invalidateCatalog();
       const next = await gameRepository.getOffers(game.slug, edition);
       editionSnapshots = { [edition]: next };
       loadState = resolveOfferSnapshot(next);

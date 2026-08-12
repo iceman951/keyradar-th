@@ -3,7 +3,7 @@ import { MockGameRepository } from '$lib/data/mock-repository';
 import { stores } from '$lib/data/fixtures';
 import { regionPresentation } from '$lib/domain/presentation';
 import { hasConsistentFinalPrice } from '$lib/domain/pricing';
-import { regionForStore } from '$lib/itad/store-regions';
+import { regionStatusFor } from '../../shared/seed/catalog';
 import type { RegionCode } from '$lib/domain/models';
 
 describe('mock repository', () => {
@@ -33,14 +33,14 @@ describe('mock repository', () => {
     expect((await repository.searchGames(''))[0].slug).toBe('elden-ring');
   });
 
-  it('mirrors the live store region table and derives status from its presentation', async () => {
+  it('derives region status from the shared catalog and presentation layer', async () => {
     const snapshot = await repository.getOffers('helldivers-2');
-    // The mock no longer invents regions no real store sells: it reads the same
-    // curated table production does, so dev and prod cannot disagree.
-    const expected: RegionCode[] = ['global', 'sea', 'thailand', 'row'];
+    // `shared/seed/catalog.ts` is the one place region is assigned — the mock
+    // repository and the D1 seed generator both read it, so they cannot disagree.
+    const expected: RegionCode[] = ['global', 'sea', 'thailand', 'row', 'eu', 'north-america'];
     expect(new Set(snapshot.offers.map((offer) => offer.region))).toEqual(new Set(expected));
     expect(snapshot.offers.every((offer) =>
-      offer.region === regionForStore(offer.storeId) &&
+      offer.regionStatus === regionStatusFor(offer.region) &&
       offer.regionStatus === regionPresentation(offer.region).status
     )).toBe(true);
   });

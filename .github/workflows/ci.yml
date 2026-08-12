@@ -24,20 +24,38 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Type check
+      # Regenerates worker-configuration.d.ts (gitignored) so `check:worker`
+      # has the Cloudflare runtime + binding types available.
+      - name: Generate Worker types
+        run: pnpm wrangler types
+
+      - name: Type check (app)
         run: pnpm check
+
+      - name: Type check (worker)
+        run: pnpm check:worker
 
       - name: Unit tests
         run: pnpm test
 
-      - name: Build
-        run: pnpm build
+      - name: API route tests
+        run: pnpm test:api
+
+      # Applies migrations, seeds, asserts joins/chronology/idempotency.
+      - name: D1 integration tests
+        run: pnpm test:d1
 
       - name: Install Playwright browsers
         run: pnpm exec playwright install --with-deps chromium
 
-      - name: E2E tests
+      - name: E2E tests (mock mode)
         run: pnpm test:e2e
+
+      - name: E2E tests (API mode, wrangler dev + local D1)
+        run: pnpm test:e2e:api
+
+      - name: Build
+        run: pnpm build
 
       - name: Upload Playwright traces
         if: failure()

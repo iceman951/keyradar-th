@@ -4,7 +4,7 @@ export default defineConfig({
   testDir: './e2e',
   fullyParallel: true,
   reporter: 'list',
-  use: { baseURL: 'http://127.0.0.1:4180', trace: 'on-first-retry' },
+  use: { baseURL: process.env.E2E_BASE_URL ?? 'http://127.0.0.1:4180', trace: 'on-first-retry' },
   projects: [
     {
       name: 'desktop',
