@@ -1,0 +1,18 @@
+node_modules/
+.svelte-kit/
+build/
+.wrangler/
+test-results/
+coverage/
+design-reference/
+.claude/
+.github/
+worker-configuration.d.ts
+pnpm-lock.yaml
+*.min.js
+*.min.css
+*.map
+
+# Documentation
+README.md
+IMPLEMENTATION_SPEC.md
